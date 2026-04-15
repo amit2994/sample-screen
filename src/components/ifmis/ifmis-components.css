@@ -1,0 +1,582 @@
+/* ============================================================
+   IFMIS-NG ACCORDION COMPONENT STYLES
+   Matches the blue-gradient accordion design from IFMIS-NG
+   ============================================================ */
+
+/* Accordion Container */
+.ifmis-accordion {
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-white);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-5);
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.ifmis-accordion:nth-child(2) { animation-delay: 50ms; }
+.ifmis-accordion:nth-child(3) { animation-delay: 100ms; }
+.ifmis-accordion:nth-child(4) { animation-delay: 150ms; }
+.ifmis-accordion:nth-child(5) { animation-delay: 200ms; }
+
+/* Accordion Header — Blue Gradient */
+.ifmis-accordion__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-5);
+  background: linear-gradient(135deg, #1e3a6e 0%, #2d5aa0 40%, #4a7cc9 100%);
+  color: var(--color-white);
+  cursor: pointer;
+  user-select: none;
+  transition: filter var(--transition-fast);
+  min-height: 48px;
+  width: 100%;
+}
+
+.ifmis-accordion__header:hover {
+  filter: brightness(1.08);
+}
+
+.ifmis-accordion__header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ifmis-accordion__number {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-white);
+  flex-shrink: 0;
+}
+
+.ifmis-accordion__title {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.ifmis-accordion__header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Status badges on accordion header */
+.ifmis-accordion__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 3px var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.ifmis-accordion__badge--completed {
+  background: rgba(5, 150, 105, 0.2);
+  color: #a7f3d0;
+  border: 1px solid rgba(5, 150, 105, 0.3);
+}
+
+.ifmis-accordion__badge--pending {
+  background: rgba(217, 119, 6, 0.2);
+  color: #fde68a;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+}
+
+.ifmis-accordion__badge--error {
+  background: rgba(220, 38, 38, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+.ifmis-accordion__toggle {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.ifmis-accordion__toggle--open {
+  transform: rotate(180deg);
+}
+
+.ifmis-accordion__toggle:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Accordion Body */
+.ifmis-accordion__body {
+  padding: var(--space-5);
+  background: var(--color-white);
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* ============================================================
+   FIELD GRID — Table-style field layout within accordion
+   ============================================================ */
+
+.ifmis-field-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.ifmis-field-grid--cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.ifmis-field-grid--cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.ifmis-field-grid--cols-5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.ifmis-field-grid--cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.ifmis-field {
+  padding: var(--space-3) var(--space-4);
+  border-right: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
+  background: var(--color-white);
+  min-height: 64px;
+}
+
+.ifmis-field:last-child {
+  border-right: none;
+}
+
+.ifmis-field__label {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-1);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.ifmis-field__label .required {
+  color: var(--color-error);
+}
+
+.ifmis-field__value {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+}
+
+.ifmis-field__value--muted {
+  color: var(--color-text-tertiary);
+  font-weight: 400;
+  font-style: italic;
+}
+
+.ifmis-field__value--highlight {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.ifmis-field__value--success {
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+.ifmis-field__value--large {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+/* Editable field input inside ifmis-field */
+.ifmis-field .form-input {
+  margin-top: 0;
+  width: 100%;
+}
+
+.ifmis-field select.form-input {
+  width: 100%;
+}
+
+/* ============================================================
+   FORM ROWS (alternative to grid — for mixed layouts)
+   ============================================================ */
+
+.ifmis-form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.ifmis-form-row--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.ifmis-form-row--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ============================================================
+   SECTION FOOTER — "Next" button area
+   ============================================================ */
+
+.ifmis-accordion__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-3) var(--space-5);
+  border-top: 1px solid var(--color-border-light);
+  background: var(--color-bg);
+}
+
+.ifmis-btn-next {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.ifmis-btn-next:hover {
+  background: var(--color-primary-dark);
+  box-shadow: var(--shadow-md);
+}
+
+.ifmis-btn-next:active {
+  transform: scale(0.97);
+}
+
+/* ============================================================
+   STATUS CARD (Top of screen — account/bill status)
+   ============================================================ */
+
+.ifmis-status-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-5) var(--space-6);
+  background: linear-gradient(135deg, #eef0ff 0%, #f0f4ff 50%, #fef3e2 100%);
+  border: 1px solid rgba(79, 70, 229, 0.12);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-5);
+}
+
+.ifmis-status-card__icon {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, var(--color-primary-lighter), rgba(167, 139, 250, 0.2));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: var(--space-1);
+}
+
+.ifmis-status-card__icon-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.ifmis-status-card__icon-badge {
+  display: inline-flex;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.ifmis-status-card__icon-badge--pending {
+  background: rgba(217, 119, 6, 0.15);
+  color: var(--color-warning);
+}
+
+.ifmis-status-card__icon-badge--approved {
+  background: rgba(5, 150, 105, 0.15);
+  color: var(--color-success);
+}
+
+.ifmis-status-card__icon-badge--created {
+  background: rgba(79, 70, 229, 0.15);
+  color: var(--color-primary);
+}
+
+.ifmis-status-card__details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4) var(--space-8);
+  flex: 1;
+}
+
+.ifmis-status-card__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ifmis-status-card__item-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+}
+
+.ifmis-status-card__item-value {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.ifmis-status-card__item-value--primary {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.ifmis-status-card__item-value--success {
+  color: var(--color-success);
+}
+
+.ifmis-status-card__item-value--large {
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   PAGE ACTIONS (Bottom — Reset / Forward)
+   ============================================================ */
+
+.ifmis-page-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-6) 0;
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.ifmis-btn-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-8);
+  background: var(--color-white);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+}
+
+.ifmis-btn-reset:hover {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-text-tertiary);
+}
+
+.ifmis-btn-forward {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-8);
+  background: linear-gradient(135deg, #1e3a6e, #2d5aa0);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-md);
+}
+
+.ifmis-btn-forward:hover {
+  filter: brightness(1.1);
+  box-shadow: var(--shadow-lg);
+}
+
+.ifmis-btn-forward:active {
+  transform: scale(0.97);
+}
+
+/* ============================================================
+   BREADCRUMB BAR (Screen-level)
+   ============================================================ */
+
+.ifmis-page-breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+}
+
+.ifmis-page-breadcrumb__left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.ifmis-page-breadcrumb__left a {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.ifmis-page-breadcrumb__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ifmis-btn-collapse-all {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-primary);
+  background: var(--color-primary-lighter);
+  border: 1px solid rgba(79, 70, 229, 0.15);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.ifmis-btn-collapse-all:hover {
+  background: rgba(79, 70, 229, 0.15);
+}
+
+/* ============================================================
+   AUDIT LOG TABLE
+   ============================================================ */
+
+.ifmis-audit-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.ifmis-audit-table th {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, #1e3a6e 0%, #2d5aa0 100%);
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ifmis-audit-table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border-light);
+  color: var(--color-text-primary);
+}
+
+.ifmis-audit-table tbody tr {
+  transition: background var(--transition-fast);
+}
+
+.ifmis-audit-table tbody tr:hover {
+  background: var(--color-bg);
+}
+
+.ifmis-audit-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================================
+   GENERATED ACCOUNT NUMBER — Hero display
+   ============================================================ */
+
+.ifmis-account-number-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-6);
+  background: linear-gradient(135deg, #f0f4ff, #eef0ff, #f8f0ff);
+  border: 2px dashed rgba(79, 70, 229, 0.2);
+  border-radius: var(--radius-xl);
+  text-align: center;
+  gap: var(--space-3);
+}
+
+.ifmis-account-number-display__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ifmis-account-number-display__value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ifmis-account-number-display__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.ifmis-account-number-display__meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.ifmis-account-number-display__lock {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  background: rgba(5, 150, 105, 0.1);
+  color: var(--color-success);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  margin-top: var(--space-2);
+}
