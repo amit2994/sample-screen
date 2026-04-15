@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { MessageCirclePlus, X } from 'lucide-react';
 import { useComments, type Comment } from '../../hooks/useComments';
 import CommentPin from './CommentPin';
@@ -88,6 +88,37 @@ export default function CommentLayer({
   const openComments = comments.filter((c) => c.status === 'open');
   const resolvedComments = comments.filter((c) => c.status === 'resolved');
 
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Do not trigger if typing in an input field or textarea
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        (e.target as HTMLElement).isContentEditable
+      ) {
+        return;
+      }
+
+      if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        setCommentMode((prev) => !prev);
+        // Clear any existing draft to ensure a clean state
+        setDraftContext(null);
+        setDraftText('');
+      }
+
+      if (e.key === 'Escape') {
+        setDraftContext(null);
+        setDraftText('');
+        setCommentMode(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <div className="comment-layer-wrapper">
       {/* Toolbar */}
@@ -101,7 +132,7 @@ export default function CommentLayer({
           id="toggle-comment-mode"
         >
           <MessageCirclePlus size={16} />
-          {commentMode ? 'Exit Comment Mode' : 'Add Comment'}
+          {commentMode ? 'Exit Comment Mode (Esc)' : 'Add Comment (C)'}
         </button>
 
         <button
