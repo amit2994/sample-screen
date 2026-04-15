@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import './Sidebar.css';
 
-import { sprints, type Sprint } from '../../config/sprints';
+import { sprints } from '../../config/sprints';
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);

@@ -4,7 +4,6 @@ import {
   Lock,
   Calendar,
   Clock,
-  CheckCircle2,
   RotateCcw,
   ArrowRight,
   ChevronsDown,

@@ -149,7 +149,7 @@ export default function CommentPanel({
               </p>
             </div>
           ) : (
-            filteredComments.map((comment, index) => (
+            filteredComments.map((comment) => (
               <div
                 key={comment.id}
                 className={`comment-card ${
