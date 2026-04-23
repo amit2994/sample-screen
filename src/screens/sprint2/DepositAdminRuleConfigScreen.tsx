@@ -10,8 +10,6 @@ export default function DepositAdminRuleConfigScreen() {
   const [selectedAccounts, setSelectedAccounts] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const mockAccounts = ['PD-49320', 'PD-82011', 'DEP-0921', 'PD-55910'];
-
   const handleScopeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setApplicabilityScope(e.target.value as 'global' | 'specific');
   };
