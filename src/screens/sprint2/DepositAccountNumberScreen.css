@@ -1,0 +1,510 @@
+/* DepositAccountNumberScreen.css */
+
+.deposit-account-screen {
+  font-family: 'Inter', sans-serif;
+  color: #334155;
+  padding-bottom: 24px;
+}
+
+/* Page Header Overrides if needed */
+.deposit-account-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.deposit-account-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 4px 0;
+}
+
+.deposit-account-header p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+.status-badge-created {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background-color: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Generated Account Number Card */
+.ifmis-gen-card {
+  display: flex;
+  align-items: flex-start;
+  padding: 24px;
+  background-color: #ffffff;
+  border: 2px solid #22c55e;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  position: relative;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+}
+
+.ifmis-gen-card__icon {
+  width: 56px;
+  height: 56px;
+  background-color: #dcfce7;
+  color: #16a34a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-right: 24px;
+  flex-shrink: 0;
+}
+
+.ifmis-gen-card__content {
+  flex: 1;
+}
+
+.ifmis-gen-card__label {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.ifmis-gen-card__number {
+  font-size: 24px;
+  font-weight: 700;
+  color: #16a34a;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.ifmis-gen-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.ifmis-gen-card__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ifmis-gen-card__meta-item svg {
+  color: #94a3b8;
+}
+
+.ifmis-gen-card__format {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  text-align: right;
+}
+
+.ifmis-gen-card__format-label {
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.ifmis-gen-card__format-value {
+  font-size: 11px;
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* Stepper Card */
+.ifmis-stepper-card {
+  background-color: #ffffff;
+  border: 1px solid #60a5fa; /* Light blue border */
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+}
+
+.ifmis-stepper-card__header {
+  padding: 16px 24px;
+  background-color: #f0f9ff;
+  border-bottom: 1px solid #e0f2fe;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ifmis-stepper-card__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.ifmis-stepper-card__badge {
+  background-color: #93c5fd;
+  color: #1e3a8a;
+  border: 1px solid #60a5fa;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ifmis-stepper__container {
+  padding: 32px 24px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* Stepper steps */
+.ifmis-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+/* Connecting lines */
+.ifmis-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: calc(50% + 24px);
+  width: calc(100% - 48px);
+  height: 2px;
+  border-top: 2px dashed #86efac; /* Green dashed line */
+  z-index: -1;
+}
+
+.ifmis-step--pending:not(:last-child)::after {
+  border-top: 2px dashed #fde047; /* Yellow dashed line for pending */
+}
+
+
+.ifmis-step__circle {
+  width: 32px;
+  height: 32px;
+  background-color: #dcfce7;
+  color: #16a34a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  box-shadow: 0 0 0 4px #f0fdf4;
+}
+
+.ifmis-step__circle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ifmis-step__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 4px;
+}
+
+.ifmis-step__status {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.ifmis-step__link {
+  font-size: 12px;
+  color: #64748b;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid #e2e8f0;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.ifmis-step__link:hover {
+  background-color: #f8fafc;
+}
+
+/* Tabs */
+.ifmis-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.ifmis-tab {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+  background: transparent;
+  border: 1px solid transparent;
+  border-bottom: none;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.2s;
+}
+
+.ifmis-tab--active {
+  background-color: #1e3a6e;
+  color: #ffffff;
+}
+
+.ifmis-tab:not(.ifmis-tab--active):hover {
+  color: #0f172a;
+  background-color: #f1f5f9;
+}
+
+/* Info Grids */
+.ifmis-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.ifmis-info-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+.ifmis-info-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed #e2e8f0;
+}
+
+.ifmis-info-card__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin: 0;
+}
+
+.ifmis-info-card__icon {
+  color: #1e3a8a;
+  width: 18px;
+  height: 18px;
+}
+
+.ifmis-info-card__row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.ifmis-info-card__row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.ifmis-info-card__label {
+  font-size: 13px;
+  color: #64748b;
+  flex: 1;
+}
+
+.ifmis-info-card__value {
+  font-size: 13px;
+  color: #0f172a;
+  font-weight: 600;
+  text-align: right;
+  flex: 2;
+}
+
+.value-badge {
+  background-color: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-left: 6px;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+
+
+/* Components Breakdown */
+.components-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+.components-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.components-card__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin: 0;
+}
+
+.components-card__icon {
+  color: #1e3a8a;
+  width: 18px;
+  height: 18px;
+}
+
+.components-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.component-box {
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.component-box__label {
+  font-size: 11px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.component-box__value {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* Colors for component boxes based on screenshot */
+.box-blue {
+  background-color: #f0f9ff;
+  border-color: #bae6fd;
+}
+.box-blue .component-box__label { color: #0284c7; }
+.box-blue .component-box__value { color: #0369a1; }
+
+.box-purple {
+  background-color: #faf5ff;
+  border-color: #e9d5ff;
+}
+.box-purple .component-box__label { color: #9333ea; }
+.box-purple .component-box__value { color: #7e22ce; }
+
+.box-yellow {
+  background-color: #fefce8;
+  border-color: #fef08a;
+}
+.box-yellow .component-box__label { color: #ca8a04; }
+.box-yellow .component-box__value { color: #a16207; }
+
+.box-green {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+}
+.box-green .component-box__label { color: #16a34a; }
+.box-green .component-box__value { color: #15803d; }
+
+.box-red {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+}
+.box-red .component-box__label { color: #dc2626; }
+.box-red .component-box__value { color: #b91c1c; }
+
+.components-footer {
+  text-align: center;
+  font-size: 12px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Page Footer Actions */
+.deposit-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.deposit-footer__ref {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.deposit-footer__actions {
+  display: flex;
+  gap: 16px;
+}
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #1e3a8a;
+  border: 1px solid #1e3a8a;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #1e3a6e;
+}

@@ -4,6 +4,7 @@ import Dashboard from './screens/Dashboard';
 import Story1Screen from './screens/sprint1/Story1Screen';
 import Story2Screen from './screens/sprint1/Story2Screen';
 import DepositAccountNumberScreen from './screens/sprint2/DepositAccountNumberScreen';
+import DepositAdminRuleConfigScreen from './screens/sprint2/DepositAdminRuleConfigScreen';
 
 export const router = createBrowserRouter([
   {
@@ -16,15 +17,7 @@ export const router = createBrowserRouter([
       { path: 'sprint/1/story/2', element: <Story2Screen /> },
       // Sprint 2
       { path: 'sprint/2/story/1', element: <DepositAccountNumberScreen /> },
-      {
-        path: 'sprint/2/story/2',
-        element: (
-          <div style={{ padding: 'var(--space-8)', textAlign: 'center', color: 'var(--color-text-tertiary)' }}>
-            <h2>Reports & Analytics</h2>
-            <p>Screen coming soon</p>
-          </div>
-        ),
-      },
+      { path: 'sprint/2/story/2', element: <DepositAdminRuleConfigScreen /> },
       // Catch-all
       {
         path: '*',
