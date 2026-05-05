@@ -122,31 +122,41 @@ export default function DepositAdminRuleConfigScreen() {
             <div className="grid-2-col form-row">
               <div className="form-group">
                 <label className="form-label">
-                  Applicable Deposit Type(s) <span className="required">*</span>
+                  {applicabilityScope === 'specific' ? 'Applicable Deposit Type' : 'Applicable Deposit Type(s)'} <span className="required">*</span>
                 </label>
                 <div className="checkbox-group-container" style={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '8px', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', maxHeight: '120px', overflowY: 'auto' }}>
-                  {['Civil Court Deposit (CCD)', 'Criminal Court Deposit(CrCD)', 'PD with fund source Other than Consolidated Fund '].map(type => (
+                  {['Civil Court Deposit (CCD)', 'Criminal Court Deposit(CrCD)', 'PD with fund source Other than Consolidated Fund'].map(type => (
                     <label key={type} className="checkbox-option" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                      <input type="checkbox" name="depositTypes" value={type} style={{ width: '16px', height: '16px', accentColor: 'var(--color-primary)' }} />
+                      <input
+                        type={applicabilityScope === 'specific' ? 'radio' : 'checkbox'}
+                        name="depositTypes"
+                        value={type}
+                        style={{ width: '16px', height: '16px', accentColor: 'var(--color-primary)' }}
+                      />
                       <span className="checkbox-label" style={{ fontSize: 'var(--font-size-sm)' }}>{type}</span>
                     </label>
                   ))}
                 </div>
+                {applicabilityScope === 'specific' && (
+                  <span className="form-helper">Only one deposit type can be selected for account-specific rules.</span>
+                )}
               </div>
 
-              <div className="form-group">
-                <label className="form-label">
-                  Rate of Interest (%) <span className="required">*</span>
-                </label>
-                <input
-                  type="number"
-                  className="form-input"
-                  placeholder="e.g., 6.5"
-                  step="0.01"
-                  min="0"
-                  required
-                />
-              </div>
+              {applicabilityScope !== 'specific' && (
+                <div className="form-group">
+                  <label className="form-label">
+                    Rate of Interest (%) <span className="required">*</span>
+                  </label>
+                  <input
+                    type="number"
+                    className="form-input"
+                    placeholder="e.g., 6.5"
+                    step="0.01"
+                    min="0"
+                    required
+                  />
+                </div>
+              )}
             </div>
 
             <div className="grid-3-col form-row">

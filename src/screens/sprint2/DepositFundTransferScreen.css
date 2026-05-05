@@ -1,0 +1,672 @@
+/* ============================================================
+   DEPOSIT FUND TRANSFER — Consolidated Fund Mode
+   ============================================================ */
+
+.dft-screen {
+  padding: var(--space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* — Header — */
+.dft-screen header {
+  margin-bottom: var(--space-6);
+}
+
+.dft-screen h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.dft-screen .header-desc {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  max-width: 720px;
+}
+
+.dft-header-badges {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.dft-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 3px var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  border-radius: var(--radius-full);
+}
+
+.dft-header-badge.origin {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+}
+
+.dft-header-badge.fund {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.dft-header-badge.role {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+/* — Wizard Stepper — */
+.dft-wizard-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: var(--space-8);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-white);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+
+.dft-step-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+  cursor: pointer;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.dft-step-item:hover {
+  background: var(--color-bg-secondary);
+}
+
+.dft-step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  flex-shrink: 0;
+  transition: all var(--transition-base);
+  border: 2px solid var(--color-border);
+  color: var(--color-text-tertiary);
+  background: var(--color-white);
+}
+
+.dft-step-item.active .dft-step-circle {
+  background: linear-gradient(135deg, #1e3a6e 0%, #2d5aa0 100%);
+  border-color: #1e3a6e;
+  color: var(--color-white);
+  box-shadow: 0 0 0 3px rgba(30, 58, 110, 0.15);
+}
+
+.dft-step-item.completed .dft-step-circle {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: var(--color-white);
+}
+
+.dft-step-label {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+}
+
+.dft-step-item.active .dft-step-label {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.dft-step-item.completed .dft-step-label {
+  color: var(--color-success);
+}
+
+.dft-step-connector {
+  flex: 1;
+  height: 2px;
+  background: var(--color-border-light);
+  min-width: 24px;
+  margin: 0 var(--space-1);
+  border-radius: 2px;
+  transition: background var(--transition-base);
+}
+
+.dft-step-connector.completed {
+  background: var(--color-success);
+}
+
+/* — Sections — */
+.dft-section {
+  background: var(--color-white);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-6);
+  overflow: hidden;
+  transition: box-shadow var(--transition-fast);
+  animation: fadeInUp var(--transition-base) ease-out;
+}
+
+.dft-section:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.dft-section-header {
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--color-border-light);
+  background: linear-gradient(135deg, #1e3a6e 0%, #2d5aa0 40%, #4a7cc9 100%);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 48px;
+}
+
+.dft-section-header h2 {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-white);
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+.dft-section-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: var(--color-white);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.dft-section-body {
+  padding: var(--space-5);
+}
+
+.dft-section-body .grid-2-col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+}
+
+.dft-section-body .grid-3-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+.dft-section-body .grid-4-col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+.dft-form-row {
+  margin-bottom: var(--space-5);
+}
+
+.dft-form-row:last-child {
+  margin-bottom: 0;
+}
+
+/* — Read-only display fields — */
+.dft-display-value {
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.dft-display-value.system {
+  background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+  border-color: rgba(5, 150, 105, 0.2);
+  color: var(--color-success);
+}
+
+.dft-system-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  margin-top: 2px;
+}
+
+.dft-system-tag svg {
+  color: var(--color-success);
+}
+
+/* — Info callout — */
+.dft-info-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-4);
+}
+
+.dft-info-callout.info {
+  background: var(--color-info-bg);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  color: #1e40af;
+}
+
+.dft-info-callout.warning {
+  background: var(--color-warning-bg);
+  border: 1px solid rgba(217, 119, 6, 0.15);
+  color: #92400e;
+}
+
+.dft-info-callout.success {
+  background: var(--color-success-bg);
+  border: 1px solid rgba(5, 150, 105, 0.15);
+  color: #065f46;
+}
+
+.dft-info-callout.error {
+  background: var(--color-error-bg);
+  border: 1px solid rgba(220, 38, 38, 0.15);
+  color: #991b1b;
+}
+
+.dft-info-callout svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* — Budget Line Table — */
+.dft-budget-table-wrapper {
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.dft-budget-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.dft-budget-table thead {
+  background: var(--color-bg-secondary);
+}
+
+.dft-budget-table th {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.dft-budget-table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border-light);
+  color: var(--color-text-primary);
+}
+
+.dft-budget-table tbody tr {
+  transition: background var(--transition-fast);
+  cursor: pointer;
+}
+
+.dft-budget-table tbody tr:hover {
+  background: var(--color-primary-lighter);
+}
+
+.dft-budget-table tbody tr.selected {
+  background: #eef2ff;
+  box-shadow: inset 3px 0 0 var(--color-primary);
+}
+
+.dft-budget-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.dft-budget-radio {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+}
+
+.dft-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+}
+
+.dft-status-badge.mapped {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.dft-status-badge.unmapped {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.dft-status-badge.pending {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+}
+
+.dft-status-badge.approved {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.dft-status-badge.rejected {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+/* — Approval Timeline — */
+.dft-approval-timeline {
+  position: relative;
+  padding-left: 28px;
+  margin-top: var(--space-4);
+}
+
+.dft-approval-timeline::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: var(--color-border-light);
+  border-radius: 2px;
+}
+
+.dft-timeline-item {
+  position: relative;
+  padding-bottom: var(--space-5);
+}
+
+.dft-timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.dft-timeline-dot {
+  position: absolute;
+  left: -22px;
+  top: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border);
+  background: var(--color-white);
+}
+
+.dft-timeline-item.done .dft-timeline-dot {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.dft-timeline-item.active .dft-timeline-dot {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.dft-timeline-item.pending .dft-timeline-dot {
+  background: var(--color-white);
+  border-color: var(--color-border);
+}
+
+.dft-timeline-title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+
+.dft-timeline-meta {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+.dft-timeline-remark {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--color-primary-light);
+}
+
+/* — Summary Confirmation — */
+.dft-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.dft-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dft-summary-label {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dft-summary-value {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.dft-summary-divider {
+  border: none;
+  border-top: 1px dashed var(--color-border-light);
+  margin: var(--space-4) 0;
+}
+
+/* — Accounting Entries — */
+.dft-accounting-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+}
+
+.dft-accounting-row:last-child {
+  margin-bottom: 0;
+}
+
+.dft-accounting-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dft-accounting-icon.debit {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.dft-accounting-icon.credit {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.dft-accounting-details {
+  flex: 1;
+}
+
+.dft-accounting-details .label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dft-accounting-details .value {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.dft-accounting-amount {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+}
+
+.dft-accounting-amount.debit {
+  color: var(--color-error);
+}
+
+.dft-accounting-amount.credit {
+  color: var(--color-success);
+}
+
+/* — Action Bar — */
+.dft-action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border-light);
+  margin-top: var(--space-2);
+}
+
+.dft-action-bar-left {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.dft-action-bar-right {
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* — Conditional Sections Animation — */
+.dft-section-enter {
+  animation: fadeInDown var(--transition-base) ease-out;
+}
+
+/* — HoAD / FD Approval Form — */
+.dft-approval-form {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+}
+
+.dft-approval-form h4 {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-3);
+}
+
+.dft-radio-card-group {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.dft-radio-card {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: var(--color-white);
+}
+
+.dft-radio-card:hover {
+  border-color: var(--color-primary-light);
+  background: var(--color-primary-lighter);
+}
+
+.dft-radio-card.selected-approve {
+  border-color: var(--color-success);
+  background: var(--color-success-bg);
+}
+
+.dft-radio-card.selected-reject {
+  border-color: var(--color-error);
+  background: var(--color-error-bg);
+}
+
+.dft-radio-card input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+}
+
+/* — Responsive — */
+@media (max-width: 768px) {
+  .dft-section-body .grid-2-col,
+  .dft-section-body .grid-3-col,
+  .dft-section-body .grid-4-col {
+    grid-template-columns: 1fr;
+  }
+
+  .dft-wizard-stepper {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: var(--space-3);
+  }
+
+  .dft-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dft-action-bar {
+    flex-direction: column;
+  }
+
+  .dft-radio-card-group {
+    flex-direction: column;
+  }
+}

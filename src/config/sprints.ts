@@ -26,6 +26,8 @@ export const sprints: Sprint[] = [
     stories: [
       { id: 'story-3', title: 'Account Number Generation', path: '/sprint/2/story/1', screen_id: 'sprint2-story1-deposit-account-number' },
       { id: 'story-4', title: 'Reports & Analytics', path: '/sprint/2/story/2', screen_id: 'sprint2-story2' },
+      { id: 'story-5', title: 'Deposit Fund Transfer (CF)', path: '/sprint/2/story/3', screen_id: 'sprint2-story3-deposit-fund-transfer' },
+      { id: 'story-6', title: 'Sub-PD Creation', path: '/sprint/2/story/4', screen_id: 'sprint2-story4-sub-pd-creation' },
     ],
   },
 ];
