@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
-  FileText, CheckCircle2, AlertCircle, Building, User,
-  IndianRupee, CreditCard, Send, Settings, ArrowRightLeft, Database, Receipt
+  CheckCircle2, AlertCircle, Building, User,
+  CreditCard, ArrowRightLeft, Database, Receipt
 } from 'lucide-react';
 import './DepositFundTransferScreen.css';
 
@@ -28,7 +28,7 @@ export default function DepositFundTransferScreen() {
   
   // PD-CF specific states
   const [mappingRequested, setMappingRequested] = useState(false);
-  const [hoadApproved, setHoadApproved] = useState(false);
+  const [, setHoadApproved] = useState(false);
   const [fdDecision, setFdDecision] = useState<'pending' | 'approved' | 'rejected'>('pending');
 
   const isPD = depositType === 'PD';

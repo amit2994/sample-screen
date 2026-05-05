@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   FileText, CheckCircle2, AlertCircle, Building, User,
-  IndianRupee, Layers, Calendar, Receipt, ChevronRight, Save, PieChart
+  IndianRupee, Layers, Receipt, ChevronRight, Save, PieChart
 } from 'lucide-react';
 import './SubPDCreationScreen.css';
 
