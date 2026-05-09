@@ -49,6 +49,7 @@ export default function PlusMinusMemoScreen() {
   const [reportType, setReportType] = useState('');
   const [accountType, setAccountType] = useState('');
   const [depositAccountNo, setDepositAccountNo] = useState('');
+  const [operatorId, setOperatorId] = useState('');
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [hasGenerated, setHasGenerated] = useState(false);
@@ -76,6 +77,7 @@ export default function PlusMinusMemoScreen() {
     setReportType('');
     setAccountType('');
     setDepositAccountNo('');
+    setOperatorId('');
     setFromDate('');
     setToDate('');
     setHasGenerated(false);
@@ -142,40 +144,85 @@ export default function PlusMinusMemoScreen() {
               <div className="grid-4-col pmm-form-row">
                 <div className="form-group">
                   <label className="form-label">Report Type <span className="required">*</span></label>
-                  <select className="form-input" value={reportType} onChange={e => setReportType(e.target.value)}>
+                  <select className="form-input" value={reportType} onChange={e => {
+                    setReportType(e.target.value);
+                    setAccountType('');
+                    setDepositAccountNo('');
+                    setOperatorId('');
+                  }}>
                     <option value="">Select...</option>
                     <option value="hoa">HoA-wise</option>
                     <option value="operator">Operator-wise</option>
                   </select>
                 </div>
-                <div className="form-group">
-                  <label className="form-label">Account Type <span className="required">*</span></label>
-                  <select className="form-input" value={accountType} onChange={e => setAccountType(e.target.value)}>
-                    <option value="">Select...</option>
-                    <option value="PD">PD</option>
-                    <option value="CCD">CCD</option>
-                    <option value="CrCD">CrCD</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Deposit Account Number <span className="required">*</span></label>
-                  <select className="form-input" value={depositAccountNo} onChange={e => setDepositAccountNo(e.target.value)}>
-                    <option value="">Select...</option>
-                    <option value="PD-82011">PD-82011</option>
-                    <option value="PD-49320">PD-49320</option>
-                    <option value="CCD-10293">CCD-10293</option>
-                    <option value="CrCD-83921">CrCD-83921</option>
-                  </select>
-                </div>
-                {reportType === 'hoa' ? (
+                
+                {reportType === 'operator' ? (
+                  <div className="form-group">
+                    <label className="form-label">Operator ID <span className="required">*</span></label>
+                    <select className="form-input" value={operatorId} onChange={e => {
+                      const val = e.target.value;
+                      setOperatorId(val);
+                      if (val === 'OPR-1001') { setAccountType('PD'); setDepositAccountNo('PD-82011'); }
+                      else if (val === 'OPR-1002') { setAccountType('CCD'); setDepositAccountNo('CCD-10293'); }
+                      else if (val === 'OPR-1003') { setAccountType('CrCD'); setDepositAccountNo('CrCD-83921'); }
+                      else { setAccountType(''); setDepositAccountNo(''); }
+                    }}>
+                      <option value="">Select...</option>
+                      <option value="OPR-1001">OPR-1001</option>
+                      <option value="OPR-1002">OPR-1002</option>
+                      <option value="OPR-1003">OPR-1003</option>
+                    </select>
+                  </div>
+                ) : (
+                  <div className="form-group">
+                    <label className="form-label">Account Type <span className="required">*</span></label>
+                    <select className="form-input" value={accountType} onChange={e => setAccountType(e.target.value)}>
+                      <option value="">Select...</option>
+                      <option value="PD">PD</option>
+                      <option value="CCD">CCD</option>
+                      <option value="CrCD">CrCD</option>
+                    </select>
+                  </div>
+                )}
+                
+                {reportType === 'operator' ? (
+                  <div className="form-group">
+                    <label className="form-label">Account Type <span className="required">*</span></label>
+                    <select className="form-input" value={accountType} disabled>
+                      <option value="">Auto-filled...</option>
+                      <option value="PD">PD</option>
+                      <option value="CCD">CCD</option>
+                      <option value="CrCD">CrCD</option>
+                    </select>
+                  </div>
+                ) : (
+                  <div className="form-group">
+                    <label className="form-label">Deposit Account Number <span className="required">*</span></label>
+                    <select className="form-input" value={depositAccountNo} onChange={e => setDepositAccountNo(e.target.value)}>
+                      <option value="">Select...</option>
+                      <option value="PD-82011">PD-82011</option>
+                      <option value="PD-49320">PD-49320</option>
+                      <option value="CCD-10293">CCD-10293</option>
+                      <option value="CrCD-83921">CrCD-83921</option>
+                    </select>
+                  </div>
+                )}
+                
+                {reportType === 'operator' ? (
+                  <div className="form-group">
+                    <label className="form-label">Deposit Account Number <span className="required">*</span></label>
+                    <select className="form-input" value={depositAccountNo} disabled>
+                      <option value="">Auto-filled...</option>
+                      <option value="PD-82011">PD-82011</option>
+                      <option value="PD-49320">PD-49320</option>
+                      <option value="CCD-10293">CCD-10293</option>
+                      <option value="CrCD-83921">CrCD-83921</option>
+                    </select>
+                  </div>
+                ) : reportType === 'hoa' ? (
                   <div className="form-group">
                     <label className="form-label">HoA <span className="required">*</span></label>
                     <select className="form-input"><option value="">Select...</option><option>8443-00-106-0001</option><option>8443-00-111-0001</option><option>8443-00-113-0001</option></select>
-                  </div>
-                ) : reportType === 'operator' ? (
-                  <div className="form-group">
-                    <label className="form-label">Operator ID <span className="required">*</span></label>
-                    <select className="form-input"><option value="">Select...</option><option>OPR-1001</option><option>OPR-1002</option></select>
                   </div>
                 ) : <div className="form-group"></div>}
               </div>
