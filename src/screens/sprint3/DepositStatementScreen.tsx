@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import {
   FileText, User, Building, Eye, Download, Printer, BookOpen,
-  Filter, AlertCircle, ArrowUpRight,
-  ArrowDownRight, Shield
+  Filter, AlertCircle
 } from 'lucide-react';
 import './DepositStatementScreen.css';
 
@@ -26,29 +25,24 @@ const MOCK_TRANSACTIONS = [
 ];
 
 export default function DepositStatementScreen() {
-  const [statementType, setStatementType] = useState('');
   const [selectedAccount, setSelectedAccount] = useState('');
+  const [selectedHoa, setSelectedHoa] = useState('');
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
-  const [txnType, setTxnType] = useState('all');
   const [outputFormat, setOutputFormat] = useState('pdf');
   const [generated, setGenerated] = useState(false);
 
   const account = MOCK_ACCOUNTS.find(a => a.id === selectedAccount);
   const fmt = (n: number) => '₹ ' + n.toLocaleString('en-IN');
 
-  const filteredTxns = MOCK_TRANSACTIONS.filter(t => {
-    if (txnType === 'receipt') return t.type === 'credit' || t.type === 'opening';
-    if (txnType === 'payment') return t.type === 'debit' || t.type === 'opening';
-    return true;
-  });
+  const filteredTxns = MOCK_TRANSACTIONS.filter(t => t.type !== 'opening');
+  const openingTxn = MOCK_TRANSACTIONS.find(t => t.type === 'opening');
 
-  const totalCredit = MOCK_TRANSACTIONS.reduce((s, t) => s + t.credit, 0);
-  const totalDebit = MOCK_TRANSACTIONS.reduce((s, t) => s + t.debit, 0);
+
   const closingBalance = MOCK_TRANSACTIONS[MOCK_TRANSACTIONS.length - 1]?.balance || 0;
 
   const handleGenerate = () => setGenerated(true);
-  const handleReset = () => { setGenerated(false); setStatementType(''); setSelectedAccount(''); setFromDate(''); setToDate(''); setTxnType('all'); };
+  const handleReset = () => { setGenerated(false); setSelectedAccount(''); setSelectedHoa(''); setFromDate(''); setToDate(''); };
 
   return (
     <div className="dsp-screen animate-fade-in">
@@ -70,15 +64,7 @@ export default function DepositStatementScreen() {
             <h2>Statement / Passbook Generation</h2>
           </div>
           <div className="dsp-section-body">
-            <div className="grid-2-col dsp-form-row">
-              <div className="form-group">
-                <label className="form-label">Statement Type <span className="required">*</span></label>
-                <select className="form-input" value={statementType} onChange={e => { setStatementType(e.target.value); }}>
-                  <option value="">Select Type...</option>
-                  <option value="custom">Custom Statement</option>
-                  <option value="passbook">Passbook</option>
-                </select>
-              </div>
+            <div className="grid-3-col dsp-form-row">
               <div className="form-group">
                 <label className="form-label">Deposit Account No. <span className="required">*</span></label>
                 <select className="form-input" value={selectedAccount} onChange={e => setSelectedAccount(e.target.value)}>
@@ -87,38 +73,16 @@ export default function DepositStatementScreen() {
                 </select>
                 {selectedAccount && <span className="form-helper" style={{ color: 'var(--color-success)' }}>Account is Active & Accessible</span>}
               </div>
-            </div>
-
-            {statementType === 'custom' && (
-              <>
-                <div className="grid-2-col dsp-form-row">
-                  <div className="form-group">
-                    <label className="form-label">From Date <span className="required">*</span></label>
-                    <input type="date" className="form-input" value={fromDate} onChange={e => setFromDate(e.target.value)} />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">To Date <span className="required">*</span></label>
-                    <input type="date" className="form-input" value={toDate} onChange={e => setToDate(e.target.value)} />
-                  </div>
-                </div>
-                <div className="grid-2-col dsp-form-row">
-                  <div className="form-group">
-                    <label className="form-label">Transaction Type</label>
-                    <select className="form-input" value={txnType} onChange={e => setTxnType(e.target.value)}>
-                      <option value="all">All (Credit & Debit)</option>
-                      <option value="receipt">Receipt (Credit only)</option>
-                      <option value="payment">Payment (Debit only)</option>
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Purpose Code</label>
-                    <select className="form-input"><option value="">All Purpose Codes</option><option>General Administration</option><option>Works Deposit</option></select>
-                  </div>
-                </div>
-              </>
-            )}
-
-            <div className="grid-2-col dsp-form-row">
+              <div className="form-group">
+                <label className="form-label">HoA</label>
+                <select className="form-input" value={selectedHoa} onChange={e => setSelectedHoa(e.target.value)}>
+                  <option value="">Select HoA...</option>
+                  <option value="8443-00-106-0001">8443-00-106-0001</option>
+                  <option value="8443-00-111-0001">8443-00-111-0001</option>
+                  <option value="8443-00-113-0001">8443-00-113-0001</option>
+                  <option value="8443-00-114-0001">8443-00-114-0001</option>
+                </select>
+              </div>
               <div className="form-group">
                 <label className="form-label">Output Format <span className="required">*</span></label>
                 <select className="form-input" value={outputFormat} onChange={e => setOutputFormat(e.target.value)}>
@@ -127,6 +91,17 @@ export default function DepositStatementScreen() {
                   <option value="csv">CSV</option>
                   <option value="doc">DOC</option>
                 </select>
+              </div>
+            </div>
+
+            <div className="grid-2-col dsp-form-row">
+              <div className="form-group">
+                <label className="form-label">From Date <span className="required">*</span></label>
+                <input type="date" className="form-input" value={fromDate} onChange={e => setFromDate(e.target.value)} />
+              </div>
+              <div className="form-group">
+                <label className="form-label">To Date <span className="required">*</span></label>
+                <input type="date" className="form-input" value={toDate} onChange={e => setToDate(e.target.value)} />
               </div>
             </div>
 
@@ -140,8 +115,8 @@ export default function DepositStatementScreen() {
                 <button className="btn btn-secondary" onClick={handleReset}>Reset</button>
               </div>
               <div className="dsp-action-bar-right">
-                <button className="btn btn-primary" disabled={!statementType || !selectedAccount || (statementType === 'custom' && (!fromDate || !toDate))} onClick={handleGenerate}>
-                  <FileText size={14} /> Generate {statementType === 'passbook' ? 'Passbook' : 'Statement'}
+                <button className="btn btn-primary" disabled={!selectedAccount || !fromDate || !toDate} onClick={handleGenerate}>
+                  <FileText size={14} /> Generate Passbook
                 </button>
               </div>
             </div>
@@ -153,7 +128,7 @@ export default function DepositStatementScreen() {
           <div className="dsp-section" style={{ marginBottom: 'var(--space-4)' }}>
             <div className="dsp-section-header">
               <div className="dsp-section-icon"><BookOpen size={18} /></div>
-              <h2>{statementType === 'passbook' ? 'Passbook' : 'Custom Statement'} — {selectedAccount}</h2>
+              <h2>Passbook — {selectedAccount}</h2>
               <div className="dsp-section-header-actions">
                 <button className="btn" onClick={handleReset}>← New Query</button>
                 <button className="btn"><Download size={14} /> Download ({outputFormat.toUpperCase()})</button>
@@ -162,67 +137,92 @@ export default function DepositStatementScreen() {
             </div>
           </div>
 
-          <div className="dsp-passbook">
-            <div className="dsp-passbook-header">
-              <div className="dsp-passbook-title">IFMIS Next Gen — Deposit Account {statementType === 'passbook' ? 'Passbook' : 'Statement'}</div>
-              <div className="dsp-passbook-subtitle">
-                Period: {statementType === 'custom' ? `${fromDate} to ${toDate}` : 'Complete Transaction History'} &nbsp;|&nbsp; Generated by: Admin-T01 (Deposit Administrator)
+          <div style={{ background: '#fff', padding: '40px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', borderRadius: '4px', maxWidth: '100%', overflowX: 'auto', margin: '0 auto', color: '#111', fontFamily: 'serif' }}>
+            
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <div style={{ display: 'inline-flex', justifyContent: 'center', alignItems: 'center', width: '60px', height: '60px', borderRadius: '50%', border: '2px solid #888', marginBottom: '10px' }}>
+                <span style={{ fontSize: '10px', fontWeight: 'bold' }}>MP</span>
               </div>
+              <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 10px 0' }}>FORM M.P.T.C. – 36</h2>
+              <h3 style={{ fontSize: '14px', fontWeight: 'bold', margin: '0 0 20px 0' }}>(See Subsidiary Rule 346, 356 & 357)</h3>
+              <h2 style={{ fontSize: '18px', fontWeight: 'bold', margin: '0 0 20px 0' }}>Deposit Account Passbook</h2>
             </div>
 
-            <div className="dsp-passbook-meta">
-              <div className="dsp-meta-item"><span className="dsp-meta-label">Account Number</span><span className="dsp-meta-value">{selectedAccount}</span></div>
-              <div className="dsp-meta-item"><span className="dsp-meta-label">Account Type</span><span className="dsp-meta-value">{account?.type} — {account?.name}</span></div>
-              <div className="dsp-meta-item"><span className="dsp-meta-label">Fund Source</span><span className="dsp-meta-value">{account?.fund}</span></div>
-              <div className="dsp-meta-item"><span className="dsp-meta-label">DDO Code / Name</span><span className="dsp-meta-value">{account?.ddo}</span></div>
-              <div className="dsp-meta-item"><span className="dsp-meta-label">Operator Code / Name</span><span className="dsp-meta-value">{account?.operator}</span></div>
-              <div className="dsp-meta-item"><span className="dsp-meta-label">Opening Balance</span><span className="dsp-meta-value" style={{ color: 'var(--color-primary)' }}>{fmt(5000000)}</span></div>
+            <div style={{ marginBottom: '30px', fontSize: '14px', lineHeight: '2.5' }}>
+              <div>Treasury Code and Name................................<span style={{ fontWeight: 'bold', paddingLeft: '8px' }}>270 - Neemuch District Treasury</span></div>
+              <div>DDO Code and Name.......................................<span style={{ fontWeight: 'bold', paddingLeft: '8px' }}>{account?.ddo}</span></div>
+              <div>Deposit Account Number and Operator Name................<span style={{ fontWeight: 'bold', paddingLeft: '8px' }}>{selectedAccount} / {account?.operator}</span></div>
+              <div>Fund Source – Consolidated Fund/Other than Consolidated Fund/Both...............<span style={{ fontWeight: 'bold', paddingLeft: '8px' }}>{account?.fund}</span></div>
+              <div>Head of Account: .......................................<span style={{ fontWeight: 'bold', paddingLeft: '8px' }}>{selectedHoa || '—'}</span></div>
+              <div>Pass-book start date.................. <span style={{ fontWeight: 'bold' }}>{fromDate}</span> to date................ <span style={{ fontWeight: 'bold' }}>{toDate}</span></div>
+              <div>Opening Balance ₹................ <span style={{ fontWeight: 'bold' }}>{fmt(openingTxn?.balance || 5000000)}</span> on date................ <span style={{ fontWeight: 'bold' }}>{fromDate}</span></div>
             </div>
 
-            <div className="dsp-table-wrapper">
-              <table className="dsp-table">
-                <thead>
-                  <tr>
-                    <th>Date</th><th>Narration</th><th>Reference</th>
-                    <th className="align-right">Credit (₹)</th>
-                    <th className="align-right">Debit (₹)</th>
-                    <th className="align-right">Balance (₹)</th>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', textAlign: 'center' }}>
+              <thead>
+                <tr style={{ border: '1px solid #000' }}>
+                  <th rowSpan={2} style={{ border: '1px solid #000', padding: '8px 4px', fontWeight: 'bold', width: '5%' }}>Sr No</th>
+                  <th rowSpan={2} style={{ border: '1px solid #000', padding: '8px 4px', fontWeight: 'bold', width: '10%' }}>Date</th>
+                  <th colSpan={3} style={{ border: '1px solid #000', padding: '8px 4px', fontWeight: 'bold' }}>Transaction Details</th>
+                  <th rowSpan={2} style={{ border: '1px solid #000', padding: '8px 4px', fontWeight: 'bold', width: '15%' }}>Type of transaction<br/>(Credit/Debit)</th>
+                  <th rowSpan={2} style={{ border: '1px solid #000', padding: '8px 4px', fontWeight: 'bold', width: '15%' }}>Balance</th>
+                </tr>
+                <tr style={{ border: '1px solid #000' }}>
+                  <th style={{ border: '1px solid #000', padding: '8px 4px', fontWeight: 'bold', width: '20%' }}>Challan No/<br/>Voucher No.</th>
+                  <th style={{ border: '1px solid #000', padding: '8px 4px', fontWeight: 'bold', width: '20%' }}>Party Name</th>
+                  <th style={{ border: '1px solid #000', padding: '8px 4px', fontWeight: 'bold', width: '15%' }}>Amount</th>
+                </tr>
+                <tr style={{ border: '1px solid #000', fontWeight: 'bold', background: '#f5f5f5' }}>
+                  <td style={{ border: '1px solid #000', padding: '4px' }}>1</td>
+                  <td style={{ border: '1px solid #000', padding: '4px' }}>2</td>
+                  <td style={{ border: '1px solid #000', padding: '4px' }}>3</td>
+                  <td style={{ border: '1px solid #000', padding: '4px' }}>4</td>
+                  <td style={{ border: '1px solid #000', padding: '4px' }}>5</td>
+                  <td style={{ border: '1px solid #000', padding: '4px' }}>6</td>
+                  <td style={{ border: '1px solid #000', padding: '4px' }}>7</td>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredTxns.map((t, i) => (
+                  <tr key={t.id} style={{ border: '1px solid #000', height: '30px' }}>
+                    <td style={{ border: '1px solid #000', padding: '6px 4px' }}>{i + 1}</td>
+                    <td style={{ border: '1px solid #000', padding: '6px 4px' }}>{t.date}</td>
+                    <td style={{ border: '1px solid #000', padding: '6px 4px' }}>{t.ref}</td>
+                    <td style={{ border: '1px solid #000', padding: '6px 4px', textAlign: 'left' }}>
+                      {t.narration.split('—')[1]?.trim() || t.narration}
+                    </td>
+                    <td style={{ border: '1px solid #000', padding: '6px 4px', textAlign: 'right' }}>
+                      {fmt(t.credit > 0 ? t.credit : t.debit)}
+                    </td>
+                    <td style={{ border: '1px solid #000', padding: '6px 4px' }}>
+                      {t.credit > 0 ? 'Credit' : 'Debit'}
+                    </td>
+                    <td style={{ border: '1px solid #000', padding: '6px 4px', textAlign: 'right', fontWeight: 'bold' }}>
+                      {fmt(t.balance)}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {filteredTxns.map(t => (
-                    <tr key={t.id}>
-                      <td style={{ whiteSpace: 'nowrap' }}>{t.date}</td>
-                      <td>{t.narration}</td>
-                      <td style={{ fontWeight: 500 }}>{t.ref}</td>
-                      <td className="align-right">{t.credit > 0 ? <span className="credit-cell"><ArrowDownRight size={12} style={{ verticalAlign: 'middle' }} /> {fmt(t.credit)}</span> : '—'}</td>
-                      <td className="align-right">{t.debit > 0 ? <span className="debit-cell"><ArrowUpRight size={12} style={{ verticalAlign: 'middle' }} /> {fmt(t.debit)}</span> : '—'}</td>
-                      <td className="align-right balance-cell">{fmt(t.balance)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                ))}
+                {/* Empty rows to match the screenshot spacing */}
+                {[...Array(5)].map((_, i) => (
+                  <tr key={`empty-${i}`} style={{ border: '1px solid #000', height: '30px' }}>
+                    <td style={{ border: '1px solid #000' }}></td>
+                    <td style={{ border: '1px solid #000' }}></td>
+                    <td style={{ border: '1px solid #000' }}></td>
+                    <td style={{ border: '1px solid #000' }}></td>
+                    <td style={{ border: '1px solid #000' }}></td>
+                    <td style={{ border: '1px solid #000' }}></td>
+                    <td style={{ border: '1px solid #000' }}></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div style={{ marginTop: '20px', fontSize: '14px', lineHeight: '2.5' }}>
+              <div>Closing Balance ₹................ <span style={{ fontWeight: 'bold' }}>{fmt(closingBalance)}</span> on date................ <span style={{ fontWeight: 'bold' }}>{toDate}</span></div>
             </div>
 
-            <div className="dsp-passbook-footer">
-              <div className="dsp-closing-balance">
-                <span className="dsp-closing-label">Closing Balance</span>
-                <span className="dsp-closing-value">{fmt(closingBalance)}</span>
-              </div>
-              <div style={{ display: 'flex', gap: 'var(--space-6)' }}>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-tertiary)' }}>Total Credits</div>
-                  <div style={{ fontWeight: 600, color: 'var(--color-success)' }}>{fmt(totalCredit)}</div>
-                </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-tertiary)' }}>Total Debits</div>
-                  <div style={{ fontWeight: 600, color: 'var(--color-error)' }}>{fmt(totalDebit)}</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="dsp-generated-stamp">
-              Generated on {new Date().toLocaleDateString('en-IN')} at {new Date().toLocaleTimeString('en-IN')} by Admin-T01 (Deposit Administrator) &nbsp;|&nbsp; <Shield size={10} style={{ verticalAlign: 'middle' }} /> Audit Logged
+            <div style={{ marginTop: '40px', fontSize: '13px', fontStyle: 'italic', fontWeight: 'bold' }}>
+              This pass-book is generated by software hence doesn't require signature.
             </div>
           </div>
         </>
