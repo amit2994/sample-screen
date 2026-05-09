@@ -25,18 +25,20 @@ const MOCK_ACCOUNT_BUDGETS = [
   { id: 'M-2', head: '8443-00-106-0002', available: 2500000, accountId: 'PD-82011' },
   { id: 'M-3', head: '8443-00-111-0001', available: 12000000, accountId: 'PD-49320' }
 ];
-const ACCOUNT_DETAILS: Record<string, { treasury: string; purpose: string }> = {
-  'PD-82011': { treasury: 'District Treasury, Central', purpose: 'General Administration Fund' },
-  'PD-49320': { treasury: 'Sub-Treasury, Rural', purpose: 'Rural Development Schemes' }
+const ACCOUNT_DETAILS: Record<string, { treasury: string; purpose: string; type: string; name: string }> = {
+  'PD-82011': { treasury: 'District Treasury, Central', purpose: 'General Administration Fund', type: 'PD', name: 'Urban Administration' },
+  'PD-49320': { treasury: 'Sub-Treasury, Rural', purpose: 'Rural Development Schemes', type: 'PD', name: 'Rural Development' },
+  'CCD-10293': { treasury: 'District Treasury, Central', purpose: 'Court Case Settlement', type: 'CCD', name: 'Civil Suit Deposits' },
+  'CrCD-83921': { treasury: 'Sub-Treasury, Rural', purpose: 'Bail & Security', type: 'CrCD', name: 'Bail Bonds' },
 };
 
 export default function DepositFundTransferScreen() {
   const [step, setStep] = useState(1);
-  const [depositType] = useState('PD');
+  const [depositType, setDepositType] = useState('PD');
   const [selectedAccount, setSelectedAccount] = useState<string>('');
   const [amount, setAmount] = useState('');
   const [selectedBudget, setSelectedBudget] = useState<string>('');
-  const [isBudgetDropdownOpen, setIsBudgetDropdownOpen] = useState(false);
+
 
   // PD-CF specific states
   const [mappingRequested, setMappingRequested] = useState(false);
@@ -93,8 +95,11 @@ export default function DepositFundTransferScreen() {
                   setIsMapBudgetDropdownOpen(false);
                 }}>
                   <option value="">Select Account...</option>
-                  <option value="PD-82011">PD-82011 - Urban Administration</option>
-                  <option value="PD-49320">PD-49320 - Rural Development</option>
+                  {Object.entries(ACCOUNT_DETAILS)
+                    .filter(([_, details]) => details.type === depositType)
+                    .map(([id, details]) => (
+                      <option key={id} value={id}>{id} - {details.name}</option>
+                  ))}
                 </select>
               </div>
               <div className="form-group"></div>
@@ -253,7 +258,16 @@ export default function DepositFundTransferScreen() {
             <div className="grid-2-col dft-form-row">
               <div className="form-group">
                 <label className="form-label">Deposit Type <span className="required">*</span></label>
-                <input type="text" className="form-input" value="Personal Deposit (PD)" disabled />
+                <select className="form-input" value={depositType} onChange={e => {
+                  setDepositType(e.target.value);
+                  setSelectedAccount('');
+                  setSelectedBudget('');
+                  setMappingRequested(false);
+                }}>
+                  <option value="PD">Personal Deposit (PD)</option>
+                  <option value="CCD">Civil Court Deposit (CCD)</option>
+                  <option value="CrCD">Criminal Court Deposit (CrCD)</option>
+                </select>
               </div>
               <div className="form-group">
                 <label className="form-label">Deposit Account <span className="required">*</span></label>
@@ -263,8 +277,11 @@ export default function DepositFundTransferScreen() {
                   setMappingRequested(false);
                 }}>
                   <option value="">Select Account...</option>
-                  <option value="PD-82011">PD-82011 - Urban Administration</option>
-                  <option value="PD-49320">PD-49320 - Rural Development</option>
+                  {Object.entries(ACCOUNT_DETAILS)
+                    .filter(([_, details]) => details.type === depositType)
+                    .map(([id, details]) => (
+                      <option key={id} value={id}>{id} - {details.name}</option>
+                  ))}
                 </select>
                 <span className="form-helper" style={{ color: 'var(--color-success)' }}>Account is Active & CF Eligible</span>
               </div>
@@ -297,24 +314,45 @@ export default function DepositFundTransferScreen() {
               <div className="dft-form-row" style={{ marginTop: 'var(--space-6)' }}>
                 {selectedAccount && (
                   <div style={{ marginBottom: 'var(--space-6)' }}>
-                    <label className="form-label">Mapped Budget Lines for Selected Account</label>
+                    <label className="form-label">Mapped Budget Lines for Selected Account <span className="required">*</span></label>
                     <div className="dft-budget-table-wrapper">
                       <table className="dft-budget-table">
                         <thead>
                           <tr>
+                            <th>Select</th>
                             <th>Budget Head</th>
                             <th>Available Budget</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {filteredBudgets.length > 0 ? filteredBudgets.map(bl => (
-                            <tr key={bl.id}>
-                              <td style={{ fontWeight: 600 }}>{bl.head}</td>
-                              <td>₹ {bl.available.toLocaleString('en-IN')}</td>
-                            </tr>
-                          )) : (
+                          {filteredBudgets.length > 0 ? filteredBudgets.map(bl => {
+                            const mockBudget = MOCK_BUDGETS.find(b => b.head === bl.head);
+                            const mockBudgetId = mockBudget?.id || '';
+                            return (
+                              <tr 
+                                key={bl.id}
+                                className={selectedBudget === mockBudgetId ? 'selected' : ''}
+                                onClick={() => {
+                                  setSelectedBudget(mockBudgetId);
+                                  setMappingRequested(false);
+                                }}
+                                style={{ cursor: 'pointer' }}
+                              >
+                                <td>
+                                  <input 
+                                    type="radio" 
+                                    className="dft-budget-radio" 
+                                    checked={selectedBudget === mockBudgetId} 
+                                    readOnly 
+                                  />
+                                </td>
+                                <td style={{ fontWeight: 600 }}>{bl.head}</td>
+                                <td>₹ {bl.available.toLocaleString('en-IN')}</td>
+                              </tr>
+                            );
+                          }) : (
                             <tr>
-                              <td colSpan={2} style={{ textAlign: 'center', padding: 'var(--space-4)', color: 'var(--color-text-tertiary)' }}>
+                              <td colSpan={3} style={{ textAlign: 'center', padding: 'var(--space-4)', color: 'var(--color-text-tertiary)' }}>
                                 No budget lines found for this account.
                               </td>
                             </tr>
@@ -322,73 +360,21 @@ export default function DepositFundTransferScreen() {
                         </tbody>
                       </table>
                     </div>
-                  </div>
-                )}
-
-                <label className="form-label">Select Originating Budget Line <span className="required">*</span></label>
-                <div
-                  className="form-input"
-                  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', backgroundColor: 'var(--color-background)' }}
-                  onClick={() => setIsBudgetDropdownOpen(!isBudgetDropdownOpen)}
-                >
-                  {!selectedBudget ? (
-                    <span>Select Budget Line...</span>
-                  ) : (
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 'var(--space-4)', alignItems: 'center', flex: 1 }}>
-                      {(() => {
-                        const bl = MOCK_BUDGETS.find(b => b.id === selectedBudget)!;
-                        return (
-                          <>
-                            <span style={{ fontWeight: 600 }}>{bl.head}</span>
-                            <span>₹ {bl.available.toLocaleString('en-IN')}</span>
-                            <span>
-                              <span className={`dft-status-badge ${bl.status}`} style={{ margin: 0 }}>
-                                {bl.status === 'approved' ? 'FD Approved' : 'Not Mapped'}
-                              </span>
-                            </span>
-                          </>
-                        );
-                      })()}
+                    
+                    <div style={{ marginTop: 'var(--space-4)', display: 'flex', justifyContent: 'flex-end' }}>
+                      <button 
+                        className="btn btn-primary"
+                        style={{ fontSize: '0.85rem', padding: 'var(--space-2) var(--space-4)' }}
+                        onClick={() => {
+                          setMapFormAccount(selectedAccount);
+                          setMapFormBudgets([]);
+                          setShowMappingForm(true);
+                        }}
+                      >
+                        Initiate Request to Map New Budget Line
+                      </button>
                     </div>
-                  )}
-                  <ChevronDown size={16} style={{ marginLeft: 'var(--space-4)' }} />
-                </div>
 
-                {isBudgetDropdownOpen && (
-                  <div className="dft-budget-table-wrapper" style={{ marginTop: 'var(--space-2)' }}>
-                    <table className="dft-budget-table">
-                      <thead>
-                        <tr>
-                          <th>Select</th>
-                          <th>Budget Head</th>
-                          <th>Available Budget</th>
-                          <th>Mapping Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {MOCK_BUDGETS.map(bl => (
-                          <tr key={bl.id}
-                            className={selectedBudget === bl.id ? 'selected' : ''}
-                            onClick={() => {
-                              setSelectedBudget(bl.id);
-                              setMappingRequested(false);
-                              setIsBudgetDropdownOpen(false);
-                            }}>
-                            <td>
-                              <input type="radio" className="dft-budget-radio"
-                                checked={selectedBudget === bl.id} readOnly />
-                            </td>
-                            <td style={{ fontWeight: 600 }}>{bl.head}</td>
-                            <td>₹ {bl.available.toLocaleString('en-IN')}</td>
-                            <td>
-                              <span className={`dft-status-badge ${bl.status}`}>
-                                {bl.status === 'approved' ? 'FD Approved' : 'Not Mapped'}
-                              </span>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
                   </div>
                 )}
               </div>

@@ -7,6 +7,12 @@ import DepositAccountNumberScreen from './screens/sprint2/DepositAccountNumberSc
 import DepositAdminRuleConfigScreen from './screens/sprint2/DepositAdminRuleConfigScreen';
 import DepositFundTransferScreen from './screens/sprint2/DepositFundTransferScreen';
 import SubPDCreationScreen from './screens/sprint2/SubPDCreationScreen';
+import DepositFundTransferChallanScreen from './screens/sprint2/DepositFundTransferChallanScreen';
+import SubPDBillCreationScreen from './screens/sprint2/SubPDBillCreationScreen';
+import PaymentAdviceGenerationScreen from './screens/sprint2/PaymentAdviceGenerationScreen';
+import PlusMinusMemoScreen from './screens/sprint3/PlusMinusMemoScreen';
+import DepositStatementScreen from './screens/sprint3/DepositStatementScreen';
+import DepositLapseScreen from './screens/sprint3/DepositLapseScreen';
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +28,13 @@ export const router = createBrowserRouter([
       { path: 'sprint/2/story/2', element: <DepositAdminRuleConfigScreen /> },
       { path: 'sprint/2/story/3', element: <DepositFundTransferScreen /> },
       { path: 'sprint/2/story/4', element: <SubPDCreationScreen /> },
+      { path: 'sprint/2/story/5', element: <DepositFundTransferChallanScreen /> },
+      { path: 'sprint/2/story/6', element: <SubPDBillCreationScreen /> },
+      { path: 'sprint/2/story/7', element: <PaymentAdviceGenerationScreen /> },
+      // Sprint 3
+      { path: 'sprint/3/story/1', element: <PlusMinusMemoScreen /> },
+      { path: 'sprint/3/story/2', element: <DepositStatementScreen /> },
+      { path: 'sprint/3/story/3', element: <DepositLapseScreen /> },
       // Catch-all
       {
         path: '*',
