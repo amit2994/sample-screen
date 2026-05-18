@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FileText, Search, Shield, CheckCircle2, AlertCircle, Clock, XCircle, Calendar, Building, User, Download, Eye, Filter, BarChart3, ShieldAlert, Check, Loader2, ArrowRight } from 'lucide-react';
+import { FileText, Search, Shield, CheckCircle2, AlertCircle, Clock, XCircle, Calendar, Building, User, Download, ShieldAlert, Check, Loader2, ArrowRight } from 'lucide-react';
 import './DepositLapseScreen.css';
 
 const LAPSE_ACCOUNTS = [
@@ -33,7 +33,7 @@ type Tab = 'fdreview' | 'exception' | 'audit';
 
 export default function DepositLapseScreen() {
   const [tab, setTab] = useState<Tab>('fdreview');
-  const [fy, setFy] = useState('2025-26');
+  const [fy] = useState('2025-26');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [fdDecision, setFdDecision] = useState<'close' | 'continue' | ''>('');
 
@@ -43,7 +43,7 @@ export default function DepositLapseScreen() {
   const [processComplete, setProcessComplete] = useState(false);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: ReturnType<typeof setTimeout>;
     if (showProcessModal && !processComplete) {
       if (processStep < CLOSURE_STEPS.length) {
         timer = setTimeout(() => {
@@ -80,10 +80,6 @@ export default function DepositLapseScreen() {
     { id: 'audit', label: 'Audit Trail', icon: Shield },
   ];
 
-  const statusLabel = (s: string) => {
-    const map: Record<string, string> = { review: 'FD Review', eligible: 'Auto-Lapse', exception: 'Exception', excluded: 'Excluded', lapsed: 'Closed', continued: 'Continued' };
-    return map[s] || s;
-  };
 
   return (
     <div className="dlm-screen animate-fade-in">

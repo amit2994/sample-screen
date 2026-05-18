@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   ChevronRight, Check, AlertCircle, ChevronUp, ChevronDown,
-  UploadCloud, Eye, Trash2, RotateCcw, Calendar, Upload, FileText, File
+  UploadCloud, Eye, Trash2, RotateCcw, Calendar, Upload, File
 } from 'lucide-react';
 import './DepositAdminRuleConfigScreen.css';
 
