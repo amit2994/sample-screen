@@ -99,7 +99,7 @@ export default function DepositFundTransferScreen() {
                     .filter(([_, details]) => details.type === depositType)
                     .map(([id, details]) => (
                       <option key={id} value={id}>{id} - {details.name}</option>
-                  ))}
+                    ))}
                 </select>
               </div>
               <div className="form-group"></div>
@@ -121,7 +121,7 @@ export default function DepositFundTransferScreen() {
                 <div className="grid-2-col dft-form-row" style={{ marginTop: 'var(--space-6)', paddingBottom: isMapBudgetDropdownOpen ? '220px' : '0', transition: 'padding-bottom 0.2s ease' }}>
                   <div className="form-group" style={{ position: 'relative' }}>
                     <label className="form-label">Select Budget Line(s) <span className="required">*</span></label>
-                    <div 
+                    <div
                       className={`form-input ${!mapFormAccount ? 'disabled' : ''}`}
                       style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: mapFormAccount ? 'pointer' : 'not-allowed', backgroundColor: mapFormAccount ? 'var(--color-background)' : 'var(--color-background-alt)' }}
                       onClick={() => {
@@ -129,13 +129,13 @@ export default function DepositFundTransferScreen() {
                       }}
                     >
                       <span>
-                        {mapFormBudgets.length === 0 
-                          ? 'Select Unmapped Budget Line...' 
+                        {mapFormBudgets.length === 0
+                          ? 'Select Unmapped Budget Line...'
                           : `${mapFormBudgets.length} Budget Line(s) Selected`}
                       </span>
                       <ChevronDown size={16} />
                     </div>
-                    
+
                     {isMapBudgetDropdownOpen && mapFormAccount && (
                       <div className="custom-dropdown-panel" style={{
                         position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 9999,
@@ -148,8 +148,8 @@ export default function DepositFundTransferScreen() {
                             display: 'flex', alignItems: 'center', gap: 'var(--space-3)',
                             padding: 'var(--space-3)', cursor: 'pointer', borderBottom: '1px solid var(--color-border-light)'
                           }}>
-                            <input 
-                              type="checkbox" 
+                            <input
+                              type="checkbox"
                               checked={mapFormBudgets.includes(b.id)}
                               onChange={(e) => {
                                 if (e.target.checked) {
@@ -185,8 +185,8 @@ export default function DepositFundTransferScreen() {
             <button className="btn btn-secondary" onClick={() => setShowMappingForm(false)}>Back to Transfer</button>
           </div>
           <div className="dft-action-bar-right">
-            <button 
-              className="btn btn-primary" 
+            <button
+              className="btn btn-primary"
               disabled={!mapFormAccount || mapFormBudgets.length === 0}
               onClick={() => {
                 setSelectedAccount(mapFormAccount);
@@ -281,7 +281,7 @@ export default function DepositFundTransferScreen() {
                     .filter(([_, details]) => details.type === depositType)
                     .map(([id, details]) => (
                       <option key={id} value={id}>{id} - {details.name}</option>
-                  ))}
+                    ))}
                 </select>
                 <span className="form-helper" style={{ color: 'var(--color-success)' }}>Account is Active & CF Eligible</span>
               </div>
@@ -329,7 +329,7 @@ export default function DepositFundTransferScreen() {
                             const mockBudget = MOCK_BUDGETS.find(b => b.head === bl.head);
                             const mockBudgetId = mockBudget?.id || '';
                             return (
-                              <tr 
+                              <tr
                                 key={bl.id}
                                 className={selectedBudget === mockBudgetId ? 'selected' : ''}
                                 onClick={() => {
@@ -339,11 +339,11 @@ export default function DepositFundTransferScreen() {
                                 style={{ cursor: 'pointer' }}
                               >
                                 <td>
-                                  <input 
-                                    type="radio" 
-                                    className="dft-budget-radio" 
-                                    checked={selectedBudget === mockBudgetId} 
-                                    readOnly 
+                                  <input
+                                    type="radio"
+                                    className="dft-budget-radio"
+                                    checked={selectedBudget === mockBudgetId}
+                                    readOnly
                                   />
                                 </td>
                                 <td style={{ fontWeight: 600 }}>{bl.head}</td>
@@ -360,9 +360,9 @@ export default function DepositFundTransferScreen() {
                         </tbody>
                       </table>
                     </div>
-                    
+
                     <div style={{ marginTop: 'var(--space-4)', display: 'flex', justifyContent: 'flex-end' }}>
-                      <button 
+                      <button
                         className="btn btn-primary"
                         style={{ fontSize: '0.85rem', padding: 'var(--space-2) var(--space-4)' }}
                         onClick={() => {
