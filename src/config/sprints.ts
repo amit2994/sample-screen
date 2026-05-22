@@ -40,6 +40,7 @@ export const sprints: Sprint[] = [
       { id: 'story-10', title: 'Plus–Minus Memo & Certification', path: '/sprint/3/story/1', screen_id: 'sprint3-story1-plus-minus-memo' },
       { id: 'story-11', title: 'Deposit Statement / Passbook', path: '/sprint/3/story/2', screen_id: 'sprint3-story2-deposit-statement' },
       { id: 'story-12', title: 'Deposit Lapse Management', path: '/sprint/3/story/3', screen_id: 'sprint3-story3-deposit-lapse' },
+      { id: 'story-13', title: 'Treasury Officer (Creator) - PD Account Closure', path: '/sprint/3/story/4', screen_id: 'sprint3-story4-treasury-creator-pd-account-closure' },
     ],
   },
 ];

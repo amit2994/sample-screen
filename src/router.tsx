@@ -13,6 +13,7 @@ import PaymentAdviceGenerationScreen from './screens/sprint2/PaymentAdviceGenera
 import PlusMinusMemoScreen from './screens/sprint3/PlusMinusMemoScreen';
 import DepositStatementScreen from './screens/sprint3/DepositStatementScreen';
 import DepositLapseScreen from './screens/sprint3/DepositLapseScreen';
+import TreasuryCreatorPDAcclosureScreen from './screens/sprint3/TreasuryCreatorPDAcclosureScreen';
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,7 @@ export const router = createBrowserRouter([
       { path: 'sprint/3/story/1', element: <PlusMinusMemoScreen /> },
       { path: 'sprint/3/story/2', element: <DepositStatementScreen /> },
       { path: 'sprint/3/story/3', element: <DepositLapseScreen /> },
+      { path: 'sprint/3/story/4', element: <TreasuryCreatorPDAcclosureScreen /> },
       // Catch-all
       {
         path: '*',
