@@ -5,7 +5,6 @@ import {
   AlertCircle, 
   CheckCircle2, 
   Clock, 
-  ArrowRight, 
   ShieldAlert, 
   Send, 
   Check, 
@@ -87,7 +86,6 @@ export default function TreasuryCreatorPDAcclosureScreen() {
 
   // Bill creation form state
   const [customRemarks, setCustomRemarks] = useState('');
-  const [isSubmittingBill, setIsSubmittingBill] = useState(false);
 
   // Selected claim object helper
   const selectedClaim = claims.find(c => c.id === selectedClaimId);
