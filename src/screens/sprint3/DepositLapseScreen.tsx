@@ -205,7 +205,7 @@ export default function DepositLapseScreen() {
                         </tr>
                         <tr>
                           <td style={{ fontWeight: 500, fontFamily: 'monospace', fontSize: '13px' }}>2215-02-800-0002</td>
-                          <td className="align-right">{fmt(selected.balance - Math.floor(selected.balance * 0.6))}</td>
+                          <td className="align-right">{selected.balance - Math.floor(selected.balance * 0.6)}</td>
                           <td><input type="text" className="form-input" placeholder="Leave blank for 0070" style={{ height: '30px', fontSize: '13px' }} /></td>
                         </tr>
                       </tbody>
