@@ -44,4 +44,16 @@ export const sprints: Sprint[] = [
       { id: 'story-13', title: 'Treasury Officer (Creator) - PD Account Closure', path: '/sprint/3/story/4', screen_id: 'sprint3-story4-treasury-creator-pd-account-closure' },
     ],
   },
+  {
+    id: 'sprint-4',
+    name: 'Sprint 4',
+    stories: [
+      {
+        id: 'story-14',
+        title: 'Revenue Deposit Lapse Management',
+        path: '/sprint/4/story/1',
+        screen_id: 'sprint4-story1-revenue-deposit-lapse',
+      },
+    ],
+  },
 ];

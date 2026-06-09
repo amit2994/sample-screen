@@ -15,6 +15,8 @@ import DepositStatementScreen from './screens/sprint3/DepositStatementScreen';
 import DepositLapseScreen from './screens/sprint3/DepositLapseScreen';
 import CourtDepositLapseScreen from './screens/sprint3/CourtDepositLapseScreen';
 import TreasuryCreatorPDAcclosureScreen from './screens/sprint3/TreasuryCreatorPDAcclosureScreen';
+import RevenueDepositLapseScreen from './screens/sprint4/RevenueDepositLapseScreen';
+
 
 export const router = createBrowserRouter([
   {
@@ -39,7 +41,10 @@ export const router = createBrowserRouter([
       { path: 'sprint/3/story/3', element: <CourtDepositLapseScreen /> },
       { path: 'sprint/3/story/3-pd', element: <DepositLapseScreen /> },
       { path: 'sprint/3/story/4', element: <TreasuryCreatorPDAcclosureScreen /> },
+      // Sprint 4
+      { path: 'sprint/4/story/1', element: <RevenueDepositLapseScreen /> },
       // Catch-all
+
       {
         path: '*',
         element: (

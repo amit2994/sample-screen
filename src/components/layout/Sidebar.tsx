@@ -17,7 +17,7 @@ import { sprints } from '../../config/sprints';
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
-  const [expandedSprints, setExpandedSprints] = useState<string[]>(['sprint-1', 'sprint-2', 'sprint-3']);
+  const [expandedSprints, setExpandedSprints] = useState<string[]>(['sprint-1', 'sprint-2', 'sprint-3', 'sprint-4']);
   const location = useLocation();
 
   const toggleSprint = (sprintId: string) => {
