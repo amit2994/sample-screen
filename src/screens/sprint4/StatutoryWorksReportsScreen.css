@@ -1105,3 +1105,29 @@
 .code-font {
   font-family: 'Consolas', 'Courier New', Courier, monospace;
 }
+
+/* --- Responsive Filter Form Grid Styles --- */
+.sidebar-filters-box .sd-form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2); /* Compact gap to maximize input room */
+}
+
+@media (max-width: 480px) {
+  /* Stack only on small mobile viewports */
+  .sidebar-filters-box .sd-form-grid-2 {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+}
+
+.sidebar-filters-box .form-input {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  font-size: var(--font-size-xs) !important; /* Compact font to prevent text clipping */
+}
+
+.sidebar-filters-box input[type="date"].form-input {
+  padding: var(--space-2) var(--space-1) !important; /* Reduced horizontal padding for date picker content */
+  font-size: 11px !important;
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   FileText,
   Filter,
@@ -140,17 +140,24 @@ export default function StatutoryWorksReportsScreen() {
   const [auditSearch, setAuditSearch] = useState('');
   const [toastMessage, setToastMessage] = useState<{ type: 'success' | 'warning' | 'error'; text: string } | null>(null);
   
-  // Adjust filtered DDOs list based on selected DDO type
-  const filteredDDOs = DDO_LIST.filter(d => d.type === ddoStatus);
+  const filteredDDOs = useMemo(() => {
+    return DDO_LIST.filter(d => d.type === ddoStatus);
+  }, [ddoStatus]);
+
+  const selectedDdoDetails = useMemo(() => {
+    return DDO_LIST.find(d => d.code === selectedDdo) || null;
+  }, [selectedDdo]);
 
   // Sync selected DDO when DDO Status changes for AG/BCO
   useEffect(() => {
-    if (filteredDDOs.length > 0) {
-      setSelectedDdo(filteredDDOs[0].code);
-    } else {
-      setSelectedDdo('');
+    if (userRole === 'BCO' || userRole === 'AG') {
+      if (filteredDDOs.length > 0) {
+        setSelectedDdo(filteredDDOs[0].code);
+      } else {
+        setSelectedDdo('');
+      }
     }
-  }, [ddoStatus]);
+  }, [ddoStatus, userRole, filteredDDOs]);
 
   // Adjust filters when user changes role
   useEffect(() => {
@@ -254,6 +261,17 @@ export default function StatutoryWorksReportsScreen() {
       ].filter(r => selectedWorkId === 'ALL' || r.workId === selectedWorkId);
       
       grandTotals = { balance: reportDataRows.reduce((sum, r) => sum + r.balance, 0) };
+    } else if (selectedTemplate.code === 'Form 61') {
+      const mockData = [
+        { ref: 'VCH-2026-6101', origHead: '8443-00-111-0040', corrHead: '8443-00-108-0000', amount: 150000, reason: 'Correction of wrong head posting' },
+        { ref: 'VCH-2026-6102', origHead: '8443-00-108-0000', corrHead: '8782-00-102-0000', amount: 95000, reason: 'Transfer debit adjustment' },
+        { ref: 'VCH-2026-6103', origHead: '8782-00-102-0000', corrHead: '8443-00-111-0040', amount: 280000, reason: 'Remittance head rectification' },
+        { ref: 'VCH-2026-6104', origHead: '8443-00-111-0040', corrHead: '8782-00-102-0000', amount: 62000, reason: 'By-transfer ledger rectification' }
+      ];
+      reportDataRows = mockData.filter(
+        r => headOfAccount === 'ALL' || r.origHead === headOfAccount || r.corrHead === headOfAccount
+      );
+      grandTotals = { amount: reportDataRows.reduce((sum, r) => sum + r.amount, 0) };
     } else {
       reportDataRows = [
         { col1: 'Account Group A', col2: 'Rs. 2,400,000', col3: 'Rs. 400,000', col4: 'Rs. 2,000,000', col5: 'Active' },
@@ -513,73 +531,100 @@ export default function StatutoryWorksReportsScreen() {
                 </span>
                 
                 <div className="filter-form-gap">
-                  {/* DDO selection options: visible and mandatory for BCO/AG users only */}
-                  {(userRole === 'BCO' || userRole === 'AG') ? (
-                    <div className="form-group animate-fade-in">
-                      <label className="form-label">DDO State Status <span className="required">*</span></label>
-                      <div className="ddo-status-toggle">
-                        <button
-                          className={`ddo-status-btn ${ddoStatus === 'Active' ? 'active' : ''}`}
-                          onClick={() => setDdoStatus('Active')}
-                        >
-                          Active
-                        </button>
-                        <button
-                          className={`ddo-status-btn ${ddoStatus === 'Closed' ? 'active' : ''}`}
-                          onClick={() => setDdoStatus('Closed')}
-                        >
-                          Closed
-                        </button>
-                        <button
-                          className={`ddo-status-btn ${ddoStatus === 'Merged' ? 'active' : ''}`}
-                          onClick={() => setDdoStatus('Merged')}
-                        >
-                          Merged
-                        </button>
+
+                  {(userRole === 'BCO' || userRole === 'AG') && (
+                    <>
+                      <div className="form-group animate-fade-in">
+                        <label className="form-label">DDO State Status</label>
+                        <div className="ddo-status-toggle">
+                          <button
+                            type="button"
+                            className={`ddo-status-btn ${ddoStatus === 'Active' ? 'active' : ''}`}
+                            onClick={() => setDdoStatus('Active')}
+                          >
+                            Active
+                          </button>
+                          <button
+                            type="button"
+                            className={`ddo-status-btn ${ddoStatus === 'Closed' ? 'active' : ''}`}
+                            onClick={() => setDdoStatus('Closed')}
+                          >
+                            Closed
+                          </button>
+                          <button
+                            type="button"
+                            className={`ddo-status-btn ${ddoStatus === 'Merged' ? 'active' : ''}`}
+                            onClick={() => setDdoStatus('Merged')}
+                          >
+                            Merged
+                          </button>
+                        </div>
                       </div>
-                      
-                      <label className="form-label" style={{ marginTop: '8px' }}>Select DDO Office <span className="required">*</span></label>
-                      <select
-                        className="form-input"
-                        value={selectedDdo}
-                        onChange={(e) => setSelectedDdo(e.target.value)}
-                      >
-                        {filteredDDOs.map(d => (
-                          <option key={d.code} value={d.code}>{d.code} - {d.office}</option>
-                        ))}
-                        {filteredDDOs.length === 0 && <option value="">No DDOs available</option>}
-                      </select>
-                    </div>
-                  ) : (
-                    <div className="form-group animate-fade-in">
-                      <label className="form-label">Current DDO Scope</label>
-                      <input
-                        type="text"
-                        className="form-input"
-                        value="DDO-RES-INDORE-01 - Indore Rural Eng. (LOCKED)"
-                        disabled
-                        style={{ background: 'var(--color-bg-secondary)', fontWeight: 600 }}
-                      />
+
+                      <div className="form-group animate-fade-in">
+                        <label className="form-label">Select DDO Office <span className="required">*</span></label>
+                        <select
+                          className="form-input"
+                          value={selectedDdo}
+                          onChange={(e) => setSelectedDdo(e.target.value)}
+                          required
+                        >
+                          <option value="">-- Select DDO Office --</option>
+                          {filteredDDOs.map(ddo => (
+                            <option key={ddo.code} value={ddo.code}>
+                              {ddo.office} ({ddo.code})
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </>
+                  )}
+
+                  {selectedDdo && selectedDdoDetails && (
+                    <div className="w2pd-fetched-group animate-fade-in" style={{
+                      background: 'var(--color-bg)',
+                      border: '1px solid var(--color-border-light)',
+                      borderRadius: 'var(--radius-md)',
+                      padding: 'var(--space-3) var(--space-4)',
+                      display: 'grid',
+                      gridTemplateColumns: '1fr',
+                      gap: 'var(--space-2)',
+                      marginBottom: 'var(--space-3)'
+                    }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                        <span style={{ fontSize: '10px', textTransform: 'uppercase', color: 'var(--color-text-tertiary)', fontWeight: 700 }}>
+                          {userRole === 'DDO' ? 'DDO Code (Auto-Fetched from User Login)' : 'DDO Code (Auto-Fetched)'}
+                        </span>
+                        <span style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)', fontWeight: 600, fontFamily: 'monospace' }}>{selectedDdoDetails.code}</span>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                        <span style={{ fontSize: '10px', textTransform: 'uppercase', color: 'var(--color-text-tertiary)', fontWeight: 700 }}>
+                          {userRole === 'DDO' ? 'DDO Name (Auto-Fetched from User Login)' : 'DDO Name (Auto-Fetched)'}
+                        </span>
+                        <span style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)', fontWeight: 600 }}>{selectedDdoDetails.name}</span>
+                      </div>
                     </div>
                   )}
 
                   <div className="form-group">
-                    <label className="form-label">Report Category <span className="required">*</span></label>
-                    <div className="reports-list-container">
+                    <label className="form-label">Report Type <span className="required">*</span></label>
+                    <select
+                      className="form-input"
+                      value={selectedTemplate.code}
+                      onChange={(e) => {
+                        const template = REPORT_TEMPLATES.find(t => t.code === e.target.value);
+                        if (template) {
+                          setSelectedTemplate(template);
+                        }
+                      }}
+                      required
+                    >
                       {REPORT_TEMPLATES.map(t => (
-                        <div
-                          key={t.code}
-                          className={`report-item-option ${selectedTemplate.code === t.code ? 'selected' : ''}`}
-                          onClick={() => setSelectedTemplate(t)}
-                        >
-                          <FileText size={16} style={{ color: 'var(--color-primary)', flexShrink: 0 }} />
-                          <div className="report-item-info">
-                            <span className="report-item-code">{t.code}</span>
-                            <span className="report-item-name">{t.title}</span>
-                          </div>
-                        </div>
+                        <option key={t.code} value={t.code}>
+                          {t.code} - {t.title}
+                        </option>
                       ))}
-                    </div>
+                    </select>
                   </div>
 
                   {/* Date Scope selection */}
@@ -879,7 +924,37 @@ export default function StatutoryWorksReportsScreen() {
                           </table>
                         )}
 
-                        {!['Form 80', 'Form 64', 'Form 65', 'Form 46A', 'CTR', 'Work ID Balances'].includes(generatedReport.templateCode) && (
+                        {generatedReport.templateCode === 'Form 61' && (
+                          <table className="document-table animate-scale-in">
+                            <thead>
+                              <tr>
+                                <th>Voucher Reference</th>
+                                <th>Original Head (HoA)</th>
+                                <th>Corrected Head (HoA)</th>
+                                <th style={{ textAlign: 'right' }}>Adjusted Amount (Rs.)</th>
+                                <th>Reason / Remarks</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {generatedReport.rows.map((row: any, i: number) => (
+                                <tr key={i}>
+                                  <td className="code-font">{row.ref}</td>
+                                  <td className="code-font">{row.origHead}</td>
+                                  <td className="code-font">{row.corrHead}</td>
+                                  <td style={{ textAlign: 'right' }}>{row.amount.toLocaleString('en-IN')}</td>
+                                  <td>{row.reason}</td>
+                                </tr>
+                              ))}
+                              <tr className="table-total">
+                                <td colSpan={3}>TOTAL BY-TRANSFER ADJUSTMENTS</td>
+                                <td style={{ textAlign: 'right' }} className="code-font">{generatedReport.totals.amount.toLocaleString('en-IN')}</td>
+                                <td>Reconciled</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        )}
+
+                        {!['Form 80', 'Form 64', 'Form 65', 'Form 46A', 'CTR', 'Work ID Balances', 'Form 61'].includes(generatedReport.templateCode) && (
                           <table className="document-table">
                             <thead>
                               <tr>

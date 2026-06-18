@@ -16,6 +16,11 @@ import {
 import './WorksToPDTransferScreen.css';
 
 // --- Types & Interfaces ---
+interface WorkHoaItem {
+  code: string;
+  balance: number;
+}
+
 interface WorkIdItem {
   id: string;
   type: 'budgeted' | 'non-budgeted';
@@ -24,8 +29,8 @@ interface WorkIdItem {
   bcoName?: string;
   ddoCode: string;
   ddoName: string;
-  hoa: string;
-  balance: number;
+  hoas: WorkHoaItem[];
+  treasury: string;
 }
 
 interface PDAccountItem {
@@ -73,8 +78,11 @@ const INITIAL_WORKS: WorkIdItem[] = [
     bcoName: 'Public Works Department (HQ)',
     ddoCode: 'DDO-BPL-02',
     ddoName: 'Bhopal Road & Bridges Division',
-    hoa: '8443-00-108-0000', // Public Works Deposits
-    balance: 2500000
+    hoas: [
+      { code: '8443-00-108-0000', balance: 2500000 },
+      { code: '8443-00-111-0040', balance: 1200000 }
+    ],
+    treasury: 'Bhopal Treasury (T-101)'
   },
   {
     id: 'WRK-BUD-2015',
@@ -84,8 +92,11 @@ const INITIAL_WORKS: WorkIdItem[] = [
     bcoName: 'Department of School Education',
     ddoCode: 'DDO-IND-01',
     ddoName: 'Indore RES Division',
-    hoa: '8443-00-111-0040', // Rural Engineering Services Deposits
-    balance: 1450000
+    hoas: [
+      { code: '8443-00-111-0040', balance: 1450000 },
+      { code: '8443-00-108-0000', balance: 850000 }
+    ],
+    treasury: 'Indore Treasury (T-102)'
   },
   {
     id: 'WRK-NBD-5091',
@@ -93,8 +104,10 @@ const INITIAL_WORKS: WorkIdItem[] = [
     projectName: 'Maintenance and Rehabilitation of Gwalior Canal System',
     ddoCode: 'DDO-GWL-03',
     ddoName: 'Gwalior Water Resources Division',
-    hoa: '8443-00-108-0000', // Public Works Deposits
-    balance: 980000
+    hoas: [
+      { code: '8443-00-108-0000', balance: 980000 }
+    ],
+    treasury: 'Gwalior Treasury (T-103)'
   },
   {
     id: 'WRK-NBD-7014',
@@ -102,8 +115,10 @@ const INITIAL_WORKS: WorkIdItem[] = [
     projectName: 'Afforestation and Soil Conservation Fencing in Jabalpur Division',
     ddoCode: 'DDO-JBL-05',
     ddoName: 'Jabalpur Forest Division Office',
-    hoa: '8782-00-102-0000', // Forest Remittances
-    balance: 620000
+    hoas: [
+      { code: '8782-00-102-0000', balance: 620000 }
+    ],
+    treasury: 'Jabalpur Treasury (T-104)'
   }
 ];
 
@@ -196,11 +211,6 @@ export default function WorksToPDTransferScreen() {
   };
 
   // --- Derived Calculations ---
-  const filteredWorks = useMemo(() => {
-    if (!workIdType) return [];
-    return works.filter(w => w.type === workIdType);
-  }, [workIdType, works]);
-
   const selectedWork = useMemo(() => {
     return works.find(w => w.id === selectedWorkId) || null;
   }, [selectedWorkId, works]);
@@ -217,25 +227,25 @@ export default function WorksToPDTransferScreen() {
 
   // Check if HoA matches
   const hoaMismatch = useMemo(() => {
-    if (accountType !== 'PD' || !selectedWork || !selectedPdAcc) return false;
-    // Mismatch if the selected PD account doesn't include the source work's HoA
-    return !selectedPdAcc.allowedHoas.includes(selectedWork.hoa);
-  }, [accountType, selectedWork, selectedPdAcc]);
+    if (accountType !== 'PD' || !selectedWork || !selectedPdAcc || !selectedHoa) return false;
+    // Mismatch if the selected PD account doesn't include the selected HoA
+    return !selectedPdAcc.allowedHoas.includes(selectedHoa);
+  }, [accountType, selectedWork, selectedPdAcc, selectedHoa]);
 
   // Check if a linkage request is already pending for this mismatch
   const existingPendingRequest = useMemo(() => {
-    if (!selectedWork || !selectedPdAcc) return null;
+    if (!selectedWork || !selectedPdAcc || !selectedHoa) return null;
     return linkageRequests.find(
       req => req.workId === selectedWork.id &&
         req.pdAccountId === selectedPdAcc.id &&
-        req.requestedHoa === selectedWork.hoa &&
+        req.requestedHoa === selectedHoa &&
         req.status === 'Pending'
     ) || null;
-  }, [selectedWork, selectedPdAcc, linkageRequests]);
+  }, [selectedWork, selectedPdAcc, selectedHoa, linkageRequests]);
 
   // Total balance summary
   const totalRemainingWorksBalance = useMemo(() => {
-    return works.reduce((sum, w) => sum + w.balance, 0);
+    return works.reduce((sum, w) => sum + w.hoas.reduce((hSum, h) => hSum + h.balance, 0), 0);
   }, [works]);
 
   const totalTransferred = useMemo(() => {
@@ -246,7 +256,7 @@ export default function WorksToPDTransferScreen() {
 
   // Request Linkage
   const handleRequestLinkage = () => {
-    if (!selectedWork || !selectedPdAcc) return;
+    if (!selectedWork || !selectedPdAcc || !selectedHoa) return;
 
     if (existingPendingRequest) {
       showToast('warning', 'A linkage request for this HoA is already pending approval.');
@@ -260,7 +270,7 @@ export default function WorksToPDTransferScreen() {
       bcoCode: selectedWork.bcoCode,
       pdAccountId: selectedPdAcc.id,
       pdAccountName: selectedPdAcc.name,
-      requestedHoa: selectedWork.hoa,
+      requestedHoa: selectedHoa,
       status: 'Pending',
       requestDate: new Date().toISOString().replace('T', ' ').slice(0, 19)
     };
@@ -277,11 +287,22 @@ export default function WorksToPDTransferScreen() {
       showToast('error', 'Please select a Source Work ID.');
       return;
     }
+    if (!selectedHoa) {
+      showToast('error', 'Please select a Head of Account.');
+      return;
+    }
     if (!transferAmount || parseFloat(transferAmount) <= 0) {
       showToast('error', 'Transfer amount must be greater than zero.');
       return;
     }
-    if (selectedWork && parseFloat(transferAmount) > selectedWork.balance) {
+
+    const activeHoaItem = selectedWork?.hoas.find(h => h.code === selectedHoa);
+    if (!activeHoaItem) {
+      showToast('error', 'Selected Head of Account not found.');
+      return;
+    }
+
+    if (parseFloat(transferAmount) > activeHoaItem.balance) {
       showToast('error', 'Transfer amount cannot exceed the HoA balance.');
       return;
     }
@@ -299,11 +320,19 @@ export default function WorksToPDTransferScreen() {
 
     const amountNum = parseFloat(transferAmount);
 
-    // Deduct balance from source Work ID
+    // Deduct balance from source Work ID's specific HoA
     setWorks(prevWorks =>
       prevWorks.map(w => {
         if (w.id === selectedWorkId) {
-          return { ...w, balance: w.balance - amountNum };
+          return {
+            ...w,
+            hoas: w.hoas.map(h => {
+              if (h.code === selectedHoa) {
+                return { ...h, balance: h.balance - amountNum };
+              }
+              return h;
+            })
+          };
         }
         return w;
       })
@@ -315,11 +344,11 @@ export default function WorksToPDTransferScreen() {
       dateTime: new Date().toISOString().replace('T', ' ').slice(0, 19),
       fromWorkId: selectedWorkId,
       fromWorkType: selectedWork?.type === 'budgeted' ? 'Budgeted' : 'Non-Budgeted',
-      fromHoa: selectedWork?.hoa || '',
+      fromHoa: selectedHoa,
       toTreasury: toTreasury || fromTreasury || 'General Treasury',
       toAccountType: accountType,
       toAccountId: accountType === 'PD' ? selectedPdAccount : undefined,
-      toHoa: accountType === 'PD' ? selectedWork?.hoa || '' : selectedCourtHoa,
+      toHoa: accountType === 'PD' ? selectedHoa : selectedCourtHoa,
       amount: amountNum,
       status: 'Completed'
     };
@@ -464,47 +493,6 @@ export default function WorksToPDTransferScreen() {
                 <Layers size={14} /> Origin Details
               </div>
 
-              {/* Treasury Selector */}
-              <div className="form-group">
-                <label className="form-label">
-                  Treasury <span className="required">*</span>
-                </label>
-                <select
-                  className="form-input"
-                  value={fromTreasury}
-                  onChange={(e) => setFromTreasury(e.target.value)}
-                  required
-                >
-                  <option value="">-- Select Treasury --</option>
-                  {TREASURIES.map(t => (
-                    <option key={t} value={t}>{t}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Work ID Type Selector */}
-              <div className="form-group">
-                <label className="form-label">
-                  Work ID Type <span className="required">*</span>
-                </label>
-                <select
-                  className="form-input"
-                  value={workIdType}
-                  onChange={(e) => {
-                    const newType = e.target.value as 'budgeted' | 'non-budgeted' | '';
-                    setWorkIdType(newType);
-                    setSelectedWorkId('');
-                    setSelectedHoa('');
-                    setTransferAmount('');
-                  }}
-                  required
-                >
-                  <option value="">-- Select Work ID Type --</option>
-                  <option value="budgeted">Budgeted</option>
-                  <option value="non-budgeted">Non-Budgeted</option>
-                </select>
-              </div>
-
               {/* Work ID Selection */}
               <div className="form-group">
                 <label className="form-label">
@@ -514,114 +502,142 @@ export default function WorksToPDTransferScreen() {
                   className="form-input"
                   value={selectedWorkId}
                   onChange={(e) => {
-                    setSelectedWorkId(e.target.value);
-                    if (e.target.value) {
-                      const match = works.find(w => w.id === e.target.value);
+                    const workId = e.target.value;
+                    setSelectedWorkId(workId);
+                    if (workId) {
+                      const match = works.find(w => w.id === workId);
                       if (match) {
-                        setSelectedHoa(match.hoa);
+                        setFromTreasury(match.treasury);
+                        setWorkIdType(match.type);
+                        setSelectedHoa('');
+                        setTransferAmount('');
                       }
                     } else {
+                      setFromTreasury('');
+                      setWorkIdType('');
                       setSelectedHoa('');
+                      setTransferAmount('');
                     }
                   }}
                   required
-                  disabled={!workIdType}
                 >
                   <option value="">-- Select Work Context --</option>
-                  {filteredWorks.map(w => (
+                  {works.map(w => (
                     <option key={w.id} value={w.id}>
-                      {w.id} - {w.projectName.substring(0, 40)}...
+                      {w.id} - {w.projectName.substring(0, 50)}...
                     </option>
                   ))}
                 </select>
-                {!workIdType && (
-                  <span className="w2pd-field-helper">
-                    * Please select Work ID Type first.
-                  </span>
-                )}
               </div>
 
-              {/* Auto-Fetched DDO / BCO Metadata (Conditional) */}
-              {selectedWork && (
-                <div className="w2pd-fetched-group animate-fade-in">
+              {/* Auto-Fetched Fields from Work Context */}
+              {selectedWork ? (
+                <div className="w2pd-fetched-group animate-fade-in" style={{ gridTemplateColumns: '1fr 1fr', gap: 'var(--space-3)' }}>
                   <div className="w2pd-fetched-field">
-                    <span className="w2pd-fetched-lbl">Work ID Type</span>
-                    <span className="w2pd-fetched-val code-font text-primary">
-                      {selectedWork.type.toUpperCase()}
+                    <span className="w2pd-fetched-lbl">Treasury (Auto-Fetched)</span>
+                    <span className="w2pd-fetched-val" style={{ fontWeight: 700 }}>{fromTreasury}</span>
+                  </div>
+
+                  <div className="w2pd-fetched-field">
+                    <span className="w2pd-fetched-lbl">Work ID Type (Auto-Fetched)</span>
+                    <span className="w2pd-fetched-val code-font text-primary" style={{ textTransform: 'uppercase' }}>
+                      {workIdType}
                     </span>
                   </div>
 
                   {selectedWork.type === 'budgeted' ? (
                     <>
                       <div className="w2pd-fetched-field">
-                        <span className="w2pd-fetched-lbl">BCO Code</span>
+                        <span className="w2pd-fetched-lbl">BCO Code (Auto-Fetched)</span>
                         <span className="w2pd-fetched-val w2pd-code-font">{selectedWork.bcoCode}</span>
                       </div>
                       <div className="w2pd-fetched-field" style={{ gridColumn: 'span 2' }}>
-                        <span className="w2pd-fetched-lbl">BCO Name</span>
+                        <span className="w2pd-fetched-lbl">BCO Name (Auto-Fetched)</span>
                         <span className="w2pd-fetched-val">{selectedWork.bcoName}</span>
                       </div>
                     </>
                   ) : (
                     <>
                       <div className="w2pd-fetched-field">
-                        <span className="w2pd-fetched-lbl">DDO Code</span>
+                        <span className="w2pd-fetched-lbl">DDO Code (Auto-Fetched)</span>
                         <span className="w2pd-fetched-val w2pd-code-font">{selectedWork.ddoCode}</span>
                       </div>
                       <div className="w2pd-fetched-field" style={{ gridColumn: 'span 2' }}>
-                        <span className="w2pd-fetched-lbl">DDO Name</span>
+                        <span className="w2pd-fetched-lbl">DDO Name (Auto-Fetched)</span>
                         <span className="w2pd-fetched-val">{selectedWork.ddoName}</span>
                       </div>
                     </>
                   )}
                 </div>
-              )}
-
-              <div className="w2pd-form-section-title" style={{ marginTop: 'var(--space-2)' }}>
-                <DollarSign size={14} /> Head of Account & Balance details
-              </div>
-
-              {/* Select HoA */}
-              <div className="form-group">
-                <label className="form-label">Head of Account (HoA)</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  value={selectedHoa}
-                  readOnly
-                  placeholder="Select Work ID to auto fetch HoA"
-                />
-              </div>
-
-              {/* HoA Total Balance */}
-              <div className="form-group">
-                <label className="form-label">HoA Total Balance (Auto-Fetched)</label>
-                <div className="w2pd-fetched-group">
-                  <div className="w2pd-fetched-field" style={{ gridColumn: 'span 2' }}>
-                    <span className="w2pd-fetched-lbl">Available Balance in Treasury</span>
-                    <span className="w2pd-fetched-val balance-val">
-                      {selectedWork ? `₹ ${selectedWork.balance.toLocaleString('en-IN')}.00` : '₹ 0.00'}
-                    </span>
+              ) : (
+                <div className="w2pd-alert info animate-scale-in">
+                  <div className="w2pd-alert-icon">
+                    <Info size={18} />
+                  </div>
+                  <div className="w2pd-alert-content">
+                    <span className="w2pd-alert-title">No Work Context Selected</span>
+                    <span>Please select a Work ID to automatically fetch originating Treasury, Work ID Type, and BCO/DDO metadata.</span>
                   </div>
                 </div>
-              </div>
+              )}
 
-              {/* Transfer Amount */}
-              <div className="form-group">
-                <label className="form-label">
-                  Transfer Amount (₹) <span className="required">*</span>
-                </label>
-                <input
-                  type="number"
-                  className="form-input"
-                  placeholder="Enter amount to transfer"
-                  value={transferAmount}
-                  onChange={(e) => setTransferAmount(e.target.value)}
-                  max={selectedWork?.balance || undefined}
-                  min="1"
-                  required
-                />
-              </div>
+              {/* Head of Account (HoA) Selection dropdown */}
+              {selectedWork && (
+                <div className="form-group animate-fade-in">
+                  <label className="form-label">
+                    Head of Account (HoA) <span className="required">*</span>
+                  </label>
+                  <select
+                    className="form-input"
+                    value={selectedHoa}
+                    onChange={(e) => {
+                      setSelectedHoa(e.target.value);
+                      setTransferAmount('');
+                    }}
+                    required
+                  >
+                    <option value="">-- Select Head of Account --</option>
+                    {selectedWork.hoas.map(hoa => (
+                      <option key={hoa.code} value={hoa.code}>
+                        {hoa.code}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {/* HoA Total Balance & Transfer Amount - conditional on selectedHoa */}
+              {selectedWork && selectedHoa && (
+                <>
+                  <div className="form-group animate-fade-in">
+                    <label className="form-label">HoA Total Balance (Auto-Fetched)</label>
+                    <div className="w2pd-fetched-group">
+                      <div className="w2pd-fetched-field" style={{ gridColumn: 'span 2' }}>
+                        <span className="w2pd-fetched-lbl">Available Balance in Treasury</span>
+                        <span className="w2pd-fetched-val balance-val">
+                          ₹ {(selectedWork.hoas.find(h => h.code === selectedHoa)?.balance || 0).toLocaleString('en-IN')}.00
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="form-group animate-fade-in">
+                    <label className="form-label">
+                      Transfer Amount (₹) <span className="required">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      className="form-input"
+                      placeholder="Enter amount to transfer"
+                      value={transferAmount}
+                      onChange={(e) => setTransferAmount(e.target.value)}
+                      max={selectedWork.hoas.find(h => h.code === selectedHoa)?.balance || undefined}
+                      min="1"
+                      required
+                    />
+                  </div>
+                </>
+              )}
 
             </div>
           </div>
@@ -754,7 +770,7 @@ export default function WorksToPDTransferScreen() {
                           {selectedPdAcc.allowedHoas.map(hoa => (
                             <span
                               key={hoa}
-                              className={`badge ${selectedWork?.hoa === hoa ? 'badge-success' : 'badge-primary'}`}
+                              className={`badge ${selectedHoa === hoa ? 'badge-success' : 'badge-primary'}`}
                               style={{ fontFamily: 'monospace' }}
                             >
                               {hoa}
@@ -774,7 +790,7 @@ export default function WorksToPDTransferScreen() {
                       <div className="w2pd-alert-content">
                         <span className="w2pd-alert-title">Head of Account Mismatch</span>
                         <span>
-                          The Head of Account <strong>{selectedWork.hoa}</strong> associated with this Work ID is not listed in the allowed heads for the selected PD Account <strong>{selectedPdAcc.name}</strong>.
+                          The Head of Account <strong>{selectedHoa}</strong> associated with this Work ID is not listed in the allowed heads for the selected PD Account <strong>{selectedPdAcc.name}</strong>.
                         </span>
 
                         <div className="w2pd-action-box" style={{ marginTop: 'var(--space-2)' }}>
