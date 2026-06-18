@@ -16,6 +16,10 @@ import DepositLapseScreen from './screens/sprint3/DepositLapseScreen';
 import CourtDepositLapseScreen from './screens/sprint3/CourtDepositLapseScreen';
 import TreasuryCreatorPDAcclosureScreen from './screens/sprint3/TreasuryCreatorPDAcclosureScreen';
 import RevenueDepositLapseScreen from './screens/sprint4/RevenueDepositLapseScreen';
+import SecurityDepositWorkIdScreen from './screens/sprint4/SecurityDepositWorkIdScreen';
+import StatutoryWorksReportsScreen from './screens/sprint4/StatutoryWorksReportsScreen';
+import ContractManagementSinglePayment from './screens/sprint4/contractid';
+import WorksToPDTransferScreen from './screens/sprint4/WorksToPDTransferScreen';
 
 
 export const router = createBrowserRouter([
@@ -43,6 +47,10 @@ export const router = createBrowserRouter([
       { path: 'sprint/3/story/4', element: <TreasuryCreatorPDAcclosureScreen /> },
       // Sprint 4
       { path: 'sprint/4/story/1', element: <RevenueDepositLapseScreen /> },
+      { path: 'sprint/4/story/2', element: <SecurityDepositWorkIdScreen /> },
+      { path: 'sprint/4/story/3', element: <StatutoryWorksReportsScreen /> },
+      { path: 'sprint/4/story/4', element: <ContractManagementSinglePayment /> },
+      { path: 'sprint/4/story/5', element: <WorksToPDTransferScreen /> },
       // Catch-all
 
       {

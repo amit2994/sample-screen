@@ -1,0 +1,558 @@
+import styles from './ContractManagementSinglePayment.module.css';
+
+const ContractManagementSinglePayment = () => {
+   	return (
+    		<div className={styles.contractManagementSinglePay}>
+      			<div className={styles.header}>
+        				<div className={styles.frameParent}>
+          					<div className={styles.e729ac5962e075ae13623a051f09b8Parent}>
+            						<div className={styles.ifmisNgParent}>
+              							<div className={styles.ifmisNg}>IFMIS-NG</div>
+              							<div className={styles.financialManagement}>Financial Management</div>
+            						</div>
+          					</div>
+          					<div className={styles.frameGroup}>
+            						<div className={styles.frameContainer}>
+              							<div className={styles.frameDiv}>
+                								<div className={styles.frameParent2}>
+                  									<div className={styles.accessibilityCtrl}>Accessibility (CTRL + F2)</div>
+                								</div>
+                								<div className={styles.caretdownWrapper}>
+                  									<div className={styles.caretdown}>
+                  									</div>
+                								</div>
+              							</div>
+              							<div className={styles.frameWrapper}>
+                								<div className={styles.frameParent3}>
+                  									<div className={styles.englishWrapper}>
+                    										<div className={styles.accessibilityCtrl}>English</div>
+                  									</div>
+                  									<div className={styles.wrapper}>
+                    										<div className={styles.div}>हिन्दी</div>
+                  									</div>
+                								</div>
+              							</div>
+              							<div className={styles.groupParent}>
+                								<div className={styles.selectionLayerParent}>
+                  									<div className={styles.selectionLayer} />
+                								</div>
+                								<div className={styles.selectionLayerParent}>
+                  									<div className={styles.selectionLayer2} />
+                								</div>
+                								<div className={styles.selectionLayerParent}>
+                  									<div className={styles.selectionLayer} />
+                								</div>
+              							</div>
+            						</div>
+            						<div className={styles.frameParent4}>
+              							<div className={styles.notificationsParent}>
+                								<div className={styles.container}>
+                  									<div className={styles.div2}>5</div>
+                								</div>
+              							</div>
+              							<div className={styles.frameParent5}>
+                								<div className={styles.avatarsParent}>
+                  									<div className={styles.avatars}>
+                    										<div className={styles.badges}>
+                       											<div className={styles.badgesChild} />
+                    										</div>
+                  									</div>
+                  									<div className={styles.accessibilityCtrl}>Mukesh Kumar</div>
+                								</div>
+                								<div className={styles.caretdownWrapper}>
+                  									<div className={styles.caretdown}>
+                  									</div>
+                								</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+      			<div className={styles.frameParent6}>
+        				<div className={styles.pageTitleWrapper}>
+          					<div className={styles.pageTitle}>
+            						<div className={styles.thisIsA}>Contract Management</div>
+            						<div className={styles.breadcrumbWBack}>
+              							<div className={styles.avatarsParent}>
+                								<div className={styles.breadcrumb1Wrapper}>
+                  									<div className={styles.accessibilityCtrl}>BMS</div>
+                								</div>
+                								<div className={styles.caretright}>
+                								</div>
+                								<div className={styles.breadcrumb2Wrapper}>
+                  									<div className={styles.accessibilityCtrl}>Approval Workflow Management</div>
+                								</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+        				<div className={styles.frameParent7}>
+          					<div className={styles.frameParent8}>
+            						<div className={styles.inputFieldInner}>
+              							<div className={styles.avatarsParent}>
+                								<div className={styles.accessibilityCtrl}>Work ID Transfer</div>
+              							</div>
+            						</div>
+            						<div className={styles.statusPendingWrapper}>
+              							<div className={styles.accessibilityCtrl}>Status Pending</div>
+            						</div>
+          					</div>
+          					<div className={styles.frameWrapper3}>
+            						<div className={styles.frameParent9}>
+              							<div className={styles.frameWrapper4}>
+                								<div className={styles.requestNoParent}>
+                  									<div className={styles.requestNo}>Request No. :</div>
+                  									<div className={styles.workIdtnn}>Work ID/T/NN</div>
+                								</div>
+              							</div>
+              							<div className={styles.frameWrapper4}>
+                								<div className={styles.requestNoParent}>
+                  									<div className={styles.requestNo}>Contract ID:</div>
+                  									<div className={styles.workIdtnn}>Work ID/T/NN</div>
+                								</div>
+              							</div>
+              							<div className={styles.frameWrapper6}>
+                								<div className={styles.inputFieldInner}>
+                  									<div className={styles.dateParent}>
+                    										<div className={styles.div}>Date:</div>
+                    										<div className={styles.na}>N/A</div>
+                  									</div>
+                								</div>
+              							</div>
+              							<div className={styles.frameItem} />
+            						</div>
+          					</div>
+        				</div>
+        				<div className={styles.accordionContainer}>
+          					<div className={styles.accordianTitle}>
+            						<div className={styles.frameParent10}>
+              							<div className={styles.frame}>
+                								<div className={styles.div3}>01</div>
+              							</div>
+              							<div className={styles.accessibilityCtrl}>Creation of Contract ID</div>
+            						</div>
+          					</div>
+          					<div className={styles.frameParent11}>
+            						<div className={styles.inputFieldParent}>
+              							<div className={styles.inputField}>
+                								<div className={styles.labelWrapper}>
+                  									<div className={styles.requestNo}>Project ID</div>
+                								</div>
+                								<div className={styles.inputFieldInner}>
+                  									<div className={styles.enterWrapper}>
+                    										<div className={styles.div}>Enter</div>
+                  									</div>
+                								</div>
+              							</div>
+              							<div className={styles.inputField}>
+                								<div className={styles.labelWrapper}>
+                  									<div className={styles.div}>Work ID</div>
+                								</div>
+                								<div className={styles.inputFieldInner}>
+                  									<div className={styles.enterWrapper}>
+                    										<div className={styles.div}>Enter</div>
+                  									</div>
+                								</div>
+              							</div>
+              							<div className={styles.inputField}>
+                								<div className={styles.labelWrapper}>
+                  									<div className={styles.div}>Sub ID</div>
+                								</div>
+                								<div className={styles.inputFieldInner}>
+                  									<div className={styles.enterWrapper}>
+                    										<div className={styles.div}>Enter</div>
+                  									</div>
+                								</div>
+              							</div>
+            						</div>
+            						<div className={styles.sectionTitleParent}>
+              							<div className={styles.inputFieldInner}>
+                								<div className={styles.sectionTitle}>
+                  									<div className={styles.accessibilityCtrl}>Contract ID Details</div>
+                								</div>
+              							</div>
+              							<div className={styles.inputFieldGroup}>
+                								<div className={styles.inputField4}>
+                  									<div className={styles.labelWrapper}>
+                    										<div className={styles.requestNo}>Contract ID</div>
+                  									</div>
+                  									<div className={styles.inputFieldInner}>
+                    										<div className={styles.enterWrapper}>
+                      											<div className={styles.div}>Enter</div>
+                    										</div>
+                  									</div>
+                								</div>
+                								<div className={styles.inputField4}>
+                  									<div className={styles.labelWrapper}>
+                    										<div className={styles.requestNo}>Contract Name</div>
+                  									</div>
+                  									<div className={styles.inputFieldInner}>
+                    										<div className={styles.enterWrapper}>
+                      											<div className={styles.div}>Enter</div>
+                    										</div>
+                  									</div>
+                								</div>
+                								<div className={styles.inputField4}>
+                  									<div className={styles.labelWrapper}>
+                    										<div className={styles.requestNo}>{`Date & Time`}</div>
+                  									</div>
+                  									<div className={styles.inputFieldInner}>
+                    										<div className={styles.enterWrapper}>
+                      											<div className={styles.div}>Enter</div>
+                    										</div>
+                  									</div>
+                								</div>
+                								<div className={styles.inputField4}>
+                  									<div className={styles.labelWrapper}>
+                    										<div className={styles.requestNo}>Valid Up To</div>
+                  									</div>
+                  									<div className={styles.inputFieldInner}>
+                    										<div className={styles.enterWrapper}>
+                      											<div className={styles.div}>Enter</div>
+                    										</div>
+                  									</div>
+                								</div>
+              							</div>
+            						</div>
+            						<div className={styles.inputFieldContainer}>
+              							<div className={styles.inputField4}>
+                								<div className={styles.labelWrapper}>
+                  									<div className={styles.label8}>Search Vendor (by Code/ Name)</div>
+                								</div>
+                								<div className={styles.inputFieldInner}>
+                  									<div className={styles.enterWrapper6}>
+                    										<div className={styles.accessibilityCtrl}>Type here..</div>
+                  									</div>
+                								</div>
+              							</div>
+              							<div className={styles.searchIconButton}>
+                								<div className={styles.caretdown}>
+                								</div>
+              							</div>
+            						</div>
+            						<div className={styles.sectionTitleParent}>
+              							<div className={styles.sectionTitle}>
+                								<div className={styles.accessibilityCtrl}>Vendor Details</div>
+                								<div className={styles.buttons}>
+                  									<div className={styles.accessibilityCtrl}>Clear</div>
+                								</div>
+              							</div>
+              							<div className={styles.frameParent13}>
+                								<div className={styles.inputFieldParent2}>
+                  									<div className={styles.inputField}>
+                    										<div className={styles.labelWrapper}>
+                      											<div className={styles.requestNo}>Vendor Code</div>
+                    										</div>
+                    										<div className={styles.inputFieldInner}>
+                      											<div className={styles.fetchedDataWrapper}>
+                        												<div className={styles.fetchedData}>Fetched Data</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                  									<div className={styles.inputField}>
+                    										<div className={styles.labelWrapper}>
+                      											<div className={styles.requestNo}>Vendor Name</div>
+                    										</div>
+                    										<div className={styles.inputFieldInner}>
+                      											<div className={styles.fetchedDataWrapper}>
+                        												<div className={styles.fetchedData}>Fetched Data</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                								</div>
+                								<div className={styles.inputFieldParent2}>
+                  									<div className={styles.inputField4}>
+                    										<div className={styles.labelWrapper}>
+                      											<div className={styles.requestNo}>PAN / GST / TAN</div>
+                    										</div>
+                    										<div className={styles.inputFieldInner}>
+                      											<div className={styles.fetchedDataWrapper}>
+                        												<div className={styles.fetchedData}>Fetched Data</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                  									<div className={styles.inputField4}>
+                    										<div className={styles.labelWrapper}>
+                      											<div className={styles.requestNo}>Bank Account No.</div>
+                    										</div>
+                    										<div className={styles.inputFieldInner}>
+                      											<div className={styles.fetchedDataWrapper}>
+                        												<div className={styles.fetchedData}>Fetched Data</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                  									<div className={styles.inputField4}>
+                    										<div className={styles.labelWrapper}>
+                      											<div className={styles.div}>Bank No.</div>
+                    										</div>
+                    										<div className={styles.inputFieldInner}>
+                      											<div className={styles.fetchedDataWrapper}>
+                        												<div className={styles.fetchedData}>Fetched Data</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                  									<div className={styles.inputField4}>
+                    										<div className={styles.labelWrapper}>
+                      											<div className={styles.requestNo}>IFSC Code</div>
+                    										</div>
+                    										<div className={styles.inputFieldInner}>
+                      											<div className={styles.fetchedDataWrapper}>
+                        												<div className={styles.fetchedData}>Fetched Data</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                								</div>
+                								<div className={styles.inputFieldWrapper}>
+                  									<div className={styles.inputField}>
+                    										<div className={styles.labelWrapper}>
+                      											<div className={styles.requestNo}>Contract Amount</div>
+                    										</div>
+                    										<div className={styles.inputFieldInner}>
+                      											<div className={styles.fetchedDataWrapper}>
+                        												<div className={styles.fetchedData}>Fetched Data</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                								</div>
+              							</div>
+            						</div>
+            						<div className={styles.sectionTitleParent}>
+              							<div className={styles.inputFieldInner}>
+                								<div className={styles.sectionTitle}>
+                  									<div className={styles.accessibilityCtrl}>Payment Terms</div>
+                								</div>
+              							</div>
+              							<div className={styles.frameParent15}>
+                								<div className={styles.inputFieldInner}>
+                  									<div className={styles.inputField16}>
+                    										<div className={styles.labelWrapper}>
+                      											<div className={styles.label8}>{`Does this Contract has `}</div>
+                    										</div>
+                    										<div className={styles.inputFieldInner15}>
+                      											<div className={styles.frameParent16}>
+                        												<div className={styles.circleParent}>
+                          													<div className={styles.selectionLayerParent}>
+                          													</div>
+                          													<div className={styles.div}>Single Payment</div>
+                        												</div>
+                        												<div className={styles.circleGroup}>
+                          													<div className={styles.selectionLayerParent}>
+                          													</div>
+                          													<div className={styles.div}>Milestone Payment</div>
+                        												</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                								</div>
+                								<div className={styles.frameParent17}>
+                  									<div className={styles.frameParent18}>
+                    										<div className={styles.colHeaderWrapper}>
+                      											<div className={styles.accessibilityCtrl}>S. no</div>
+                    										</div>
+                    										<div className={styles.wrapper2}>
+                      											<div className={styles.fetchedData}>1</div>
+                    										</div>
+                  									</div>
+                  									<div className={styles.frameWrapper4}>
+                    										<div className={styles.colHeaderContainer}>
+                      											<div className={styles.accessibilityCtrl}>Contract Amount</div>
+                    										</div>
+                    										<div className={styles.frameParent20}>
+                      											<div className={styles.colHeaderFrame}>
+                        												<div className={styles.label8}>%</div>
+                      											</div>
+                      											<div className={styles.colHeaderFrame}>
+                        												<div className={styles.label8}>Value</div>
+                      											</div>
+                    										</div>
+                    										<div className={styles.frameParent21}>
+                      											<div className={styles.frameInner} />
+                      											<div className={styles.frameInner} />
+                    										</div>
+                  									</div>
+                  									<div className={styles.frameWrapper4}>
+                    										<div className={styles.colHeaderContainer}>
+                      											<div className={styles.accessibilityCtrl}>Date</div>
+                    										</div>
+                    										<div className={styles.frameParent20}>
+                      											<div className={styles.colHeaderFrame}>
+                        												<div className={styles.label8}>Starting</div>
+                      											</div>
+                      											<div className={styles.colHeaderFrame}>
+                        												<div className={styles.label8}>Ending</div>
+                      											</div>
+                    										</div>
+                    										<div className={styles.frameParent21}>
+                      											<div className={styles.frameInner} />
+                      											<div className={styles.frameInner} />
+                    										</div>
+                  									</div>
+                  									<div className={styles.frameParent25}>
+                    										<div className={styles.colHeaderWrapper6}>
+                      											<div className={styles.accessibilityCtrl}>Status</div>
+                    										</div>
+                    										<div className={styles.buttonsWrapper}>
+                      											<div className={styles.buttons2}>
+                        												<div className={styles.accessibilityCtrl}>Edit</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                								</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+        				<div className={styles.frameWrapper8}>
+          					<div className={styles.sectionTitleGroup}>
+            						<div className={styles.sectionTitle4} />
+            						<div className={styles.ifmisNgParent}>
+              							<div className={styles.inputFieldParent4}>
+                								<div className={styles.inputField17} />
+                								<div className={styles.dropdown} />
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+        				<div className={styles.ctaTray}>
+          					<div className={styles.buttons3}>
+            						<div className={styles.accessibilityCtrl}>Back</div>
+          					</div>
+          					<div className={styles.ctaTrayChild} />
+          					<div className={styles.ctaTrayItem} />
+          					<div className={styles.ctaTrayInner} />
+          					<div className={styles.ctaTrayChild2} />
+          					<div className={styles.ctaTrayChild3} />
+          					<div className={styles.formButtonsParent}>
+            						<div className={styles.formButtons} />
+            						<div className={styles.formButtons2} />
+            						<div className={styles.formButtons3}>
+              							<div className={styles.accessibilityCtrl}>Save</div>
+            						</div>
+            						<div className={styles.buttons4}>
+              							<div className={styles.accessibilityCtrl}>Generate</div>
+            						</div>
+            						<div className={styles.formButtons4}>
+              							<div className={styles.accessibilityCtrl}>Forward</div>
+              							<div className={styles.selectionLayerParent}>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+      			<div className={styles.sidebar}>
+        				<div className={styles.frameParent26}>
+          					<div className={styles.frameParent27}>
+            						<div className={styles.magnifyingglassParent}>
+              							<div className={styles.search}>Search</div>
+            						</div>
+            						<div className={styles.collapseIconButton}>
+              							<div className={styles.caretleft2}>
+              							</div>
+            						</div>
+          					</div>
+          					<div className={styles.worklistTab}>
+            						<div className={styles.frameParent10}>
+              							<div className={styles.rowsplustopWrapper}>
+                								<div className={styles.notificationsIcon}>
+                								</div>
+              							</div>
+              							<div className={styles.accessibilityCtrl}>Worklist</div>
+            						</div>
+            						<div className={styles.div5}>28</div>
+          					</div>
+        				</div>
+        				<div className={styles.sidebarInner}>
+          					<div className={styles.frameParent29}>
+            						<div className={styles.assignedModulesParent}>
+              							<div className={styles.ifmisNg}>Assigned Modules</div>
+              							<div className={styles.moduleTilesParent}>
+                								<div className={styles.moduleTiles}>
+                  									<div className={styles.frameParent30}>
+                    										<div className={styles.scrollWrapper}>
+                       											<div className={styles.scroll}>
+                      											</div>
+                    										</div>
+                    										<div className={styles.accessibilityCtrl}>BMS</div>
+                  									</div>
+                								</div>
+                								<div className={styles.frameParent31}>
+                  									<div className={styles.moduleTilesGroup}>
+                    										<div className={styles.moduleTiles2}>
+                      											<div className={styles.handdepositWrapper}>
+                      											</div>
+                    										</div>
+                    										<div className={styles.moduleTiles3}>
+                    										</div>
+                  									</div>
+                  									<div className={styles.moduleTilesGroup}>
+                    										<div className={styles.moduleTiles4}>
+                      											<div className={styles.coinsWrapper}>
+                      											</div>
+                    										</div>
+                    										<div className={styles.collapseIconButton2}>
+                      											<div className={styles.caretleft2}>
+                      											</div>
+                    										</div>
+                  									</div>
+                								</div>
+              							</div>
+            						</div>
+            						<div className={styles.frameParent32}>
+              							<div className={styles.subModulesParent}>
+                								<div className={styles.ifmisNg}>Sub - Modules</div>
+                								<div className={styles.vectorParent}>
+                  									<div className={styles.frameParent33}>
+                    										<div className={styles.dashboardWrapper}>
+                      											<div className={styles.accessibilityCtrl}>Work ID Management</div>
+                    										</div>
+                    										<div className={styles.profileManagementWrapper}>
+                      											<div className={styles.div}>Sub ID Creation</div>
+                    										</div>
+                    										<div className={styles.frameWrapper10}>
+                      											<div className={styles.challanSearchParent}>
+                        												<div className={styles.div}>Mapping DDO</div>
+                        												<div className={styles.caretright}>
+                        												</div>
+                      											</div>
+                    										</div>
+                    										<div className={styles.frameWrapper10}>
+                      											<div className={styles.submitChallanParent}>
+                        												<div className={styles.div}>Contract Management</div>
+                        												<div className={styles.caretright}>
+                        												</div>
+                      											</div>
+                    										</div>
+                    										<div className={styles.frameWrapper12}>
+                      											<div className={styles.challanRedressalParent}>
+                        												<div className={styles.div}>Work Management An..</div>
+                        												<div className={styles.caretright}>
+                        												</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                								</div>
+              							</div>
+              							<div className={styles.frameParent34}>
+                								<div className={styles.frameParent35}>
+                  									<div className={styles.headsetWrapper}>
+                    										<div className={styles.caretdown}>
+                    										</div>
+                  									</div>
+                  									<div className={styles.div}>Help Desk</div>
+                								</div>
+                								<div className={styles.frameParent35}>
+                  									<div className={styles.questionmarkWrapper}>
+                    										<div className={styles.caretdown}>
+                    										</div>
+                  									</div>
+                  									<div className={styles.div}>Help</div>
+                								</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>);
+};
+
+export default ContractManagementSinglePayment;

@@ -54,6 +54,30 @@ export const sprints: Sprint[] = [
         path: '/sprint/4/story/1',
         screen_id: 'sprint4-story1-revenue-deposit-lapse',
       },
+      {
+        id: 'story-15',
+        title: 'Security Deposit (SD) Work ID Auto-Gen',
+        path: '/sprint/4/story/2',
+        screen_id: 'sprint4-story2-security-deposit-autogen',
+      },
+      {
+        id: 'story-16',
+        title: 'Statutory & Works Account Reports',
+        path: '/sprint/4/story/3',
+        screen_id: 'sprint4-story3-statutory-reports',
+      },
+      {
+        id: 'story-16.5',
+        title: 'Contract Management Single Payment',
+        path: '/sprint/4/story/4',
+        screen_id: 'sprint4-story4-contract-management',
+      },
+      {
+        id: 'story-17',
+        title: 'Works to PD Transfer Management',
+        path: '/sprint/4/story/5',
+        screen_id: 'sprint4-story5-works-to-pd-transfer',
+      },
     ],
   },
 ];
