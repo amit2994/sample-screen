@@ -18,6 +18,7 @@ export const sprints: Sprint[] = [
     stories: [
       { id: 'story-1', title: 'Deposit Account Creation', path: '/sprint/1/story/1', screen_id: 'sprint1-story1' },
       { id: 'story-2', title: 'Interest Rate Configuration', path: '/sprint/1/story/2', screen_id: 'sprint1-story2' },
+      { id: 'story-3', title: 'Court Deposit Account Creation', path: '/sprint/1/story/3', screen_id: 'sprint1-court-deposit-creation' },
     ],
   },
   {
@@ -30,7 +31,7 @@ export const sprints: Sprint[] = [
       { id: 'story-6', title: 'Sub-PD Creation', path: '/sprint/2/story/4', screen_id: 'sprint2-story4-sub-pd-creation' },
       { id: 'story-7', title: 'Deposit Fund Transfer (Challan)', path: '/sprint/2/story/5', screen_id: 'sprint2-story5-deposit-fund-transfer-challan' },
       { id: 'story-8', title: 'Sub-PD Bill Creation', path: '/sprint/2/story/6', screen_id: 'sprint2-story6-sub-pd-bill-creation' },
-      { id: 'story-9', title: 'Payment Advice Gen.', path: '/sprint/2/story/7', screen_id: 'sprint2-story7-payment-advice-gen' },
+      { id: 'story-9', title: 'Deposit Payment Processing', path: '/sprint/2/story/7', screen_id: 'sprint2-story7-payment-advice-gen' },
     ],
   },
   {

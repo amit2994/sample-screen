@@ -3,6 +3,7 @@ import AppLayout from './components/layout/AppLayout';
 import Dashboard from './screens/Dashboard';
 import Story1Screen from './screens/sprint1/Story1Screen';
 import Story2Screen from './screens/sprint1/Story2Screen';
+import CourtDepositAccountCreationScreen from './screens/sprint1/CourtDepositAccountCreationScreen';
 import DepositAccountNumberScreen from './screens/sprint2/DepositAccountNumberScreen';
 import DepositAdminRuleConfigScreen from './screens/sprint2/DepositAdminRuleConfigScreen';
 import DepositFundTransferScreen from './screens/sprint2/DepositFundTransferScreen';
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
       // Sprint 1
       { path: 'sprint/1/story/1', element: <Story1Screen /> },
       { path: 'sprint/1/story/2', element: <Story2Screen /> },
+      { path: 'sprint/1/story/3', element: <CourtDepositAccountCreationScreen /> },
       // Sprint 2
       { path: 'sprint/2/story/1', element: <DepositAccountNumberScreen /> },
       { path: 'sprint/2/story/2', element: <DepositAdminRuleConfigScreen /> },

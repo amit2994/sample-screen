@@ -581,63 +581,77 @@ export default function WorksToPDTransferScreen() {
                 </div>
               )}
 
-              {/* Head of Account (HoA) Selection dropdown */}
+              {/* Head of Account, HoA Balance & Transfer Amount Group */}
               {selectedWork && (
-                <div className="form-group animate-fade-in">
-                  <label className="form-label">
-                    Head of Account (HoA) <span className="required">*</span>
-                  </label>
-                  <select
-                    className="form-input"
-                    value={selectedHoa}
-                    onChange={(e) => {
-                      setSelectedHoa(e.target.value);
-                      setTransferAmount('');
-                    }}
-                    required
-                  >
-                    <option value="">-- Select Head of Account --</option>
-                    {selectedWork.hoas.map(hoa => (
-                      <option key={hoa.code} value={hoa.code}>
-                        {hoa.code}
-                      </option>
-                    ))}
-                  </select>
+                <div className={selectedHoa ? "w2pd-form-grid-3 animate-fade-in" : "animate-fade-in"}>
+                  <div className="form-group">
+                    <label className="form-label">
+                      Head of Account (HoA) <span className="required">*</span>
+                    </label>
+                    <select
+                      className="form-input"
+                      value={selectedHoa}
+                      onChange={(e) => {
+                        setSelectedHoa(e.target.value);
+                        setTransferAmount('');
+                      }}
+                      required
+                    >
+                      <option value="">-- Select Head of Account --</option>
+                      {selectedWork.hoas.map(hoa => (
+                        <option key={hoa.code} value={hoa.code}>
+                          {hoa.code}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {selectedHoa && (
+                    <>
+                      <div className="form-group animate-fade-in">
+                        <label className="form-label">HoA Total Balance (Auto-Fetched)</label>
+                        <div 
+                          className="w2pd-fetched-group" 
+                          style={{ 
+                            padding: '0 var(--space-3)', 
+                            height: '38px', 
+                            display: 'flex', 
+                            alignItems: 'center',
+                            background: 'var(--color-bg)',
+                            border: '1px solid var(--color-border-light)',
+                            borderRadius: 'var(--radius-md)',
+                            boxSizing: 'border-box'
+                          }}
+                        >
+                          <div className="w2pd-fetched-field" style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span className="w2pd-fetched-lbl" style={{ margin: 0, fontSize: '9px' }}>Available Balance</span>
+                            <span className="w2pd-fetched-val balance-val" style={{ margin: 0, fontSize: 'var(--font-size-sm)', fontWeight: 700 }}>
+                              ₹ {(selectedWork.hoas.find(h => h.code === selectedHoa)?.balance || 0).toLocaleString('en-IN')}.00
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="form-group animate-fade-in">
+                        <label className="form-label">
+                          Transfer Amount (₹) <span className="required">*</span>
+                        </label>
+                        <input
+                          type="number"
+                          className="form-input"
+                          placeholder="Enter amount to transfer"
+                          value={transferAmount}
+                          onChange={(e) => setTransferAmount(e.target.value)}
+                          max={selectedWork.hoas.find(h => h.code === selectedHoa)?.balance || undefined}
+                          min="1"
+                          required
+                        />
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
 
-              {/* HoA Total Balance & Transfer Amount - conditional on selectedHoa */}
-              {selectedWork && selectedHoa && (
-                <>
-                  <div className="form-group animate-fade-in">
-                    <label className="form-label">HoA Total Balance (Auto-Fetched)</label>
-                    <div className="w2pd-fetched-group">
-                      <div className="w2pd-fetched-field" style={{ gridColumn: 'span 2' }}>
-                        <span className="w2pd-fetched-lbl">Available Balance in Treasury</span>
-                        <span className="w2pd-fetched-val balance-val">
-                          ₹ {(selectedWork.hoas.find(h => h.code === selectedHoa)?.balance || 0).toLocaleString('en-IN')}.00
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="form-group animate-fade-in">
-                    <label className="form-label">
-                      Transfer Amount (₹) <span className="required">*</span>
-                    </label>
-                    <input
-                      type="number"
-                      className="form-input"
-                      placeholder="Enter amount to transfer"
-                      value={transferAmount}
-                      onChange={(e) => setTransferAmount(e.target.value)}
-                      max={selectedWork.hoas.find(h => h.code === selectedHoa)?.balance || undefined}
-                      min="1"
-                      required
-                    />
-                  </div>
-                </>
-              )}
 
             </div>
           </div>

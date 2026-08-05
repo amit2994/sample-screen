@@ -170,3 +170,26 @@
   color: var(--color-text-secondary);
   font-weight: 500;
 }
+
+/* Responsive Header Media Queries */
+@media (max-width: 768px) {
+  .header {
+    padding: 0 var(--space-4);
+  }
+
+  .header__search {
+    display: none !important;
+  }
+
+  .header__username {
+    display: none !important;
+  }
+
+  .header__user {
+    padding: var(--space-1) !important;
+  }
+
+  .breadcrumb {
+    display: none !important;
+  }
+}

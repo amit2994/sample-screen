@@ -368,6 +368,19 @@
   gap: var(--space-4);
 }
 
+.w2pd-form-grid-3 {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: var(--space-4);
+}
+
+@media (max-width: 768px) {
+  .w2pd-form-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 .w2pd-submit-tray {
   display: flex;
   justify-content: flex-end;

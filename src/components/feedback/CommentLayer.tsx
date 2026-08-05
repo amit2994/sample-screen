@@ -185,6 +185,7 @@ export default function CommentLayer({
           <div
             className="comment-draft animate-scale-in"
             style={{ left: `${draftContext.x}%`, top: `${draftContext.y}%` }}
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="comment-draft__bubble">
               <textarea

@@ -1,0 +1,561 @@
+/* ============================================================
+   DEPOSIT PAYMENT PROCESSING SCREEN STYLES
+   ============================================================ */
+
+@import "../../components/ifmis/ifmis-components.css";
+
+.dpp-screen {
+  padding: var(--space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* — Top Header — */
+.dpp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-6);
+  background: var(--color-white);
+  padding: var(--space-5) var(--space-6);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.dpp-header-title h1 {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.dpp-header-title p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  max-width: 720px;
+}
+
+.dpp-header-user {
+  background: linear-gradient(135deg, #1e3a6e 0%, #112240 100%);
+  color: var(--color-white);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  box-shadow: var(--shadow-md);
+  max-width: 320px;
+}
+
+.dpp-header-user-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.dpp-header-user-role {
+  color: var(--color-text-tertiary);
+  opacity: 0.9;
+}
+
+.dpp-header-user-login {
+  margin-top: 4px;
+  font-size: 10px;
+  color: #fca5a5;
+}
+
+/* — Request Status Stepper — */
+.dpp-status-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5) var(--space-6);
+  margin-bottom: var(--space-5);
+}
+
+.dpp-status-header {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dpp-status-badge {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+  padding: 4px var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+}
+
+.dpp-status-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.dpp-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.dpp-step-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  background: var(--color-white);
+  border: 2px solid var(--color-border);
+  color: var(--color-text-tertiary);
+  transition: all 0.3s ease;
+}
+
+.dpp-step.completed .dpp-step-circle {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: var(--color-white);
+}
+
+.dpp-step.active .dpp-step-circle {
+  background: var(--color-primary-lighter);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.dpp-step-title {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.dpp-step-status {
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+}
+
+.dpp-step.completed .dpp-step-status {
+  color: var(--color-success);
+}
+
+.dpp-step.active .dpp-step-status {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.dpp-step-link {
+  font-size: 10px;
+  color: var(--color-primary);
+  text-decoration: underline;
+  margin-top: 2px;
+}
+
+.dpp-stepper-line {
+  flex: 1;
+  height: 2px;
+  background: var(--color-border-light);
+  margin: -20px var(--space-2) 0;
+  position: relative;
+  z-index: 0;
+}
+
+.dpp-stepper-line.completed {
+  background: var(--color-success);
+}
+
+.dpp-stepper-line.dotted {
+  border-top: 2px dotted var(--color-primary-light);
+  background: transparent;
+}
+
+/* — Warning / Return Remarks Box — */
+.dpp-remark-box {
+  background: #FFFBEB; /* Warning BG */
+  border: 1px solid #FCD34D;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-6);
+  box-shadow: var(--shadow-xs);
+}
+
+.dpp-remark-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: #B45309;
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-1);
+}
+
+.dpp-remark-content {
+  font-size: var(--font-size-sm);
+  color: #78350F;
+  line-height: 1.5;
+}
+
+/* — Processing Section Tabs — */
+.dpp-processing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-border-light);
+  padding-bottom: var(--space-3);
+}
+
+.dpp-processing-title h2 {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.dpp-processing-title p {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+.dpp-tab-buttons {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.dpp-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  color: var(--color-text-secondary);
+  border: 1px solid transparent;
+}
+
+.dpp-tab-btn.active {
+  background: var(--color-primary);
+  color: var(--color-white);
+  box-shadow: var(--shadow-sm);
+}
+
+.dpp-tab-btn:not(.active):hover {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+}
+
+/* — Accordion Custom Styles — */
+.dpp-accordion-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.dpp-control-btn {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dpp-control-btn:hover {
+  text-decoration: underline;
+}
+
+/* — Form Layout Grids — */
+.form-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+.form-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+/* — Bank Details Frame — */
+.dpp-bank-details {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-bg);
+  margin-bottom: var(--space-4);
+}
+
+.dpp-bank-details-title {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: underline;
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* — Mode Of Payment — */
+.dpp-payment-modes {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.dpp-mode-card {
+  flex: 1;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: all var(--transition-fast);
+  background: var(--color-white);
+  font-weight: 500;
+}
+
+.dpp-mode-card:hover {
+  border-color: var(--color-primary-light);
+  background: var(--color-primary-lighter);
+}
+
+.dpp-mode-card.active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-lighter);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.dpp-mode-card input[type="radio"] {
+  accent-color: var(--color-primary);
+  width: 16px;
+  height: 16px;
+}
+
+.dpp-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-4);
+  background: var(--color-bg);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+}
+
+.dpp-checkbox-group input[type="checkbox"] {
+  accent-color: var(--color-primary);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.dpp-checkbox-group label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+/* — File Upload Area — */
+.dpp-upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-bottom: var(--space-4);
+}
+
+.dpp-upload-area:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-lighter);
+}
+
+.dpp-upload-icon {
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+
+.dpp-upload-text {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.dpp-upload-btn {
+  margin-top: var(--space-3);
+}
+
+.dpp-files-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.dpp-file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-white);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+}
+
+.dpp-file-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.dpp-file-icon {
+  color: var(--color-text-tertiary);
+}
+
+.dpp-file-actions {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.dpp-file-btn {
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+}
+
+.dpp-file-btn:hover {
+  background: var(--color-bg-secondary);
+}
+
+.dpp-file-btn.delete:hover {
+  color: var(--color-error);
+  background: var(--color-error-bg);
+}
+
+/* — E-Sign Section — */
+.dpp-esign-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  background: var(--color-bg);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.dpp-esign-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+}
+
+.dpp-esign-status.pending {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+.dpp-esign-status.success {
+  background: #D1FAE5;
+  color: #059669;
+}
+
+/* — Footer Layout Tray — */
+.dpp-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--color-border-light);
+  margin-top: var(--space-6);
+}
+
+.dpp-toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  border-left: 4px solid var(--color-primary);
+}
+
+.dpp-toast.success {
+  border-left-color: var(--color-success);
+}
+
+.dpp-toast.error {
+  border-left-color: var(--color-error);
+}
+
+.dpp-toast.warning {
+  border-left-color: var(--color-warning);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .form-grid-3, .form-grid-2, .form-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .dpp-payment-modes {
+    flex-direction: column;
+  }
+
+  .dpp-files-grid {
+    grid-template-columns: 1fr;
+  }
+}

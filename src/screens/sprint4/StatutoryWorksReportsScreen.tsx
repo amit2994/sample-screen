@@ -587,8 +587,8 @@ export default function StatutoryWorksReportsScreen() {
                       borderRadius: 'var(--radius-md)',
                       padding: 'var(--space-3) var(--space-4)',
                       display: 'grid',
-                      gridTemplateColumns: '1fr',
-                      gap: 'var(--space-2)',
+                      gridTemplateColumns: '1fr 1.5fr',
+                      gap: 'var(--space-3)',
                       marginBottom: 'var(--space-3)'
                     }}>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
