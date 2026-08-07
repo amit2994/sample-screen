@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HelpCircle, Check, AlertCircle, ArrowRightLeft, Database, Building, FileText } from 'lucide-react';
+import { Check, AlertCircle, Database, Building, FileText } from 'lucide-react';
 import CommentLayer from '../../components/feedback/CommentLayer';
 import './PdToCcdCrcdWorksTransferScreen.css';
 
