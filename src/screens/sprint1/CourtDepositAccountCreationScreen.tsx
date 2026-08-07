@@ -128,7 +128,7 @@ export default function CourtDepositAccountCreationScreen() {
               <div className="gov-card-body">
                 <div className="court-deposit-grid">
                   
-                  <div className="court-form-group col-start-1">
+                  <div className="court-form-group">
                     <label className="court-form-label">
                       Deposit Type <span className="required-star">*</span>
                     </label>
@@ -143,7 +143,7 @@ export default function CourtDepositAccountCreationScreen() {
                     </select>
                   </div>
 
-                  <div className="court-form-group col-start-1">
+                  <div className="court-form-group">
                     <label className="court-form-label">DDO Code</label>
                     <input 
                       type="text" 
@@ -187,9 +187,7 @@ export default function CourtDepositAccountCreationScreen() {
                     />
                   </div>
 
-
-
-                  <div className="court-form-group col-start-1">
+                  <div className="court-form-group">
                     <label className="court-form-label">
                       Court Code <span className="required-star">*</span>
                     </label>
@@ -206,7 +204,7 @@ export default function CourtDepositAccountCreationScreen() {
                     </select>
                   </div>
 
-                  <div className="court-form-group">
+                  <div className="court-form-group col-start-1">
                     <label className="court-form-label">Court Name</label>
                     <input 
                       type="text" 
@@ -217,7 +215,7 @@ export default function CourtDepositAccountCreationScreen() {
                     />
                   </div>
 
-                  <div className="court-form-group col-span-2">
+                  <div className="court-form-group">
                     <label className="court-form-label">Purpose</label>
                     <div className="purpose-wrapper">
                       <textarea 

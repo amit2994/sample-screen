@@ -19,6 +19,7 @@ export const sprints: Sprint[] = [
       { id: 'story-1', title: 'Deposit Account Creation', path: '/sprint/1/story/1', screen_id: 'sprint1-story1' },
       { id: 'story-2', title: 'Interest Rate Configuration', path: '/sprint/1/story/2', screen_id: 'sprint1-story2' },
       { id: 'story-3', title: 'Court Deposit Account Creation', path: '/sprint/1/story/3', screen_id: 'sprint1-court-deposit-creation' },
+      { id: 'story-4', title: 'Transfer PD to CCD/CrCD/Works', path: '/sprint/1/story/4', screen_id: 'sprint1-pd-transfer' },
     ],
   },
   {

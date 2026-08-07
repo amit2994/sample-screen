@@ -134,7 +134,7 @@
 /* Forms layout */
 .court-deposit-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-6);
 }
 
@@ -145,10 +145,10 @@
 }
 
 .court-form-group {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  align-items: center;
-  gap: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-1);
   position: relative;
 }
 
@@ -423,11 +423,7 @@
 }
 
 /* Responsiveness Media Queries */
-@media (max-width: 1024px) {
-  .court-form-group {
-    grid-template-columns: 140px 1fr;
-  }
-}
+/* Media queries updated to remove side-by-side grid rules for .court-form-group */
 
 @media (max-width: 768px) {
   .court-deposit-grid {
@@ -443,9 +439,7 @@
     grid-column: span 1;
   }
 
-  .court-form-group {
-    grid-template-columns: 180px 1fr;
-  }
+  /* .court-form-group remains flex column */
 
   /* Head Structure Details Responsive Table */
   .head-structure-thead {
@@ -504,9 +498,7 @@
   }
 
   .court-form-group {
-    grid-template-columns: 1fr;
     align-items: flex-start;
-    gap: var(--space-1);
   }
 
   .court-form-label {
