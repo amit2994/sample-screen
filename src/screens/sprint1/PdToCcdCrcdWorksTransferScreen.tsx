@@ -14,10 +14,7 @@ interface OperatorData {
   challans: string[];
 }
 
-interface CourtData {
-  code: string;
-  name: string;
-}
+
 
 interface WorkData {
   id: string;
@@ -57,12 +54,7 @@ const MOCK_OPERATORS: Record<string, OperatorData> = {
   }
 };
 
-const MOCK_COURTS: Record<string, CourtData> = {
-  'CRT-BPL-01': { code: 'CRT-BPL-01', name: 'First Class Judicial Magistrate Court, Bhopal' },
-  'CRT-BPL-02': { code: 'CRT-BPL-02', name: 'Second Class Judicial Magistrate Court, Bhopal' },
-  'CRT-IND-01': { code: 'CRT-IND-01', name: 'Registrar Court House, Indore' },
-  'CRT-GWL-01': { code: 'CRT-GWL-01', name: 'Chief Judicial Magistrate Court Bench, Gwalior' }
-};
+
 
 const MOCK_WORKS: Record<string, WorkData> = {
   'WRK-2026-009': {
@@ -344,9 +336,7 @@ export default function PdToCcdCrcdWorksTransferScreen() {
     }, 1500);
   };
 
-  const handleClose = () => {
-    window.location.href = '/';
-  };
+
 
   return (
     <CommentLayer screenId="sprint1-pd-transfer" moduleName="deposit">
