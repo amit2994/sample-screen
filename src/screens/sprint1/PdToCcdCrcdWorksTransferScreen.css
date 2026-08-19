@@ -115,7 +115,8 @@
 }
 
 .gov-card-header {
-  background-color: #6C82B8; /* Matching the cornflower/steel blue header */
+  background-color: #6C82B8;
+  /* Matching the cornflower/steel blue header */
   color: var(--color-white);
   font-weight: 600;
   font-size: var(--font-size-base);
@@ -367,4 +368,377 @@
 .purpose-textarea {
   min-height: 64px;
   resize: vertical;
+}
+
+/* ============================================================
+   TO SECTION: PUBLIC WORKS DEPOSIT STYLES (PNG DESIGN)
+   ============================================================ */
+
+.to-section-card {
+  border: 1px solid #E4E4E7 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  overflow: hidden;
+}
+
+.to-section-header {
+  background-color: #F1EBF8 !important;
+  color: #5C2D91 !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  padding: 16px 24px !important;
+  border-left: 5px solid #7828C8 !important;
+  border-bottom: 1px solid #E4E4E7 !important;
+  letter-spacing: 0.05em !important;
+}
+
+.to-works-container {
+  padding: 8px 4px;
+}
+
+.to-works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 32px;
+}
+
+.purple-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 6px;
+}
+
+/* Custom Styled Select for Work ID */
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.purple-select-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #ffffff;
+  border: 1.5px solid #E4E4E7;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1f2937;
+  width: 100%;
+  height: 48px;
+  cursor: pointer;
+  padding-right: 48px;
+  transition: all 0.2s ease;
+}
+
+.purple-select-input:focus {
+  border-color: #7828C8;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(120, 40, 200, 0.1);
+}
+
+.select-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background-color: #f3f4f6;
+  border-radius: 50%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234b5563' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 12px;
+  background-position: center;
+  pointer-events: none;
+}
+
+/* Lavender theme inputs for fetched data */
+.fetched-data-input {
+  background-color: #EDE7F6 !important;
+  color: #372A4E !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  padding: 12px 16px !important;
+  border-radius: 12px !important;
+  border: none !important;
+  width: 100% !important;
+  height: 48px !important;
+  cursor: not-allowed !important;
+}
+
+/* Action Buttons inside Card */
+.to-works-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.purple-btn-reset {
+  background-color: transparent;
+  color: #7828C8;
+  border: 2px solid #7828C8;
+  border-radius: 24px;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 130px;
+  text-align: center;
+}
+
+.purple-btn-reset:hover {
+  background-color: rgba(120, 40, 200, 0.05);
+  transform: translateY(-1px);
+}
+
+.purple-btn-reset:active {
+  transform: translateY(0);
+}
+
+.purple-btn-submit {
+  background-color: #7828C8;
+  color: #ffffff;
+  border: none;
+  border-radius: 24px;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  min-width: 130px;
+  box-shadow: 0 4px 10px rgba(120, 40, 200, 0.2);
+}
+
+.purple-btn-submit:hover {
+  background-color: #601fa2;
+  box-shadow: 0 6px 14px rgba(120, 40, 200, 0.3);
+  transform: translateY(-1px);
+}
+
+.purple-btn-submit:active {
+  transform: translateY(0);
+}
+
+.purple-btn-submit:disabled {
+  background-color: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  color: #ffffff;
+}
+
+/* Responsiveness for new layout */
+@media (max-width: 768px) {
+  .to-works-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .to-works-buttons-container {
+    flex-direction: column-reverse;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .purple-btn-reset,
+  .purple-btn-submit {
+     width: 100%;
+  }
+}
+
+/* ============================================================
+   SIDE-BY-SIDE FROM/TO CARD STYLING & 2-COLUMN INPUT GRID
+   ============================================================ */
+
+.transfer-cards-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+  margin-top: 12px;
+}
+
+.two-col-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 24px;
+}
+
+/* Account Type Radio Selection Chips */
+.w2pd-radio-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.w2pd-radio-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 24px;
+  border: 1.5px solid #E5E7EB;
+  background-color: #F9FAFB;
+  color: #4B5563;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.w2pd-radio-btn:hover {
+  background-color: #F3F4F6;
+  border-color: #D1D5DB;
+}
+
+.w2pd-radio-btn.active {
+  background-color: #F1EBF8;
+  border-color: #7828C8;
+  color: #7828C8;
+}
+
+.radio-circle {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid #9CA3AF;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.w2pd-radio-btn.active .radio-circle {
+  border-color: #7828C8;
+  background-color: #7828C8;
+}
+
+.w2pd-radio-btn.active .radio-circle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  background-color: #ffffff;
+  border-radius: 50%;
+}
+
+/* Text active inputs matching mockup height & styling */
+.active-text-input {
+  background-color: #ffffff;
+  border: 1.5px solid #E4E4E7;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1f2937;
+  width: 100%;
+  height: 48px;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.active-text-input:focus {
+  border-color: #7828C8;
+  box-shadow: 0 0 0 4px rgba(120, 40, 200, 0.1);
+}
+
+/* Reset / Submit New Buttons Styling */
+.purple-btn-reset-new {
+  background-color: transparent;
+  color: #7828C8;
+  border: 2px solid #7828C8;
+  border-radius: 24px;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 130px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.purple-btn-reset-new:hover {
+  background-color: rgba(120, 40, 200, 0.05);
+  transform: translateY(-1px);
+}
+
+.purple-btn-submit-new {
+  background-color: #7828C8;
+  color: #ffffff;
+  border: none;
+  border-radius: 24px;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  min-width: 130px;
+  height: 44px;
+  box-shadow: 0 4px 10px rgba(120, 40, 200, 0.2);
+  box-sizing: border-box;
+}
+
+.purple-btn-submit-new:hover {
+  background-color: #601fa2;
+  box-shadow: 0 6px 14px rgba(120, 40, 200, 0.3);
+  transform: translateY(-1px);
+}
+
+.purple-btn-submit-new:disabled {
+  background-color: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Media Queries for Side-By-Side Layout */
+@media (max-width: 1024px) {
+  .transfer-cards-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .two-col-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .two-col-grid .col-span-2 {
+    grid-column: span 1;
+  }
 }

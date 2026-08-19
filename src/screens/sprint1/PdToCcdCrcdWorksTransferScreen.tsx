@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, AlertCircle, Database, Building, FileText } from 'lucide-react';
+import { Check, AlertCircle } from 'lucide-react';
 import CommentLayer from '../../components/feedback/CommentLayer';
 import './PdToCcdCrcdWorksTransferScreen.css';
 
@@ -22,9 +22,11 @@ interface CourtData {
 interface WorkData {
   id: string;
   title: string;
-  divisionCode: string;
-  divisionName: string;
-  contractorName: string;
+  treasury: string;
+  workIdType: string;
+  ddoCode: string;
+  ddoName: string;
+  hoa: string;
 }
 
 // Mock Data
@@ -66,17 +68,59 @@ const MOCK_WORKS: Record<string, WorkData> = {
   'WRK-2026-009': {
     id: 'WRK-2026-009',
     title: 'Construction of Smart City Bypass Road, Bhopal',
-    divisionCode: 'DIV-PWD-BPL-01',
-    divisionName: 'Bhopal PWD Division-I',
-    contractorName: 'Apex Infrastructure Ltd.'
+    treasury: 'Bhopal Treasury (01)',
+    workIdType: 'PWD Contract',
+    ddoCode: 'DDO-PWD-BPL-01',
+    ddoName: 'Executive Engineer, PWD Division-I, Bhopal',
+    hoa: '8443-00-108-0001'
   },
   'WRK-2026-015': {
     id: 'WRK-2026-015',
     title: 'Rehabilitation of Bridge over Narmada, Hoshangabad',
-    divisionCode: 'DIV-PWD-HOS-02',
-    divisionName: 'Hoshangabad PWD Division-II',
-    contractorName: 'M/S Gwalior Electrical & Civil Works'
+    treasury: 'Hoshangabad Treasury (15)',
+    workIdType: 'PWD Contract',
+    ddoCode: 'DDO-PWD-HOS-02',
+    ddoName: 'Executive Engineer, PWD Division-II, Hoshangabad',
+    hoa: '8443-00-108-0002'
   }
+};
+
+const MOCK_TO_TREASURIES: Record<string, string> = {
+  'TR-01': 'Bhopal Treasury (01)',
+  'TR-15': 'Hoshangabad Treasury (15)',
+  'TR-02': 'Indore Treasury (02)',
+  'TR-03': 'Gwalior Treasury (03)'
+};
+
+const MOCK_TO_DDOS: Record<string, { name: string; deptCode: string; deptName: string }> = {
+  'DDO-BPL-001': {
+    name: 'District Court, Bhopal',
+    deptCode: 'DEP-JUS-01',
+    deptName: 'Department of Justice & Law'
+  },
+  'DDO-BPL-002': {
+    name: 'Session Court, Bhopal',
+    deptCode: 'DEP-JUS-01',
+    deptName: 'Department of Justice & Law'
+  },
+  'DDO-IND-001': {
+    name: 'Civil Court, Indore',
+    deptCode: 'DEP-JUS-01',
+    deptName: 'Department of Justice & Law'
+  },
+  'DDO-IND-002': {
+    name: 'Family Court, Indore',
+    deptCode: 'DEP-JUS-01',
+    deptName: 'Department of Justice & Law'
+  }
+};
+
+const MOCK_CCD_ACCOUNTS = ['CCD-BPL-101', 'CCD-IND-201', 'CCD-REG-001'];
+const MOCK_CRCD_ACCOUNTS = ['CRCD-BPL-501', 'CRCD-IND-601', 'CRCD-BAIL-002'];
+
+const MOCK_HOAS = {
+  CCD: '8443-00-103-0001',
+  CrCD: '8443-00-104-0001'
 };
 
 export default function PdToCcdCrcdWorksTransferScreen() {
@@ -100,19 +144,24 @@ export default function PdToCcdCrcdWorksTransferScreen() {
   // TO Section State
   const [toAccountType, setToAccountType] = useState('CCD'); // CCD, CrCD, Works
 
-  // Destination Specific fields state
-  const [courtCode, setCourtCode] = useState('');
-  const [courtName, setCourtName] = useState('');
-  const [caseNo, setCaseNo] = useState('');
-  const [caseTitle, setCaseTitle] = useState('');
+  // Destination Specific fields state for CCD/CrCD
+  const [toTreasuryCode, setToTreasuryCode] = useState('');
+  const [toTreasuryName, setToTreasuryName] = useState('');
+  const [toDdoCode, setToDdoCode] = useState('');
+  const [toDdoName, setToDdoName] = useState('');
+  const [toDeptCode, setToDeptCode] = useState('');
+  const [toDeptName, setToDeptName] = useState('');
+  const [toCcdAccountNo, setToCcdAccountNo] = useState('');
+  const [toCrcdAccountNo, setToCrcdAccountNo] = useState('');
+  const [toHoa, setToHoa] = useState('8443-00-103-0001');
 
-  const [accusedName, setAccusedName] = useState('');
-  const [bondAmount, setBondAmount] = useState('');
-
+  // Destination Specific fields state for Works
   const [workId, setWorkId] = useState('');
-  const [divisionCode, setDivisionCode] = useState('');
-  const [divisionName, setDivisionName] = useState('');
-  const [contractorName, setContractorName] = useState('');
+  const [treasury, setTreasury] = useState('');
+  const [workIdType, setWorkIdType] = useState('');
+  const [ddoCode, setDdoCode] = useState('');
+  const [ddoName, setDdoName] = useState('');
+  const [hoa, setHoa] = useState('');
 
   // Derived Values
   const currentOperator = MOCK_OPERATORS[operatorCode];
@@ -141,13 +190,27 @@ export default function PdToCcdCrcdWorksTransferScreen() {
     }
   };
 
-  const handleCourtChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleToTreasuryCodeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const code = e.target.value;
-    setCourtCode(code);
-    if (code && MOCK_COURTS[code]) {
-      setCourtName(MOCK_COURTS[code].name);
+    setToTreasuryCode(code);
+    if (code && MOCK_TO_TREASURIES[code]) {
+      setToTreasuryName(MOCK_TO_TREASURIES[code]);
     } else {
-      setCourtName('');
+      setToTreasuryName('');
+    }
+  };
+
+  const handleToDdoCodeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const code = e.target.value;
+    setToDdoCode(code);
+    if (code && MOCK_TO_DDOS[code]) {
+      setToDdoName(MOCK_TO_DDOS[code].name);
+      setToDeptCode(MOCK_TO_DDOS[code].deptCode);
+      setToDeptName(MOCK_TO_DDOS[code].deptName);
+    } else {
+      setToDdoName('');
+      setToDeptCode('');
+      setToDeptName('');
     }
   };
 
@@ -156,29 +219,46 @@ export default function PdToCcdCrcdWorksTransferScreen() {
     setWorkId(id);
     if (id && MOCK_WORKS[id]) {
       const work = MOCK_WORKS[id];
-      setDivisionCode(work.divisionCode);
-      setDivisionName(work.divisionName);
-      setContractorName(work.contractorName);
+      setTreasury(work.treasury);
+      setWorkIdType(work.workIdType);
+      setDdoCode(work.ddoCode);
+      setDdoName(work.ddoName);
+      setHoa(work.hoa);
     } else {
-      setDivisionCode('');
-      setDivisionName('');
-      setContractorName('');
+      setTreasury('');
+      setWorkIdType('');
+      setDdoCode('');
+      setDdoName('');
+      setHoa('');
     }
   };
 
   const handleToTypeChange = (type: string) => {
     setToAccountType(type);
     // Reset TO specific inputs
-    setCourtCode('');
-    setCourtName('');
-    setCaseNo('');
-    setCaseTitle('');
-    setAccusedName('');
-    setBondAmount('');
+    setToTreasuryCode('');
+    setToTreasuryName('');
+    setToDdoCode('');
+    setToDdoName('');
+    setToDeptCode('');
+    setToDeptName('');
+    setToCcdAccountNo('');
+    setToCrcdAccountNo('');
+    
+    if (type === 'CCD') {
+      setToHoa(MOCK_HOAS.CCD);
+    } else if (type === 'CrCD') {
+      setToHoa(MOCK_HOAS.CrCD);
+    } else {
+      setToHoa('');
+    }
+
     setWorkId('');
-    setDivisionCode('');
-    setDivisionName('');
-    setContractorName('');
+    setTreasury('');
+    setWorkIdType('');
+    setDdoCode('');
+    setDdoName('');
+    setHoa('');
   };
 
   const handleReset = () => {
@@ -224,29 +304,29 @@ export default function PdToCcdCrcdWorksTransferScreen() {
 
     // TO section specific validations
     if (toAccountType === 'CCD') {
-      if (!courtCode) {
-        showToast('error', 'Validation failed: Court Code is required for Civil Court Deposit.');
+      if (!toTreasuryCode) {
+        showToast('error', 'Validation failed: Treasury Code is required for CCD.');
         return;
       }
-      if (!caseNo.trim()) {
-        showToast('error', 'Validation failed: Civil Case Number is required.');
+      if (!toDdoCode) {
+        showToast('error', 'Validation failed: DDO Code is required.');
         return;
       }
-      if (!caseTitle.trim()) {
-        showToast('error', 'Validation failed: Case Title is required.');
+      if (!toCcdAccountNo) {
+        showToast('error', 'Validation failed: CCD Account No is required.');
         return;
       }
     } else if (toAccountType === 'CrCD') {
-      if (!courtCode) {
-        showToast('error', 'Validation failed: Court Code is required for Criminal Court Deposit.');
+      if (!toTreasuryCode) {
+        showToast('error', 'Validation failed: Treasury Code is required for CrCD.');
         return;
       }
-      if (!caseNo.trim()) {
-        showToast('error', 'Validation failed: Police Case / FIR No is required.');
+      if (!toDdoCode) {
+        showToast('error', 'Validation failed: DDO Code is required.');
         return;
       }
-      if (!accusedName.trim()) {
-        showToast('error', 'Validation failed: Accused Name is required.');
+      if (!toCrcdAccountNo) {
+        showToast('error', 'Validation failed: CrCD Account No is required.');
         return;
       }
     } else if (toAccountType === 'Works') {
@@ -279,7 +359,7 @@ export default function PdToCcdCrcdWorksTransferScreen() {
         {/* Tab Header Box */}
         <div className="pd-transfer-tab-container">
           <div className="pd-transfer-tab-active">
-            By-Transfer from PD Account
+            PD to {toAccountType} transfer
           </div>
         </div>
 
@@ -298,419 +378,501 @@ export default function PdToCcdCrcdWorksTransferScreen() {
           )}
 
           <form onSubmit={handleSubmit}>
+            <div className="transfer-cards-container">
 
-            {/* Card 1: From Deposit Account */}
-            <div className="gov-card">
-              <div className="gov-card-header">
-                1. From Deposit Account
-              </div>
-              <div className="gov-card-body">
-                <div className="pd-transfer-grid">
+              {/* Card 1: From Deposit Account */}
+              <div className="gov-card to-section-card">
+                <div className="gov-card-header to-section-header">
+                  FROM
+                </div>
+                <div className="gov-card-body">
+                  <div className="two-col-grid">
 
-                  {/* Row 1 */}
-                  <div className="court-form-group">
-                    <label className="court-form-label">Deposit Type</label>
-                    <input
-                      type="text"
-                      className="court-form-input disabled-input"
-                      value="PD"
-                      disabled
-                    />
-                  </div>
-
-                  <div className="court-form-group">
-                    <label className="court-form-label">
-                      Operator Code <span className="required-star">*</span>
-                    </label>
-                    <select
-                      className="court-form-select"
-                      value={operatorCode}
-                      onChange={handleOperatorChange}
-                    >
-                      {Object.keys(MOCK_OPERATORS).map(code => (
-                        <option key={code} value={code}>{code}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="court-form-group">
-                    <label className="court-form-label">Purpose Code</label>
-                    <input
-                      type="text"
-                      className="court-form-input disabled-input"
-                      value={currentOperator ? currentOperator.purposeCode : ''}
-                      disabled
-                    />
-                  </div>
-
-                  {/* Row 2 */}
-                  <div className="court-form-group">
-                    <label className="court-form-label">Operator Name</label>
-                    <input
-                      type="text"
-                      className="court-form-input disabled-input"
-                      value={operatorName}
-                      placeholder="Operator Name"
-                      disabled
-                    />
-                  </div>
-
-                  <div className="court-form-group">
-                    <label className="court-form-label">Expenditure Pattern</label>
-                    <input
-                      type="text"
-                      className="court-form-input disabled-input"
-                      value={currentOperator ? currentOperator.expenditurePattern : ''}
-                      disabled
-                    />
-                  </div>
-
-                  <div className="court-form-group">
-                    <label className="court-form-label">
-                      HOA <span className="required-star">*</span>
-                    </label>
-                    <select
-                      className="court-form-select"
-                      value={selectedHoa}
-                      onChange={(e) => setSelectedHoa(e.target.value)}
-                    >
-                      <option value="">Select HOA</option>
-                      {hoaOptions.map(h => (
-                        <option key={h.head} value={h.head}>{h.head}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Row 3 */}
-                  <div className="court-form-group">
-                    <label className="court-form-label">HOA Balance</label>
-                    <input
-                      type="text"
-                      className="court-form-input disabled-input amount-output"
-                      value={selectedHoa ? `₹ ${hoaBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}` : 'Auto-filled'}
-                      disabled
-                    />
-                  </div>
-
-                  {currentOperator && currentOperator.expenditurePattern === 'CHALLAN_WISE' && (
+                    {/* Deposit Type */}
                     <div className="court-form-group">
-                      <label className="court-form-label">
-                        Challan <span className="required-star">*</span>
+                      <label className="court-form-label purple-label">Deposit Type</label>
+                      <input
+                        type="text"
+                        className="fetched-data-input"
+                        value="PD"
+                        disabled
+                      />
+                    </div>
+
+                    {/* Operator Code */}
+                    <div className="court-form-group">
+                      <label className="court-form-label purple-label">
+                        Operator Code <span className="required-star">*</span>
                       </label>
-                      <select
-                        className="court-form-select"
-                        value={selectedChallan}
-                        onChange={(e) => setSelectedChallan(e.target.value)}
+                      <div className="select-wrapper">
+                        <select
+                          className="purple-select-input"
+                          value={operatorCode}
+                          onChange={handleOperatorChange}
+                        >
+                          {Object.keys(MOCK_OPERATORS).map(code => (
+                            <option key={code} value={code}>{code}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Purpose Code */}
+                    <div className="court-form-group">
+                      <label className="court-form-label purple-label">Purpose Code</label>
+                      <input
+                        type="text"
+                        className="fetched-data-input"
+                        value={currentOperator ? currentOperator.purposeCode : ''}
+                        disabled
+                      />
+                    </div>
+
+                    {/* Operator Name */}
+                    <div className="court-form-group">
+                      <label className="court-form-label purple-label">Operator Name</label>
+                      <input
+                        type="text"
+                        className="fetched-data-input"
+                        value={operatorName}
+                        placeholder="Operator Name"
+                        disabled
+                      />
+                    </div>
+
+                    {/* Expenditure Pattern */}
+                    <div className="court-form-group">
+                      <label className="court-form-label purple-label">Expenditure Pattern</label>
+                      <input
+                        type="text"
+                        className="fetched-data-input"
+                        value={currentOperator ? currentOperator.expenditurePattern : ''}
+                        disabled
+                      />
+                    </div>
+
+                    {/* HOA */}
+                    <div className="court-form-group">
+                      <label className="court-form-label purple-label">
+                        HOA <span className="required-star">*</span>
+                      </label>
+                      <div className="select-wrapper">
+                        <select
+                          className="purple-select-input"
+                          value={selectedHoa}
+                          onChange={(e) => setSelectedHoa(e.target.value)}
+                        >
+                          <option value="">Select HOA</option>
+                          {hoaOptions.map(h => (
+                            <option key={h.head} value={h.head}>{h.head}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* HOA Balance */}
+                    <div className="court-form-group">
+                      <label className="court-form-label purple-label">HOA Balance</label>
+                      <input
+                        type="text"
+                        className="fetched-data-input"
+                        value={selectedHoa ? `₹ ${hoaBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}` : 'Auto-filled'}
+                        disabled
+                      />
+                    </div>
+
+                    {/* Challan (Conditional) */}
+                    {currentOperator && currentOperator.expenditurePattern === 'CHALLAN_WISE' ? (
+                      <div className="court-form-group">
+                        <label className="court-form-label purple-label">
+                          Challan <span className="required-star">*</span>
+                        </label>
+                        <div className="select-wrapper">
+                          <select
+                            className="purple-select-input"
+                            value={selectedChallan}
+                            onChange={(e) => setSelectedChallan(e.target.value)}
+                          >
+                            <option value="">Select Challan</option>
+                            {challanOptions.map(c => (
+                              <option key={c} value={c}>{c}</option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    ) : null}
+
+                    {/* Transfer Amount */}
+                    <div className="court-form-group">
+                      <label className="court-form-label purple-label">
+                        Transfer Amount <span className="required-star">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="active-text-input"
+                        value={transferAmount}
+                        onChange={(e) => setTransferAmount(e.target.value)}
+                        placeholder="Enter transfer amount"
+                      />
+                    </div>
+
+                    {/* Purpose of Transfer (Full Width) */}
+                    <div className="court-form-group col-span-2">
+                      <label className="court-form-label purple-label">
+                        Purpose of Transfer <span className="required-star">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="active-text-input"
+                        value={transferPurpose}
+                        onChange={(e) => setTransferPurpose(e.target.value)}
+                        placeholder="Write the purpose of transfer"
+                      />
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2: To Account / Scheme */}
+              <div className="gov-card to-section-card">
+                <div className="gov-card-header to-section-header">
+                  TO
+                </div>
+                <div className="gov-card-body">
+                  <div className="two-col-grid">
+                    {/* Deposit Type Select Dropdown */}
+                    <div className="court-form-group">
+                      <label className="court-form-label purple-label">
+                        To Deposit Type <span className="required-star">*</span>
+                      </label>
+                      <div className="select-wrapper">
+                        <select
+                          className="purple-select-input"
+                          value={toAccountType}
+                          onChange={(e) => handleToTypeChange(e.target.value)}
+                        >
+                          <option value="CCD">Civil Court Deposit (CCD)</option>
+                          <option value="CrCD">Criminal Court Deposit (CrCD)</option>
+                          <option value="Works">Public Works Deposit (Works)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* HoA Field (Beside Deposit Type) */}
+                    <div className="court-form-group">
+                      <label className="court-form-label purple-label">Head of Account (HoA)</label>
+                      <input
+                        type="text"
+                        className="fetched-data-input"
+                        value={toAccountType === 'Works' ? (workId ? hoa : 'Fetched Data') : toHoa}
+                        disabled
+                      />
+                    </div>
+
+                    {toAccountType === 'CCD' && (
+                      <>
+                        {/* Treasury Code */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">
+                            Treasury Code <span className="required-star">*</span>
+                          </label>
+                          <div className="select-wrapper">
+                            <select
+                              className="purple-select-input"
+                              value={toTreasuryCode}
+                              onChange={handleToTreasuryCodeChange}
+                            >
+                              <option value="">Select</option>
+                              {Object.keys(MOCK_TO_TREASURIES).map(code => (
+                                <option key={code} value={code}>{code}</option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+
+                        {/* Treasury Name */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">Treasury Name</label>
+                          <input
+                            type="text"
+                            className="fetched-data-input"
+                            value={toTreasuryName || 'Fetched Data'}
+                            disabled
+                          />
+                        </div>
+
+                        {/* DDO Code */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">
+                            DDO Code <span className="required-star">*</span>
+                          </label>
+                          <div className="select-wrapper">
+                            <select
+                              className="purple-select-input"
+                              value={toDdoCode}
+                              onChange={handleToDdoCodeChange}
+                            >
+                              <option value="">Select</option>
+                              {Object.keys(MOCK_TO_DDOS).map(code => (
+                                <option key={code} value={code}>{code}</option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+
+                        {/* DDO Name */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">DDO Name</label>
+                          <input
+                            type="text"
+                            className="fetched-data-input"
+                            value={toDdoName || 'Fetched Data'}
+                            disabled
+                          />
+                        </div>
+
+                        {/* Department Code */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">Department Code</label>
+                          <input
+                            type="text"
+                            className="fetched-data-input"
+                            value={toDeptCode || 'Fetched Data'}
+                            disabled
+                          />
+                        </div>
+
+                        {/* Department Name */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">Department Name</label>
+                          <input
+                            type="text"
+                            className="fetched-data-input"
+                            value={toDeptName || 'Fetched Data'}
+                            disabled
+                          />
+                        </div>
+
+                        {/* CCD Account No */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">
+                            CCD Account No <span className="required-star">*</span>
+                          </label>
+                          <div className="select-wrapper">
+                            <select
+                              className="purple-select-input"
+                              value={toCcdAccountNo}
+                              onChange={(e) => setToCcdAccountNo(e.target.value)}
+                            >
+                              <option value="">Select</option>
+                              {MOCK_CCD_ACCOUNTS.map(acc => (
+                                <option key={acc} value={acc}>{acc}</option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      </>
+                    )}
+
+                    {toAccountType === 'CrCD' && (
+                      <>
+                        {/* Treasury Code */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">
+                            Treasury Code <span className="required-star">*</span>
+                          </label>
+                          <div className="select-wrapper">
+                            <select
+                              className="purple-select-input"
+                              value={toTreasuryCode}
+                              onChange={handleToTreasuryCodeChange}
+                            >
+                              <option value="">Select</option>
+                              {Object.keys(MOCK_TO_TREASURIES).map(code => (
+                                <option key={code} value={code}>{code}</option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+
+                        {/* Treasury Name */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">Treasury Name</label>
+                          <input
+                            type="text"
+                            className="fetched-data-input"
+                            value={toTreasuryName || 'Fetched Data'}
+                            disabled
+                          />
+                        </div>
+
+                        {/* DDO Code */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">
+                            DDO Code <span className="required-star">*</span>
+                          </label>
+                          <div className="select-wrapper">
+                            <select
+                              className="purple-select-input"
+                              value={toDdoCode}
+                              onChange={handleToDdoCodeChange}
+                            >
+                              <option value="">Select</option>
+                              {Object.keys(MOCK_TO_DDOS).map(code => (
+                                <option key={code} value={code}>{code}</option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+
+                        {/* DDO Name */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">DDO Name</label>
+                          <input
+                            type="text"
+                            className="fetched-data-input"
+                            value={toDdoName || 'Fetched Data'}
+                            disabled
+                          />
+                        </div>
+
+                        {/* Department Code */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">Department Code</label>
+                          <input
+                            type="text"
+                            className="fetched-data-input"
+                            value={toDeptCode || 'Fetched Data'}
+                            disabled
+                          />
+                        </div>
+
+                        {/* Department Name */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">Department Name</label>
+                          <input
+                            type="text"
+                            className="fetched-data-input"
+                            value={toDeptName || 'Fetched Data'}
+                            disabled
+                          />
+                        </div>
+
+                        {/* CrCD Account No */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">
+                            CrCD Account No <span className="required-star">*</span>
+                          </label>
+                          <div className="select-wrapper">
+                            <select
+                              className="purple-select-input"
+                              value={toCrcdAccountNo}
+                              onChange={(e) => setToCrcdAccountNo(e.target.value)}
+                            >
+                              <option value="">Select</option>
+                              {MOCK_CRCD_ACCOUNTS.map(acc => (
+                                <option key={acc} value={acc}>{acc}</option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      </>
+                    )}
+
+                    {toAccountType === 'Works' && (
+                      <>
+                        {/* Work ID (Full Width) */}
+                        <div className="court-form-group col-span-2">
+                          <label className="court-form-label purple-label">
+                            Work ID <span className="required-star">*</span>
+                          </label>
+                          <div className="select-wrapper">
+                            <select
+                              className="purple-select-input"
+                              value={workId}
+                              onChange={handleWorkChange}
+                            >
+                              <option value="">Select</option>
+                              {Object.keys(MOCK_WORKS).map(id => (
+                                <option key={id} value={id}>{id} - {MOCK_WORKS[id].title}</option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+
+                        {/* Treasury */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">Treasury</label>
+                          <input
+                            type="text"
+                            className="fetched-data-input"
+                            value={workId ? treasury : 'Fetched Data'}
+                            disabled
+                          />
+                        </div>
+
+                        {/* Work ID Type */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">Work ID Type</label>
+                          <input
+                            type="text"
+                            className="fetched-data-input"
+                            value={workId ? workIdType : 'Fetched Data'}
+                            disabled
+                          />
+                        </div>
+
+                        {/* DDO Code */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">DDO Code</label>
+                          <input
+                            type="text"
+                            className="fetched-data-input"
+                            value={workId ? ddoCode : 'Fetched Data'}
+                            disabled
+                          />
+                        </div>
+
+                        {/* DDO Name */}
+                        <div className="court-form-group">
+                          <label className="court-form-label purple-label">DDO Name</label>
+                          <input
+                            type="text"
+                            className="fetched-data-input"
+                            value={workId ? ddoName : 'Fetched Data'}
+                            disabled
+                          />
+                        </div>
+                      </>
+                    )}
+
+                    {/* Action buttons inside TO card at bottom right (Full Width row) */}
+                    <div className="to-works-buttons-container col-span-2">
+                      <button
+                        type="button"
+                        className="purple-btn-reset-new"
+                        onClick={handleReset}
                       >
-                        <option value="">Select Challan</option>
-                        {challanOptions.map(c => (
-                          <option key={c} value={c}>{c}</option>
-                        ))}
-                      </select>
+                        Reset Form
+                      </button>
+                      <button
+                        type="submit"
+                        className="purple-btn-submit-new"
+                        disabled={isSubmitting}
+                      >
+                        <span className="btn-icon-wrapper">
+                          <Check size={14} strokeWidth={4} />
+                        </span>
+                        {isSubmitting ? 'Submitting...' : 'Submit'}
+                      </button>
                     </div>
-                  )}
 
-                  <div className="court-form-group">
-                    <label className="court-form-label">
-                      Transfer Amount <span className="required-star">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="court-form-input amount-input"
-                      value={transferAmount}
-                      onChange={(e) => setTransferAmount(e.target.value)}
-                      placeholder="Enter transfer amount"
-                    />
                   </div>
-
-                  {/* Row 4 */}
-                  <div className="court-form-group">
-                    <label className="court-form-label">
-                      Purpose of Transfer <span className="required-star">*</span>
-                    </label>
-                    <textarea
-                      className="court-form-input purpose-textarea"
-                      value={transferPurpose}
-                      onChange={(e) => setTransferPurpose(e.target.value)}
-                      placeholder="Write the purpose of transfer"
-                      rows={2}
-                    />
-                  </div>
-
                 </div>
               </div>
+
             </div>
-
-            {/* Card 2: To Account / Scheme */}
-            <div className="gov-card mt-4">
-              <div className="gov-card-header">
-                2. To Destination Account / Scheme
-              </div>
-              <div className="gov-card-body">
-
-                {/* Visual Option Selector Cards */}
-                <div className="to-options-cards-group">
-                  <div
-                    className={`to-option-card ${toAccountType === 'CCD' ? 'selected' : ''}`}
-                    onClick={() => handleToTypeChange('CCD')}
-                  >
-                    <div className="to-option-icon"><Building size={20} /></div>
-                    <div className="to-option-details">
-                      <span className="title">Civil Court Deposit</span>
-                      <span className="desc">CCD accounts, registry cases</span>
-                    </div>
-                  </div>
-
-                  <div
-                    className={`to-option-card ${toAccountType === 'CrCD' ? 'selected' : ''}`}
-                    onClick={() => handleToTypeChange('CrCD')}
-                  >
-                    <div className="to-option-icon"><FileText size={20} /></div>
-                    <div className="to-option-details">
-                      <span className="title">Criminal Court Deposit</span>
-                      <span className="desc">CrCD bail bonds, security deposits</span>
-                    </div>
-                  </div>
-
-                  <div
-                    className={`to-option-card ${toAccountType === 'Works' ? 'selected' : ''}`}
-                    onClick={() => handleToTypeChange('Works')}
-                  >
-                    <div className="to-option-icon"><Database size={20} /></div>
-                    <div className="to-option-details">
-                      <span className="title">Public Works Deposit</span>
-                      <span className="desc">Division contracts & contractors</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Form Inputs based on selection */}
-                <div className="pd-transfer-grid mt-6">
-
-                  {toAccountType === 'CCD' && (
-                    <>
-                      <div className="court-form-group col-start-1">
-                        <label className="court-form-label">
-                          Court Code <span className="required-star">*</span>
-                        </label>
-                        <select
-                          className="court-form-select"
-                          value={courtCode}
-                          onChange={handleCourtChange}
-                        >
-                          <option value="">------ Select ------</option>
-                          {Object.keys(MOCK_COURTS).map(code => (
-                            <option key={code} value={code}>{code}</option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div className="court-form-group">
-                        <label className="court-form-label">Court Name</label>
-                        <input
-                          type="text"
-                          className="court-form-input disabled-input"
-                          value={courtName}
-                          placeholder="Auto-resolved Court Name"
-                          disabled
-                        />
-                      </div>
-
-                      <div className="court-form-group col-start-1">
-                        <label className="court-form-label">
-                          Civil Suit / Case No <span className="required-star">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="court-form-input"
-                          value={caseNo}
-                          onChange={(e) => setCaseNo(e.target.value)}
-                          placeholder="E.g. CS/2026/8902"
-                        />
-                      </div>
-
-                      <div className="court-form-group">
-                        <label className="court-form-label">
-                          Case Title / Party Name <span className="required-star">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="court-form-input"
-                          value={caseTitle}
-                          onChange={(e) => setCaseTitle(e.target.value)}
-                          placeholder="E.g. Ram Prasad vs. State of MP"
-                        />
-                      </div>
-
-                      <div className="court-form-group col-start-1">
-                        <label className="court-form-label">CCD Account Scheme</label>
-                        <input
-                          type="text"
-                          className="court-form-input disabled-input"
-                          value="01 : Regular CCD Scheme (Bhopal)"
-                          disabled
-                        />
-                      </div>
-                    </>
-                  )}
-
-                  {toAccountType === 'CrCD' && (
-                    <>
-                      <div className="court-form-group col-start-1">
-                        <label className="court-form-label">
-                          Court Code <span className="required-star">*</span>
-                        </label>
-                        <select
-                          className="court-form-select"
-                          value={courtCode}
-                          onChange={handleCourtChange}
-                        >
-                          <option value="">------ Select ------</option>
-                          {Object.keys(MOCK_COURTS).map(code => (
-                            <option key={code} value={code}>{code}</option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div className="court-form-group">
-                        <label className="court-form-label">Court Name</label>
-                        <input
-                          type="text"
-                          className="court-form-input disabled-input"
-                          value={courtName}
-                          placeholder="Auto-resolved Court Name"
-                          disabled
-                        />
-                      </div>
-
-                      <div className="court-form-group col-start-1">
-                        <label className="court-form-label">
-                          FIR / Police Case Number <span className="required-star">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="court-form-input"
-                          value={caseNo}
-                          onChange={(e) => setCaseNo(e.target.value)}
-                          placeholder="E.g. FIR/401/2026"
-                        />
-                      </div>
-
-                      <div className="court-form-group">
-                        <label className="court-form-label">
-                          Accused Name <span className="required-star">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          className="court-form-input"
-                          value={accusedName}
-                          onChange={(e) => setAccusedName(e.target.value)}
-                          placeholder="E.g. Shyam Lal Yadav"
-                        />
-                      </div>
-
-                      <div className="court-form-group col-start-1">
-                        <label className="court-form-label">Bail Bond / Security Amount</label>
-                        <input
-                          type="text"
-                          className="court-form-input"
-                          value={bondAmount}
-                          onChange={(e) => setBondAmount(e.target.value)}
-                          placeholder="E.g. 50,000.00"
-                        />
-                      </div>
-                    </>
-                  )}
-
-                  {toAccountType === 'Works' && (
-                    <>
-                      <div className="court-form-group col-start-1">
-                        <label className="court-form-label">
-                          Work ID / Project Code <span className="required-star">*</span>
-                        </label>
-                        <select
-                          className="court-form-select"
-                          value={workId}
-                          onChange={handleWorkChange}
-                        >
-                          <option value="">------ Select ------</option>
-                          {Object.keys(MOCK_WORKS).map(id => (
-                            <option key={id} value={id}>{id} - {MOCK_WORKS[id].title}</option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div className="court-form-group">
-                        <label className="court-form-label">Division Code</label>
-                        <input
-                          type="text"
-                          className="court-form-input disabled-input"
-                          value={divisionCode}
-                          placeholder="Auto-resolved Division Code"
-                          disabled
-                        />
-                      </div>
-
-                      <div className="court-form-group col-start-1">
-                        <label className="court-form-label">Division Name</label>
-                        <input
-                          type="text"
-                          className="court-form-input disabled-input"
-                          value={divisionName}
-                          placeholder="Auto-resolved Division Name"
-                          disabled
-                        />
-                      </div>
-
-                      <div className="court-form-group">
-                        <label className="court-form-label">Contractor Name</label>
-                        <input
-                          type="text"
-                          className="court-form-input disabled-input"
-                          value={contractorName}
-                          placeholder="Auto-resolved Contractor Name"
-                          disabled
-                        />
-                      </div>
-                    </>
-                  )}
-
-                </div>
-              </div>
-            </div>
-
-            {/* Action Bar */}
-            <div className="pd-transfer-actions-bar">
-              <button
-                type="submit"
-                className="gov-btn gov-btn-submit"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
-              </button>
-              <button
-                type="button"
-                className="gov-btn gov-btn-save"
-                onClick={() => showToast('success', 'Draft transfer request saved locally.')}
-              >
-                Save
-              </button>
-              <button
-                type="button"
-                className="gov-btn gov-btn-reset"
-                onClick={handleReset}
-              >
-                Reset
-              </button>
-              <button
-                type="button"
-                className="gov-btn gov-btn-close"
-                onClick={handleClose}
-              >
-                Close
-              </button>
-            </div>
-
           </form>
         </div>
       </div>
