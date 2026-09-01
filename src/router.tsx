@@ -23,6 +23,7 @@ import SecurityDepositWorkIdScreen from './screens/sprint4/SecurityDepositWorkId
 import StatutoryWorksReportsScreen from './screens/sprint4/StatutoryWorksReportsScreen';
 import ContractManagementSinglePayment from './screens/sprint4/contractid';
 import WorksToPDTransferScreen from './screens/sprint4/WorksToPDTransferScreen';
+import HoAAdditionRequestScreen from './screens/sprint6/HoAAdditionRequestScreen';
 
 
 export const router = createBrowserRouter([
@@ -57,6 +58,8 @@ export const router = createBrowserRouter([
       { path: 'sprint/4/story/3', element: <StatutoryWorksReportsScreen /> },
       { path: 'sprint/4/story/4', element: <ContractManagementSinglePayment /> },
       { path: 'sprint/4/story/5', element: <WorksToPDTransferScreen /> },
+      // Sprint 6
+      { path: 'sprint/6/story/1', element: <HoAAdditionRequestScreen /> },
       // Catch-all
 
       {

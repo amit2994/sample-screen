@@ -83,4 +83,16 @@ export const sprints: Sprint[] = [
       },
     ],
   },
+  {
+    id: 'sprint-6',
+    name: 'Sprint 6',
+    stories: [
+      {
+        id: 'story-21',
+        title: 'Request Addition of HoA to PD Account',
+        path: '/sprint/6/story/1',
+        screen_id: 'sprint6-story1-hoa-addition',
+      },
+    ],
+  },
 ];
