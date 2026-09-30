@@ -21,6 +21,7 @@ export const sprints: Sprint[] = [
       { id: 'story-3', title: 'Court Deposit Account Creation', path: '/sprint/1/story/3', screen_id: 'sprint1-court-deposit-creation' },
       { id: 'story-4', title: 'Transfer PD to CCD/CrCD/Works', path: '/sprint/1/story/4', screen_id: 'sprint1-pd-transfer' },
       { id: 'story-5', title: 'Cross Deposit-Type Transfer Enablement', path: '/sprint/1/story/5', screen_id: 'sprint1-cross-deposit-enablement' },
+      { id: 'story-6', title: 'Transfer CCD to CrCD/PD/Work ID', path: '/sprint/1/story/6', screen_id: 'sprint1-ccd-transfer' },
     ],
   },
   {
@@ -92,6 +93,12 @@ export const sprints: Sprint[] = [
         title: 'Request Addition of HoA to PD Account',
         path: '/sprint/6/story/1',
         screen_id: 'sprint6-story1-hoa-addition',
+      },
+      {
+        id: 'story-22',
+        title: 'Nidhi Funds Expenditure Report',
+        path: '/sprint/6/story/2',
+        screen_id: 'sprint6-story2-nidhi-funds-expenditure-report',
       },
     ],
   },

@@ -1,0 +1,1045 @@
+/* ============================================================
+   SPRINT 6: NIDHI FUNDS EXPENDITURE REPORT STYLING
+   ============================================================ */
+
+.nidhi-screen {
+  padding: var(--space-6, 24px);
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6, 24px);
+  animation: fadeIn 0.3s ease-out;
+  font-family: inherit;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Toast Notification --- */
+.nidhi-toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 9999;
+  background: #1E1B4B;
+  color: #FFFFFF;
+  padding: 12px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px rgba(30, 27, 75, 0.25);
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #6366F1;
+}
+
+.spin-icon {
+  animation: spin 1.5s linear infinite;
+  color: #A855F7;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- Header Section --- */
+.nidhi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  background: linear-gradient(135deg, #FAF7FD 0%, #F3EBF9 50%, #FFFFFF 100%);
+  border: 1px solid #E9D5FF;
+  padding: 24px 28px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.05);
+}
+
+.nidhi-header-left {
+  max-width: 850px;
+}
+
+.nidhi-header-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: #EDE9FE;
+  color: #7C3AED;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.nidhi-header-left h1 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #1E1B4B;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.02em;
+}
+
+.nidhi-header-left p {
+  font-size: 14px;
+  color: #5B21B6;
+  margin: 0;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.nidhi-header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* --- Buttons --- */
+.nidhi-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  white-space: nowrap;
+}
+
+.nidhi-btn-primary {
+  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+}
+
+.nidhi-btn-primary:hover {
+  background: linear-gradient(135deg, #6D28D9 0%, #5B21B6 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.35);
+}
+
+.nidhi-btn-secondary {
+  background: #FFFFFF;
+  color: #4C1D95;
+  border: 1px solid #DDD6FE;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.nidhi-btn-secondary:hover {
+  background: #F5F3FF;
+  border-color: #C4B5FD;
+  color: #5B21B6;
+}
+
+.nidhi-btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: #7C3AED;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nidhi-btn-link:hover {
+  text-decoration: underline;
+  color: #5B21B6;
+}
+
+/* --- Card Utilities --- */
+.nidhi-card {
+  background: #FFFFFF;
+  border: 1px solid #E9D5FF;
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.nidhi-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nidhi-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nidhi-card-title h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1E1B4B;
+  margin: 0;
+}
+
+.nidhi-icon-purple {
+  color: #7C3AED;
+}
+
+/* --- Section 1: Selection & Available Balance Grid --- */
+.nidhi-selection-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1.4fr;
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .nidhi-selection-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.nidhi-fund-selector-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nidhi-field-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.nidhi-required {
+  color: #EF4444;
+}
+
+.nidhi-select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #DDD6FE;
+  background: #FDFBFF;
+  color: #1F2937;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.nidhi-select-large {
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  border-color: #C4B5FD;
+}
+
+.nidhi-select:focus {
+  border-color: #7C3AED;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+  background: #FFFFFF;
+}
+
+.nidhi-fund-meta-strip {
+  margin-top: 16px;
+  background: #FAF7FD;
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px dashed #DDD6FE;
+}
+
+.meta-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.meta-label {
+  color: #6B7280;
+  font-weight: 500;
+}
+
+.meta-val {
+  color: #1F2937;
+  font-weight: 600;
+}
+
+/* PROMINENT BALANCE DISPLAY CARD */
+.nidhi-balance-display-card {
+  background: linear-gradient(135deg, #1E1B4B 0%, #312E81 60%, #4338CA 100%);
+  color: #FFFFFF;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(30, 27, 75, 0.25);
+}
+
+.nidhi-balance-display-card::after {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.nidhi-balance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.balance-label-tag {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #C7D2FE;
+}
+
+.nidhi-balance-amount {
+  font-size: 32px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 6px 0 0 0;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.nidhi-utilization-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #A7F3D0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nidhi-progress-container {
+  margin: 16px 0;
+}
+
+.nidhi-progress-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.nidhi-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+.nidhi-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #E0E7FF;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.nidhi-balance-footer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.balance-sub-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.sub-stat-label {
+  font-size: 11px;
+  color: #C7D2FE;
+}
+
+.sub-stat-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+/* --- Section 2: Filter Panel --- */
+.nidhi-filter-card {
+  background: #FFFFFF;
+}
+
+.nidhi-filter-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 1.2fr;
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .nidhi-filter-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.nidhi-date-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nidhi-input {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid #DDD6FE;
+  background: #FFFFFF;
+  font-size: 13px;
+  color: #1F2937;
+  outline: none;
+}
+
+.nidhi-input:focus {
+  border-color: #7C3AED;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+.date-to-sep {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6B7280;
+}
+
+.nidhi-preset-chips {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.preset-chip {
+  padding: 3px 8px;
+  background: #F3EBF9;
+  border: 1px solid #E9D5FF;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6D28D9;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.preset-chip:hover {
+  background: #7C3AED;
+  color: #FFFFFF;
+  border-color: #7C3AED;
+}
+
+/* Periodicity Toggle Group */
+.nidhi-toggle-group {
+  display: flex;
+  background: #F3EBF9;
+  padding: 3px;
+  border-radius: 10px;
+  border: 1px solid #E9D5FF;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6D28D9;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn.active {
+  background: #FFFFFF;
+  color: #4C1D95;
+  box-shadow: 0 2px 6px rgba(124, 58, 237, 0.12);
+}
+
+.nidhi-select-sub {
+  margin-top: 8px;
+  font-size: 13px;
+  background: #FAF7FD;
+}
+
+.scheme-filter-info {
+  margin-top: 6px;
+  font-size: 11px;
+  color: #6B7280;
+  font-weight: 500;
+}
+
+/* Secondary Search & Status Filter Row */
+.nidhi-search-row {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #F3EBF9;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.search-input-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  color: #9CA3AF;
+}
+
+.search-input {
+  padding-left: 36px;
+  padding-right: 32px;
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #9CA3AF;
+  cursor: pointer;
+}
+
+.status-filter-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-filter-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4B5563;
+  white-space: nowrap;
+}
+
+.nidhi-select-compact {
+  width: 160px;
+  padding: 7px 10px;
+}
+
+/* --- Section 3: View Tabs --- */
+.nidhi-view-tabs-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #E9D5FF;
+  padding-bottom: 2px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.nidhi-view-tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6B7280;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: #7C3AED;
+}
+
+.tab-btn.active {
+  color: #7C3AED;
+  border-bottom-color: #7C3AED;
+  background: #F3EBF9;
+  border-radius: 8px 8px 0 0;
+}
+
+.nidhi-summary-ribbon {
+  display: flex;
+  gap: 20px;
+  background: #FAF7FD;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid #E9D5FF;
+}
+
+.ribbon-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.ribbon-label {
+  color: #6B7280;
+}
+
+.ribbon-val {
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.text-purple {
+  color: #7C3AED;
+}
+
+/* --- Table Styles --- */
+.nidhi-table-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.nidhi-table-wrapper {
+  overflow-x: auto;
+}
+
+.nidhi-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.nidhi-table th {
+  background: #FAF7FD;
+  color: #4C1D95;
+  font-weight: 700;
+  padding: 12px 16px;
+  border-bottom: 1px solid #E9D5FF;
+  white-space: nowrap;
+}
+
+.nidhi-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #F3EBF9;
+  color: #374151;
+  vertical-align: middle;
+}
+
+.table-row-hover:hover {
+  background: #FAF7FD;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-dark {
+  color: #111827;
+}
+
+.text-muted {
+  color: #6B7280;
+}
+
+.text-xs {
+  font-size: 11px;
+}
+
+.flex-align-gap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mt-1 {
+  margin-top: 4px;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-expenditure {
+  color: #DC2626;
+}
+
+.text-balance {
+  color: #059669;
+}
+
+.code-font {
+  font-family: monospace;
+}
+
+.code-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  background: #F3EBF9;
+  color: #6D28D9;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.work-desc-clamp {
+  max-width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Status Pills */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status-settled {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.status-disbursed {
+  background: #DBEAFE;
+  color: #1E40AF;
+}
+
+.status-pending {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+.nidhi-action-icon-btn {
+  background: transparent;
+  border: none;
+  color: #7C3AED;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.nidhi-action-icon-btn:hover {
+  background: #EDE9FE;
+}
+
+/* Empty Table State */
+.empty-table-cell {
+  text-align: center;
+  padding: 48px 24px !important;
+}
+
+.empty-icon {
+  color: #9CA3AF;
+  margin-bottom: 8px;
+}
+
+.empty-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #374151;
+  margin: 0;
+}
+
+.empty-sub {
+  font-size: 13px;
+  color: #6B7280;
+  margin: 4px 0 0 0;
+}
+
+.margin-top-sm {
+  margin-top: 12px;
+}
+
+/* --- Scheme Card Breakdown Grid --- */
+.scheme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.scheme-item-card {
+  background: #FAF7FD;
+  border: 1px solid #E9D5FF;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.scheme-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.scheme-item-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1E1B4B;
+  margin: 4px 0 0 0;
+  line-height: 1.4;
+}
+
+.scheme-project-tag {
+  font-size: 11px;
+  font-weight: 600;
+  background: #EDE9FE;
+  color: #6D28D9;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.scheme-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.scm-metric {
+  display: flex;
+  flex-direction: column;
+}
+
+.scm-lbl {
+  font-size: 10px;
+  color: #6B7280;
+  font-weight: 500;
+}
+
+.scm-val {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.scheme-progress-bar-wrapper {
+  margin-top: 6px;
+}
+
+/* --- Period Comparison Section --- */
+.period-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #4C1D95;
+  margin: 0 0 12px 0;
+}
+
+.mt-6 {
+  margin-top: 24px;
+}
+
+.width-100 {
+  width: 100px;
+}
+
+/* --- Modal Styles --- */
+.nidhi-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.nidhi-modal {
+  background: #FFFFFF;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 640px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.nidhi-modal-header {
+  padding: 16px 24px;
+  background: #FAF7FD;
+  border-bottom: 1px solid #E9D5FF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nidhi-modal-header h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1E1B4B;
+  margin: 0;
+}
+
+.nidhi-modal-close {
+  background: transparent;
+  border: none;
+  color: #6B7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.nidhi-modal-close:hover {
+  background: #E5E7EB;
+}
+
+.nidhi-modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-banner {
+  background: linear-gradient(135deg, #FAF7FD 0%, #F3EBF9 100%);
+  border: 1px solid #E9D5FF;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-amount {
+  font-size: 24px;
+  font-weight: 800;
+  color: #7C3AED;
+  margin: 2px 0 0 0;
+}
+
+.modal-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-size: 11px;
+  color: #6B7280;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.detail-val {
+  font-size: 13px;
+  color: #1F2937;
+}
+
+.nidhi-modal-footer {
+  padding: 16px 24px;
+  background: #FAF7FD;
+  border-top: 1px solid #E9D5FF;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.bg-light {
+  background: #F9FAFB;
+}
+
+.p-2 {
+  padding: 8px 12px;
+}
+
+.rounded {
+  border-radius: 6px;
+}
+
+/* --- Comments Section --- */
+.nidhi-comments-section {
+  margin-top: 12px;
+}

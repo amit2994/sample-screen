@@ -6,6 +6,7 @@ import Story2Screen from './screens/sprint1/Story2Screen';
 import CourtDepositAccountCreationScreen from './screens/sprint1/CourtDepositAccountCreationScreen';
 import PdToCcdCrcdWorksTransferScreen from './screens/sprint1/PdToCcdCrcdWorksTransferScreen';
 import CrossDepositTransferEnablementScreen from './screens/sprint1/CrossDepositTransferEnablementScreen';
+import CcdToCrcdPdWorkTransferScreen from './screens/sprint1/CcdToCrcdPdWorkTransferScreen';
 import DepositAccountNumberScreen from './screens/sprint2/DepositAccountNumberScreen';
 import DepositAdminRuleConfigScreen from './screens/sprint2/DepositAdminRuleConfigScreen';
 import DepositFundTransferScreen from './screens/sprint2/DepositFundTransferScreen';
@@ -24,6 +25,7 @@ import StatutoryWorksReportsScreen from './screens/sprint4/StatutoryWorksReports
 import ContractManagementSinglePayment from './screens/sprint4/contractid';
 import WorksToPDTransferScreen from './screens/sprint4/WorksToPDTransferScreen';
 import HoAAdditionRequestScreen from './screens/sprint6/HoAAdditionRequestScreen';
+import NidhiFundsExpenditureReportScreen from './screens/sprint6/NidhiFundsExpenditureReportScreen';
 
 
 export const router = createBrowserRouter([
@@ -38,6 +40,7 @@ export const router = createBrowserRouter([
       { path: 'sprint/1/story/3', element: <CourtDepositAccountCreationScreen /> },
       { path: 'sprint/1/story/4', element: <PdToCcdCrcdWorksTransferScreen /> },
       { path: 'sprint/1/story/5', element: <CrossDepositTransferEnablementScreen /> },
+      { path: 'sprint/1/story/6', element: <CcdToCrcdPdWorkTransferScreen /> },
       // Sprint 2
       { path: 'sprint/2/story/1', element: <DepositAccountNumberScreen /> },
       { path: 'sprint/2/story/2', element: <DepositAdminRuleConfigScreen /> },
@@ -60,6 +63,7 @@ export const router = createBrowserRouter([
       { path: 'sprint/4/story/5', element: <WorksToPDTransferScreen /> },
       // Sprint 6
       { path: 'sprint/6/story/1', element: <HoAAdditionRequestScreen /> },
+      { path: 'sprint/6/story/2', element: <NidhiFundsExpenditureReportScreen /> },
       // Catch-all
 
       {
