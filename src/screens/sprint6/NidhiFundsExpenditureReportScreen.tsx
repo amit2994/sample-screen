@@ -2,20 +2,12 @@ import { useState, useMemo } from 'react';
 import {
   Building2,
   Calendar,
-  Filter,
   Download,
-  Printer,
   RefreshCcw,
-  CheckCircle2,
-  AlertCircle,
-  PieChart,
-  Layers,
   Sparkles,
-  TrendingUp,
   Wallet,
   Coins,
   Receipt,
-  Eye,
   X,
   FileSpreadsheet
 } from 'lucide-react';
@@ -978,22 +970,7 @@ export default function NidhiFundsExpenditureReportScreen() {
     toDate
   ]);
 
-  // Expenditure summary statistics
-  const metrics = useMemo(() => {
-    const totalTxCount = filteredTransactions.length;
-    const totalExpInPeriod = filteredTransactions.reduce((acc, curr) => acc + curr.expenditureAmount, 0);
-    const totalSanctionInPeriod = filteredTransactions.reduce((acc, curr) => acc + curr.sanctionAmount, 0);
-    const utilizationRate = activeFund.totalGrant > 0
-      ? ((activeFund.totalExpenditure / activeFund.totalGrant) * 100).toFixed(1)
-      : '0.0';
 
-    return {
-      totalTxCount,
-      totalExpInPeriod,
-      totalSanctionInPeriod,
-      utilizationRate
-    };
-  }, [filteredTransactions, activeFund]);
 
   // Helper formatting function for Indian Currency
   const formatCurrency = (val: number) => {
@@ -1010,25 +987,7 @@ export default function NidhiFundsExpenditureReportScreen() {
     setSelectedSchemeId('ALL'); // reset scheme selection when fund changes
   };
 
-  const handleApplyPresetDate = (type: 'FY' | 'Q1' | 'H1' | 'LAST_30') => {
-    if (type === 'FY') {
-      setFromDate('01/04/2026');
-      setToDate('31/03/2027');
-    } else if (type === 'Q1') {
-      setFromDate('01/04/2026');
-      setToDate('30/06/2026');
-      setPeriodicity('QUARTERLY');
-      setSelectedQuarter('Q1');
-    } else if (type === 'H1') {
-      setFromDate('01/04/2026');
-      setToDate('30/09/2026');
-      setPeriodicity('HALF_YEARLY');
-      setSelectedHalfYear('H1');
-    } else if (type === 'LAST_30') {
-      setFromDate('01/09/2026');
-      setToDate('30/09/2026');
-    }
-  };
+
 
   const handleResetFilters = () => {
     setFromDate('01/04/2026');
@@ -1041,7 +1000,7 @@ export default function NidhiFundsExpenditureReportScreen() {
   };
 
   const handleGenerateReport = () => {
-    setShowExportToast(`Generating Expenditure Report for ${activeFund.name}...`);
+    setShowExportToast(`Generating Expenditure Report for ${activeFund.name} (${filteredTransactions.length} records)...`);
     setTimeout(() => {
       setShowExportToast(null);
     }, 2500);
