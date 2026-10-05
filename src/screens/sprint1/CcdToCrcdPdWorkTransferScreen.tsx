@@ -530,7 +530,7 @@ export default function CcdToCrcdPdWorkTransferScreen() {
                     >
                       <option value="">Select</option>
                       {Object.entries(MOCK_TREASURIES).map(([code, name]) => (
-                        <option key={code} value={code}>{code}</option>
+                        <option key={code} value={code}>{code} - {name}</option>
                       ))}
                     </select>
                   </div>

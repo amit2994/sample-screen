@@ -174,6 +174,18 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
 }
 
+.nidhi-single-master-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nidhi-card-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #E9D5FF 20%, #E9D5FF 80%, transparent 100%);
+  margin: 12px 0 8px 0;
+}
+
 .nidhi-card-header {
   display: flex;
   align-items: center;
@@ -290,17 +302,32 @@
   font-weight: 600;
 }
 
-/* PROMINENT BALANCE DISPLAY CARD */
+/* PROMINENT BALANCE DISPLAY CARD & INNER CONTAINER */
 .nidhi-balance-display-card {
   background: linear-gradient(135deg, #1E1B4B 0%, #312E81 60%, #4338CA 100%);
   color: #FFFFFF;
   border: none;
+  border-radius: 14px;
+  padding: 22px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(30, 27, 75, 0.25);
+  margin-top: 18px;
+}
+
+.nidhi-balance-display-inner {
+  background: #FAF7FD;
+  border: 1px solid #E9D5FF;
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 12px;
+  color: #1E1B4B;
 }
 
 .nidhi-balance-display-card::after {
@@ -322,61 +349,59 @@
 }
 
 .balance-label-tag {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #C7D2FE;
+  letter-spacing: 0.05em;
+  color: #6B7280;
 }
 
 .nidhi-balance-amount {
-  font-size: 32px;
+  font-size: 22px;
   font-weight: 800;
-  color: #FFFFFF;
-  margin: 6px 0 0 0;
-  letter-spacing: -0.02em;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  color: #1E1B4B;
+  margin: 2px 0 0 0;
+  letter-spacing: -0.01em;
 }
 
 .nidhi-utilization-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  border-radius: 20px;
-  font-size: 13px;
+  padding: 4px 10px;
+  background: #EDE9FE;
+  border-radius: 16px;
+  font-size: 12px;
   font-weight: 700;
-  color: #A7F3D0;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #7C3AED;
+  border: 1px solid #DDD6FE;
 }
 
 .nidhi-progress-container {
-  margin: 16px 0;
+  margin: 4px 0;
 }
 
 .nidhi-progress-bar {
   width: 100%;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 6px;
+  height: 6px;
+  background: #E9D5FF;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .nidhi-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #10B981 0%, #34D399 100%);
-  border-radius: 6px;
+  background: linear-gradient(90deg, #7C3AED 0%, #A855F7 100%);
+  border-radius: 4px;
   transition: width 0.5s ease;
 }
 
 .nidhi-progress-labels {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
-  color: #E0E7FF;
-  margin-top: 6px;
+  font-size: 11px;
+  color: #6B7280;
+  margin-top: 4px;
   font-weight: 500;
 }
 
@@ -384,8 +409,8 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 8px;
+  border-top: 1px dashed #E9D5FF;
 }
 
 .balance-sub-stat {
@@ -395,13 +420,13 @@
 
 .sub-stat-label {
   font-size: 11px;
-  color: #C7D2FE;
+  color: #6B7280;
 }
 
 .sub-stat-value {
   font-size: 13px;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #1E1B4B;
 }
 
 /* --- Section 2: Filter Panel --- */
@@ -409,16 +434,42 @@
   background: #FFFFFF;
 }
 
-.nidhi-filter-grid {
+.nidhi-filter-grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.nidhi-top-filter-row {
   display: grid;
-  grid-template-columns: 1.2fr 1.2fr 1.2fr;
-  gap: 20px;
+  grid-template-columns: minmax(500px, 3.5fr) 1fr 1fr;
+  gap: 16px;
+}
+
+.nidhi-bottom-filter-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
 }
 
 @media (max-width: 1024px) {
-  .nidhi-filter-grid {
+  .nidhi-top-filter-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .nidhi-top-filter-row {
     grid-template-columns: 1fr;
   }
+}
+
+.nidhi-filter-grid-container .nidhi-select,
+.nidhi-filter-grid-container .nidhi-input {
+  height: 42px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .filter-group {
@@ -1042,4 +1093,98 @@
 /* --- Comments Section --- */
 .nidhi-comments-section {
   margin-top: 12px;
+}
+
+/* --- OFFICIAL TREASURY STATEMENT REPORT FORMAT (विवरण संख्या 21 - आरक्षित निधियां) --- */
+.nidhi-official-report-card {
+  background: #FFFFFF;
+  border: 1px solid #111827;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-top: 24px;
+  overflow-x: auto;
+}
+
+.nidhi-official-report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #000000;
+}
+
+.nidhi-official-title-hi {
+  font-size: 17px;
+  font-weight: 800;
+  color: #000000;
+  letter-spacing: 0.01em;
+}
+
+.nidhi-official-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.nidhi-official-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  color: #000000;
+  border: 2px solid #000000;
+}
+
+.nidhi-official-table th,
+.nidhi-official-table td {
+  border: 1px solid #000000;
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+
+.nidhi-official-table th {
+  background: #FFFFFF;
+  font-weight: 700;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #000000;
+}
+
+.th-red,
+.th-green {
+  color: #000000 !important;
+}
+
+.tr-group-header td {
+  font-weight: 700;
+  font-size: 14px;
+  background: #FFFFFF;
+  color: #000000;
+}
+
+.tr-subgroup-header td {
+  font-weight: 700;
+  font-size: 13px;
+  color: #000000;
+  background: #FFFFFF;
+}
+
+.text-red,
+.text-green {
+  color: #000000 !important;
+  font-weight: 600;
+}
+
+.code-font-red {
+  font-family: 'Consolas', 'Courier New', monospace;
+  color: #000000;
+  font-weight: 600;
+}
+
+.nidhi-official-table .tr-summary-row td {
+  font-weight: 800;
+  background: #F3F4F6;
+  border-top: 2px solid #000000;
+  border-bottom: 2px solid #000000;
 }

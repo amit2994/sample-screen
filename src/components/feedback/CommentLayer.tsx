@@ -8,7 +8,7 @@ import './CommentLayer.css';
 interface CommentLayerProps {
   screenId: string;
   moduleName?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export default function CommentLayer({
