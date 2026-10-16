@@ -1151,9 +1151,12 @@
   color: #000000;
 }
 
-.th-red,
+.th-red {
+  color: #DC2626 !important;
+}
+
 .th-green {
-  color: #000000 !important;
+  color: #15803D !important;
 }
 
 .tr-group-header td {

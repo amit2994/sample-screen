@@ -26,6 +26,7 @@ import ContractManagementSinglePayment from './screens/sprint4/contractid';
 import WorksToPDTransferScreen from './screens/sprint4/WorksToPDTransferScreen';
 import HoAAdditionRequestScreen from './screens/sprint6/HoAAdditionRequestScreen';
 import NidhiFundsExpenditureReportScreen from './screens/sprint6/NidhiFundsExpenditureReportScreen';
+import SchemeMappingWithNidhiFundScreen from './screens/sprint6/SchemeMappingWithNidhiFundScreen';
 
 
 export const router = createBrowserRouter([
@@ -64,6 +65,7 @@ export const router = createBrowserRouter([
       // Sprint 6
       { path: 'sprint/6/story/1', element: <HoAAdditionRequestScreen /> },
       { path: 'sprint/6/story/2', element: <NidhiFundsExpenditureReportScreen /> },
+      { path: 'sprint/6/story/3', element: <SchemeMappingWithNidhiFundScreen /> },
       // Catch-all
 
       {

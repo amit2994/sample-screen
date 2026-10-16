@@ -100,6 +100,12 @@ export const sprints: Sprint[] = [
         path: '/sprint/6/story/2',
         screen_id: 'sprint6-story2-nidhi-funds-expenditure-report',
       },
+      {
+        id: 'story-23',
+        title: 'Scheme Mapping with Nidhi Fund',
+        path: '/sprint/6/story/3',
+        screen_id: 'sprint6-story3-scheme-mapping-nidhi',
+      },
     ],
   },
 ];

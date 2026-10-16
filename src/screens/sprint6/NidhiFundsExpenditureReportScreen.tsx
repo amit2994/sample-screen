@@ -131,8 +131,8 @@ const NIDHI_FUNDS_DATA: NidhiFund[] = [
   {
     id: 'NF-01',
     code: '8121-HEAD-01',
-    name: '8121 - सामान्य तथा अन्य आरक्षित निधियाँ (General and Other Reserve Funds)-122 राज्य आपदा मोचन निधि (SDRF) (State Disaster Response Fund)',
-    shortName: '122 राज्य आपदा मोचन निधि (SDRF) (State Disaster Response Fund)',
+    name: '8121 - सामान्य तथा अन्य आरक्षित निधियाँ-122 राज्य आपदा मोचन निधि (SDRF) (General and Other Reserve Funds)',
+    shortName: '122 राज्य आपदा मोचन निधि (SDRF)',
     category: 'General and Other Reserve Funds',
     treasuryCode: 'TR-101',
     treasuryName: 'District Treasury / State Nidhi Cell',
@@ -1210,21 +1210,25 @@ export default function NidhiFundsExpenditureReportScreen() {
           <table className="nidhi-official-table">
             <thead>
               <tr>
-                <th style={{ width: '25%' }}>लेखा का शीर्ष</th>
-                <th style={{ width: '9%' }}>31 मार्च 2025 को अंत शेष (लाख में)</th>
+                <th style={{ width: '18%' }}>लेखा का शीर्ष</th>
+                <th style={{ width: '14%' }}>Shceme or Budgetline from which funds to be received in nidhi funds</th>
+                <th className="th-red" style={{ width: '8%' }}>31/03/2025 को अंत शेष (लाख में)</th>
                 <th style={{ width: '9%' }}>वित्तीय वर्ष 2025-26 में प्राप्ति / निधि में अंतरण</th>
-                <th style={{ width: '9%' }}>वर्तमान में कुल अंत शेष</th>
-                <th style={{ width: '10%' }}>संवितरण / निधि के विरुद्ध व्यय करने वाले विभाग का नाम</th>
-                <th style={{ width: '16%' }}>योजना का क्रमांक</th>
-                <th style={{ width: '7%' }}>वित्तीय वर्ष में राजस्व व्यय</th>
-                <th style={{ width: '7%' }}>वित्तीय वर्ष में पूंजीगत व्यय</th>
-                <th style={{ width: '8%' }}>कुल व्यय (लाख में )</th>
+                <th className="th-red" style={{ width: '8%' }}>1/4/2026 को अंत शेष (लाख में)</th>
+                <th className="th-green" style={{ width: '9%' }}>संवितरण / निधि के विरुद्ध व्यय करने वाले विभाग का नाम</th>
+                <th className="th-green" style={{ width: '10%' }}>योजना का क्रमांक</th>
+                <th className="th-green" style={{ width: '10%' }}>Re-receipt from nidhi into scheme or BudgetLine</th>
+                <th className="th-green" style={{ width: '5%' }}>वित्तीय वर्ष में राजस्व व्यय</th>
+                <th className="th-green" style={{ width: '5%' }}>वित्तीय वर्ष में पूंजीगत व्यय</th>
+                <th className="th-green" style={{ width: '4%' }}>कुल व्यय (लाख में )</th>
               </tr>
             </thead>
             <tbody>
               {/* Major Group Row */}
               <tr className="tr-group-header">
                 <td>(ज) आरक्षित निधि—</td>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -1246,21 +1250,16 @@ export default function NidhiFundsExpenditureReportScreen() {
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
+                <td></td>
               </tr>
 
               {/* Major Head Row + First Scheme Row */}
               <tr>
                 <td rowSpan={TREASURY_SCHEMES_DATA.length} style={{ verticalAlign: 'top', fontWeight: 700, lineHeight: '1.5' }}>
-                  {activeFund.code === '8121-00-122-001' ? (
-                    <>
-                      <span className="font-bold">8121 - सामान्य तथा अन्य आरक्षित निधियाँ-122 राज्य आपदा मोचन निधि (SDRF)</span> (General and Other Reserve Funds)
-                    </>
-                  ) : (
-                    <>
-                      <span className="font-bold">{activeFund.code} {activeFund.name}</span> ({activeFund.category})
-                    </>
-                  )}
+                  <span className="font-bold">{activeFund.name}</span>
                 </td>
+                <td rowSpan={TREASURY_SCHEMES_DATA.length}></td>
                 <td rowSpan={TREASURY_SCHEMES_DATA.length} className="text-right" style={{ verticalAlign: 'top', fontWeight: 700 }}>
                   2,300.00
                 </td>
@@ -1268,12 +1267,13 @@ export default function NidhiFundsExpenditureReportScreen() {
                   15,000.00
                 </td>
                 <td rowSpan={TREASURY_SCHEMES_DATA.length} className="text-right" style={{ verticalAlign: 'top', fontWeight: 700 }}>
-                  7,860.00
+                  17,300.00
                 </td>
                 <td rowSpan={TREASURY_SCHEMES_DATA.length} className="text-center" style={{ verticalAlign: 'top', fontWeight: 700 }}>
                   राजस्व
                 </td>
                 <td className="code-font">{TREASURY_SCHEMES_DATA[0].code}</td>
+                <td></td>
                 <td className="text-right"></td>
                 <td className="text-right"></td>
                 <td className="text-right"></td>
@@ -1283,6 +1283,7 @@ export default function NidhiFundsExpenditureReportScreen() {
               {TREASURY_SCHEMES_DATA.slice(1).map((scm, idx) => (
                 <tr key={idx}>
                   <td className="code-font">{scm.code}</td>
+                  <td></td>
                   <td className="text-right"></td>
                   <td className="text-right"></td>
                   <td className="text-right"></td>
