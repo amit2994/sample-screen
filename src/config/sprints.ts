@@ -106,6 +106,12 @@ export const sprints: Sprint[] = [
         path: '/sprint/6/story/3',
         screen_id: 'sprint6-story3-scheme-mapping-nidhi',
       },
+      {
+        id: 'story-24',
+        title: 'Contingency Fund Report',
+        path: '/sprint/6/story/4',
+        screen_id: 'sprint6-story4-contingency-fund-report',
+      },
     ],
   },
 ];

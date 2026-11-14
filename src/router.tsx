@@ -27,6 +27,7 @@ import WorksToPDTransferScreen from './screens/sprint4/WorksToPDTransferScreen';
 import HoAAdditionRequestScreen from './screens/sprint6/HoAAdditionRequestScreen';
 import NidhiFundsExpenditureReportScreen from './screens/sprint6/NidhiFundsExpenditureReportScreen';
 import SchemeMappingWithNidhiFundScreen from './screens/sprint6/SchemeMappingWithNidhiFundScreen';
+import ContingencyFundReportScreen from './screens/sprint6/ContingencyFundReportScreen';
 
 
 export const router = createBrowserRouter([
@@ -66,6 +67,8 @@ export const router = createBrowserRouter([
       { path: 'sprint/6/story/1', element: <HoAAdditionRequestScreen /> },
       { path: 'sprint/6/story/2', element: <NidhiFundsExpenditureReportScreen /> },
       { path: 'sprint/6/story/3', element: <SchemeMappingWithNidhiFundScreen /> },
+      { path: 'sprint/6/story/4', element: <ContingencyFundReportScreen /> },
+      { path: 'sprint/6/contingency-fund-report', element: <ContingencyFundReportScreen /> },
       // Catch-all
 
       {
